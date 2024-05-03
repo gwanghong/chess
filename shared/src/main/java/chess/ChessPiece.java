@@ -1,7 +1,7 @@
 package chess;
 
 import java.util.ArrayList;
-import java.util.Collection;
+
 
 /**
  * Represents a single chess piece
@@ -52,9 +52,7 @@ public class ChessPiece {
      *
      * @return Collection of valid moves
      */
-    public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        /*ArrayList<Integer> moves = new ArrayList<Integer>();
-        moves.add(2);*/
+    public ArrayList<int[][]> pieceMoves(ChessBoard board, ChessPosition myPosition) {
 
         switch (type) {
             case KING:
@@ -64,8 +62,14 @@ public class ChessPiece {
                 break;
 
             case BISHOP:
+                ArrayList<int[][]> p = new ArrayList<>();
 
-                break;
+                p.add(new int[][]{{6, 5}, {7, 6}, {8, 7},
+                        {4, 5}, {3, 6}, {2, 7}, {1, 8},
+                        {4, 3}, {3, 2}, {2, 1},
+                        {6, 3}, {7, 2}, {8, 1}});
+
+                return p;
 
             case KNIGHT:
                 break;
