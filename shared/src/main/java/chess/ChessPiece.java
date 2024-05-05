@@ -1,7 +1,9 @@
 package chess;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
+import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * Represents a single chess piece
@@ -11,12 +13,25 @@ import java.util.ArrayList;
  */
 public class ChessPiece {
 
-    PieceType type;
-    ChessGame.TeamColor pieceColor;
+    private final PieceType type;
+    private final ChessGame.TeamColor pieceColor;
 
     public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
         this.type = type;
         this.pieceColor = pieceColor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessPiece that = (ChessPiece) o;
+        return type == that.type && pieceColor == that.pieceColor;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, pieceColor);
     }
 
     /**
@@ -35,14 +50,16 @@ public class ChessPiece {
      * @return Which team this chess piece belongs to
      */
     public ChessGame.TeamColor getTeamColor() {
-        throw new RuntimeException("Not implemented");
+
+        return pieceColor;
     }
 
     /**
      * @return which type of chess piece this piece is
      */
     public PieceType getPieceType() {
-        throw new RuntimeException("Not implemented");
+
+        return type;
     }
 
     /**
@@ -52,7 +69,10 @@ public class ChessPiece {
      *
      * @return Collection of valid moves
      */
-    public ArrayList<int[][]> pieceMoves(ChessBoard board, ChessPosition myPosition) {
+    public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
+
+        final int row = myPosition.getRow();
+        final int col = myPosition.getColumn();
 
         switch (type) {
             case KING:
@@ -62,14 +82,30 @@ public class ChessPiece {
                 break;
 
             case BISHOP:
-                ArrayList<int[][]> p = new ArrayList<>();
+                Collection<ChessMove> pos = new HashSet<>();
 
-                p.add(new int[][]{{6, 5}, {7, 6}, {8, 7},
-                        {4, 5}, {3, 6}, {2, 7}, {1, 8},
-                        {4, 3}, {3, 2}, {2, 1},
-                        {6, 3}, {7, 2}, {8, 1}});
+                for (int i = row + 1, j = col + 1; i < 9 && j < 9; i++, j++) {
+                    System.out.printf("%d %d  ", i, j);
+                    pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                }
+                System.out.println("\n");
+                for (int i = row - 1, j = col + 1; i > 0 && j < 9; i--, j++) {
+                    System.out.printf("%d %d  ", i, j);
+                    pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                }
+                System.out.println("\n");
+                for (int i = row - 1, j = col - 1; i > 0 && j > 0; i--, j--) {
+                    System.out.printf("%d %d  ", i, j);
+                    pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                }
+                System.out.println("\n");
+                for (int i = row + 1, j = col - 1; i < 9 && j > 0; i++, j--) {
+                    System.out.printf("%d %d  ", i, j);
+                    pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                }
+                System.out.println("\n");
 
-                return p;
+                return pos;
 
             case KNIGHT:
                 break;
@@ -81,6 +117,6 @@ public class ChessPiece {
                 break;
             }
 
-        return new ArrayList<>();
+            return new HashSet<ChessMove>();
     }
 }
