@@ -72,23 +72,78 @@ public class ChessPiece {
                 Collection<ChessMove> pos = new HashSet<>();
 
                 for (int i = row + 1, j = col + 1; i < 9 && j < 9; i++, j++) {
-                    System.out.printf("%d %d  ", i, j);
-                    pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                    if (board.getPiece(new ChessPosition(i, j)) == null) {
+                        System.out.printf("%d %d  ", i, j);
+                        pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                    } else {
+                        if (board.getPiece(new ChessPosition(i, j)).pieceColor.equals(this.pieceColor)) {
+                            i = 9;
+                            j = 9;
+                        }
+                        else {
+                            System.out.printf("%d %d  ", i, j);
+                            pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                            i = 9;
+                            j = 9;
+                        }
+                    }
                 }
                 System.out.println("\n");
+
                 for (int i = row - 1, j = col + 1; i > 0 && j < 9; i--, j++) {
-                    System.out.printf("%d %d  ", i, j);
-                    pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                    if (board.getPiece(new ChessPosition(i, j)) == null) {
+                        System.out.printf("%d %d  ", i, j);
+                        pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                    } else {
+                        if (board.getPiece(new ChessPosition(i, j)).pieceColor.equals(this.pieceColor)) {
+                            i = 0;
+                            j = 9;
+                        }
+                        else {
+                            System.out.printf("%d %d  ", i, j);
+                            pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                            i = 0;
+                            j = 9;
+                        }
+                    }
                 }
                 System.out.println("\n");
+
                 for (int i = row - 1, j = col - 1; i > 0 && j > 0; i--, j--) {
-                    System.out.printf("%d %d  ", i, j);
-                    pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                    if (board.getPiece(new ChessPosition(i, j)) == null) {
+                        System.out.printf("%d %d  ", i, j);
+                        pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                    } else {
+                        if (board.getPiece(new ChessPosition(i, j)).pieceColor.equals(this.pieceColor)) {
+                            i = 0;
+                            j = 0;
+                        }
+                        else {
+                            System.out.printf("%d %d  ", i, j);
+                            pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                            i = 0;
+                            j = 0;
+                        }
+                    }
                 }
                 System.out.println("\n");
+
                 for (int i = row + 1, j = col - 1; i < 9 && j > 0; i++, j--) {
-                    System.out.printf("%d %d  ", i, j);
-                    pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                    if (board.getPiece(new ChessPosition(i, j)) == null) {
+                        System.out.printf("%d %d  ", i, j);
+                        pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                    } else {
+                        if (board.getPiece(new ChessPosition(i, j)).pieceColor.equals(this.pieceColor)) {
+                            i = 9;
+                            j = 0;
+                        }
+                        else {
+                            System.out.printf("%d %d  ", i, j);
+                            pos.add(new ChessMove(myPosition, new ChessPosition(i, j), null));
+                            i = 9;
+                            j = 0;
+                        }
+                    }
                 }
                 System.out.println("\n");
 
