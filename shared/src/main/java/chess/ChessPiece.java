@@ -168,7 +168,31 @@ public class ChessPiece {
                 return bishP;
 
             case KNIGHT:
-                break;
+                Collection<ChessMove> knightP = new HashSet<>();
+
+                for (int i = -1; i <= 1; i+= 2) {
+                    for (int j = -1; j <= 1; j+= 2) {
+                        if ((0 < row + 2 * i && row + 2 * i < 9) && (0 < col + 2 * j && col + 2 * j < 9)) {
+                            if (board.getPiece(new ChessPosition(row + 2 * i, col + j)) == null) {
+                                System.out.printf("%d %d  ", row + 2 * i, col + j);
+                                knightP.add(new ChessMove(myPosition, new ChessPosition(row + 2 * i, col + j), null));
+                            } else if (board.getPiece(new ChessPosition(row + 2 * i, col + j)) != null
+                                    && !board.getPiece(new ChessPosition(row + 2 * i, col + j)).pieceColor.equals(this.pieceColor)) {
+                                System.out.printf("%d %d  ", row + 2 * i, col + j);
+                                knightP.add(new ChessMove(myPosition, new ChessPosition(row + 2 * i, col + j), null));
+                            }
+                            if (board.getPiece(new ChessPosition(row + i, col + 2 * j)) == null) {
+                                System.out.printf("%d %d  ", row + i, col + 2 * j);
+                                knightP.add(new ChessMove(myPosition, new ChessPosition(row + i, col + 2 * j), null));
+                            } else if (board.getPiece(new ChessPosition(row + i, col + 2 * j)) != null
+                                    && !board.getPiece(new ChessPosition(row + i, col + 2 * j)).pieceColor.equals(this.pieceColor)) {
+                                System.out.printf("%d %d  ", row + i, col + 2 * j);
+                                knightP.add(new ChessMove(myPosition, new ChessPosition(row + i, col + 2 * j), null));
+                            }
+                        }
+                    }
+                }
+                return knightP;
 
             case ROOK:
                 break;
