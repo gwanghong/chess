@@ -198,10 +198,18 @@ public class ChessPiece {
                 break;
 
             case PAWN:
-                break;
+
             }
 
             return new HashSet<ChessMove>();
+    }
+
+    @Override
+    public String toString() {
+        return "ChessPiece{" +
+                "type=" + type +
+                ", pieceColor=" + pieceColor +
+                '}';
     }
 
     @Override
