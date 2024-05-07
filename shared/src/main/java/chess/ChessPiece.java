@@ -413,21 +413,24 @@ public class ChessPiece {
                 if (color.equals("WHITE")) {
 
                     for (int i = -1; i <= 1; i += 2) {
-                        if (board.getPiece(new ChessPosition(row + 1, col + i)) != null) {
-                            if (!board.getPiece(new ChessPosition(row + 1, col + i)).getTeamColor().equals(this.pieceColor)) {
-                                if (row + 1 == 8) {
-                                    System.out.printf("%d %d  ", row + 1, col + i);
-                                    pawnP.add(new ChessMove(myPosition, new ChessPosition(row + 1, col + i), PieceType.ROOK));
-                                    pawnP.add(new ChessMove(myPosition, new ChessPosition(row + 1, col + i), PieceType.KNIGHT));
-                                    pawnP.add(new ChessMove(myPosition, new ChessPosition(row + 1, col + i), PieceType.BISHOP));
-                                    pawnP.add(new ChessMove(myPosition, new ChessPosition(row + 1, col + i), PieceType.QUEEN));
-                                } else {
-                                    System.out.printf("%d %d  ", row + 1, col + i);
-                                    pawnP.add(new ChessMove(myPosition, new ChessPosition(row + 1, col + i), null));
+                        if (col + i < 9 && col + i > 0) {
+                            if (board.getPiece(new ChessPosition(row + 1, col + i)) != null) {
+                                if (!board.getPiece(new ChessPosition(row + 1, col + i)).getTeamColor().equals(this.pieceColor)) {
+                                    if (row + 1 == 8) {
+                                        System.out.printf("%d %d  ", row + 1, col + i);
+                                        pawnP.add(new ChessMove(myPosition, new ChessPosition(row + 1, col + i), PieceType.ROOK));
+                                        pawnP.add(new ChessMove(myPosition, new ChessPosition(row + 1, col + i), PieceType.KNIGHT));
+                                        pawnP.add(new ChessMove(myPosition, new ChessPosition(row + 1, col + i), PieceType.BISHOP));
+                                        pawnP.add(new ChessMove(myPosition, new ChessPosition(row + 1, col + i), PieceType.QUEEN));
+                                    } else {
+                                        System.out.printf("%d %d  ", row + 1, col + i);
+                                        pawnP.add(new ChessMove(myPosition, new ChessPosition(row + 1, col + i), null));
+                                    }
                                 }
                             }
                         }
                     }
+
                     if (board.getPiece(new ChessPosition(row + 1, col)) == null) {
                         if (myPosition.getRow() == 2) {
                             System.out.printf("%d %d  ", row + 1, col);
@@ -453,17 +456,19 @@ public class ChessPiece {
                 } else if (color.equals("BLACK")) {
 
                     for (int i = -1; i <= 1; i += 2) {
-                        if (board.getPiece(new ChessPosition(row - 1, col + i)) != null) {
-                            if (!board.getPiece(new ChessPosition(row - 1, col + i)).getTeamColor().equals(this.pieceColor)) {
-                                if (row - 1 == 1) {
-                                    System.out.printf("%d %d  ", row - 1, col + i);
-                                    pawnP.add(new ChessMove(myPosition, new ChessPosition(row - 1, col + i), PieceType.ROOK));
-                                    pawnP.add(new ChessMove(myPosition, new ChessPosition(row - 1, col + i), PieceType.KNIGHT));
-                                    pawnP.add(new ChessMove(myPosition, new ChessPosition(row - 1, col + i), PieceType.BISHOP));
-                                    pawnP.add(new ChessMove(myPosition, new ChessPosition(row - 1, col + i), PieceType.QUEEN));
-                                } else {
-                                    System.out.printf("%d %d  ", row - 1, col + i);
-                                    pawnP.add(new ChessMove(myPosition, new ChessPosition(row - 1, col + i), null));
+                        if (col + i < 9 && col + i > 0) {
+                            if (board.getPiece(new ChessPosition(row - 1, col + i)) != null) {
+                                if (!board.getPiece(new ChessPosition(row - 1, col + i)).getTeamColor().equals(this.pieceColor)) {
+                                    if (row - 1 == 1) {
+                                        System.out.printf("%d %d  ", row - 1, col + i);
+                                        pawnP.add(new ChessMove(myPosition, new ChessPosition(row - 1, col + i), PieceType.ROOK));
+                                        pawnP.add(new ChessMove(myPosition, new ChessPosition(row - 1, col + i), PieceType.KNIGHT));
+                                        pawnP.add(new ChessMove(myPosition, new ChessPosition(row - 1, col + i), PieceType.BISHOP));
+                                        pawnP.add(new ChessMove(myPosition, new ChessPosition(row - 1, col + i), PieceType.QUEEN));
+                                    } else {
+                                        System.out.printf("%d %d  ", row - 1, col + i);
+                                        pawnP.add(new ChessMove(myPosition, new ChessPosition(row - 1, col + i), null));
+                                    }
                                 }
                             }
                         }

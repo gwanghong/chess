@@ -10,7 +10,9 @@ import java.util.Objects;
  * signature of the existing methods.
  */
 public class ChessBoard {
+
     private final ChessPiece[][] squares = new ChessPiece[8][8];
+
     public ChessBoard() {
         
     }
@@ -42,7 +44,102 @@ public class ChessBoard {
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
-        throw new RuntimeException("Not implemented");
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                squares[i][j] = null;
+            }
+        }
+
+        //pawn
+        for (int j = 1; j < 9; j ++) {
+            ChessPosition whitePawnP = new ChessPosition(2, j);
+            ChessPiece whiteP = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN);
+
+            addPiece(whitePawnP, whiteP);
+
+            ChessPosition blackPawnP = new ChessPosition(7, j);
+            ChessPiece blackP = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN);
+
+            addPiece(blackPawnP, blackP);
+        }
+
+        //rook
+        for (int j = 1; j < 9; j += 7) {
+            ChessPosition whiteRookP = new ChessPosition(1, j);
+            ChessPiece whiteR = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK);
+
+            addPiece(whiteRookP, whiteR);
+
+            ChessPosition blackRookP = new ChessPosition(8, j);
+            ChessPiece blackR = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.ROOK);
+
+            addPiece(blackRookP, blackR);
+        }
+
+        //knight
+        for (int j = 2; j < 8; j += 5) {
+            ChessPosition whiteKnightP = new ChessPosition(1, j);
+            ChessPiece WhiteN = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KNIGHT);
+
+            addPiece(whiteKnightP, WhiteN);
+
+            ChessPosition blackKnightP = new ChessPosition(8, j);
+            ChessPiece blackN = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KNIGHT);
+
+            addPiece(blackKnightP, blackN);
+        }
+
+        //bishop
+        for (int j = 3; j < 7; j += 3) {
+            ChessPosition whiteBishopP = new ChessPosition(1, j);
+            ChessPiece whiteB = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.BISHOP);
+
+            addPiece(whiteBishopP, whiteB);
+
+            ChessPosition blackBishopP = new ChessPosition(8, j);
+            ChessPiece blackB = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.BISHOP);
+
+            addPiece(blackBishopP, blackB);
+        }
+
+        //queen
+        ChessPosition whiteQueenP = new ChessPosition(1, 4);
+        ChessPiece whiteQ = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.QUEEN);
+
+        addPiece(whiteQueenP, whiteQ);
+
+        ChessPosition blackQueenP = new ChessPosition(8, 4);
+        ChessPiece blackQ = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.QUEEN);
+
+        addPiece(blackQueenP, blackQ);
+
+        //king
+        ChessPosition whiteKingP = new ChessPosition(1, 5);
+        ChessPiece whiteK = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KING);
+
+        addPiece(whiteKingP, whiteK);
+
+        ChessPosition blackKingP = new ChessPosition(8, 5);
+        ChessPiece blackK = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KING);
+
+        addPiece(blackKingP, blackK);
+
+
+        //print
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                System.out.println(squares[i][j]);
+            }
+            System.out.println("\n");
+        }
+    }
+
+
+    @Override
+    public String toString() {
+        return "ChessBoard{" +
+                "squares=" + Arrays.toString(squares) +
+                '}';
     }
 
     @Override
