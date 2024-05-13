@@ -71,12 +71,16 @@ public class ChessGame {
     public boolean isInCheck(TeamColor teamColor) {
 
         ChessPosition kingP = null;
+        setTeamTurn(teamColor);
 
         for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
                 ChessPosition p = new ChessPosition(i,j);
                 if (board.getPiece(p) != null && board.getPiece(p).getPieceType().equals(ChessPiece.PieceType.KING)) {
-                    kingP = p;
+                    if (board.getPiece(p).getTeamColor().equals(team)) {
+                        kingP = p;
+                        System.out.printf("%d %d ", i, j);
+                    }
                 }
             }
         }
