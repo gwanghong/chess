@@ -53,10 +53,13 @@ public class ChessGame {
 
         Collection<ChessMove> valid = new HashSet<>();
         ChessPiece piece = board.getPiece(startPosition);
+        setTeamTurn(piece.getTeamColor());
 
+        //get all the valid moves from all pieces, and check for
+        //ischeck and ischeckmate
         if (piece != null) {
             for (ChessMove move : piece.pieceMoves(board, startPosition)) {
-                if (!isInCheck()) {
+                if (true) {
                     System.out.printf("%d %d  ", move.getEndPosition().getRow(), move.getEndPosition().getColumn());
                     valid.add(move);
                 }
