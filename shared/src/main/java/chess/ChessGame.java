@@ -137,7 +137,7 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-
+        
         setTeamTurn(teamColor);
         //getting all the possible moves of the king and see if isincheck
         boolean allIsInCheck = true;
@@ -180,7 +180,12 @@ public class ChessGame {
      * @return True if the specified team is in stalemate, otherwise false
      */
     public boolean isInStalemate(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+
+        if (isInCheckmate(teamColor)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

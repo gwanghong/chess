@@ -100,7 +100,7 @@ public class ChessBoard {
 
 
 
-        for (int i = 0; i < 8; i++) {
+        /*for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (squares[i][j] != null) {
                     System.out.printf("%s %s\n", squares[i][j].getPieceType(), squares[i][j].getTeamColor());
@@ -109,7 +109,7 @@ public class ChessBoard {
                 }
             }
             System.out.println("\n");
-        }
+        }*/
     }
 
     @Override
