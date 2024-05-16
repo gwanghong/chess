@@ -181,11 +181,29 @@ public class ChessGame {
      */
     public boolean isInStalemate(TeamColor teamColor) {
 
-        if (isInCheckmate(teamColor)) {
-            return true;
+        boolean isStale = false;
+
+        for (int i = 1; i < 9; i++) {
+            for (int j = 1; j < 9; j++) {
+                ChessPosition p = new ChessPosition(i, j);
+                if (board.getPiece(p) != null) {
+                    if (board.getPiece(p).getTeamColor().equals(teamColor)) {
+                        for (ChessMove ChessM : board.getPiece(p).pieceMoves(board, p)) {
+                            ChessPiece currPiece = board.getPiece(p);
+                            ChessGame copiedBoard2 = new ChessGame(this);
+                            copiedBoard2.getBoard().addPiece(p, null);
+                            copiedBoard2.getBoard().addPiece(ChessM.getEndPosition(), currPiece);
+
+                            if (copiedBoard2.isInCheck(teamColor)) {
+                                isStale = true;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
-        return false;
+        return isStale;
     }
 
     /**
