@@ -137,47 +137,9 @@ public class ChessGame {
      */
     public boolean isInCheckmate(TeamColor teamColor) {
 
-        /*
-        //deepcopy
-        ChessBoard copiedBoard = new ChessBoard();
-        for (int i = 1; i < 9; i++) {
-            for (int j = 1; j < 9; j++) {
-                ChessPosition p = new ChessPosition(i,j);
-                copiedBoard.addPiece(p,board.getPiece(p));
-            }
-        }*/
-
-        ChessGame copiedBoard = new ChessGame(this);
-
         //finding position for the current teamturn King.
         ChessPosition kingP = null;
         setTeamTurn(teamColor);
-
-        for (int i = 1; i < 9; i++) {
-            for (int j = 1; j < 9; j++) {
-                ChessPosition p = new ChessPosition(i,j);
-                if (board.getPiece(p) != null) {
-                    System.out.printf("%s: %s \n", board.getPiece(p).getTeamColor(), board.getPiece(p).getPieceType());
-                } else {
-                    System.out.println("null");
-                }
-            }
-            System.out.println("\n");
-        }
-        System.out.println("Entering copyboard\n");
-        for (int i = 1; i < 9; i++) {
-            for (int j = 1; j < 9; j++) {
-                ChessPosition p = new ChessPosition(i,j);
-                if (copiedBoard.getBoard().getPiece(p) != null) {
-                    System.out.printf("%s: %s \n", copiedBoard.getBoard().getPiece(p).getTeamColor(), copiedBoard.getBoard().getPiece(p).getPieceType());
-                } else {
-                    System.out.println("null");
-                }
-            }
-            System.out.println("\n");
-        }
-
-
 
         for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
@@ -192,56 +154,44 @@ public class ChessGame {
 
         //getting all the possible moves of the king and see if isincheck
         boolean allIsInCheck = true;
-        ChessPiece currKing = new ChessPiece(copiedBoard.team, ChessPiece.PieceType.KING);
-        for (ChessMove kingM : copiedBoard.board.getPiece(kingP).pieceMoves(copiedBoard.board, kingP)) {
-            /*copiedBoard.getBoard().addPiece(kingP, null);
+        ChessPiece currKing = new ChessPiece(team, ChessPiece.PieceType.KING);
+        for (ChessMove kingM : board.getPiece(kingP).pieceMoves(board, kingP)) {
+
+            ChessGame copiedBoard = new ChessGame(this);
+            copiedBoard.getBoard().addPiece(kingP, null);
             copiedBoard.getBoard().addPiece(kingM.getEndPosition(), currKing);
-            kingP = kingM.getEndPosition();
-            System.out.printf("%s, %s  ", kingP.getRow(), kingP.getColumn());
-            if (!copiedBoard.isInCheck(copiedBoard.team)) {
-                allIsInCheck = false;
-            } else {
-                System.out.printf("%s, %s  ", kingP.getRow(), kingP.getColumn());
-            }*/
-            ChessGame copiedBoard2 = new ChessGame(this);
-            copiedBoard2.getBoard().addPiece(kingM.getEndPosition(), currKing);
             //kingP = kingM.getEndPosition();
             System.out.printf("%s, %s  ", kingM.getEndPosition().getRow(), kingM.getEndPosition().getColumn());
-            if (!copiedBoard2.isInCheck(copiedBoard.team)) {
+            if (!copiedBoard.isInCheck(team)) {
                 allIsInCheck = false;
             } else {
                 System.out.printf("%s, %s  ", kingM.getEndPosition().getRow(), kingM.getEndPosition().getColumn());
             }
-        }
-
-
-        /*
-        //Checking if it is a shallow copy or deep copy
-        for (int i = 1; i < 9; i++) {
-            for (int j = 1; j < 9; j++) {
-                ChessPosition p = new ChessPosition(i,j);
-                if (board.getPiece(p) != null) {
-                    System.out.printf("%s: %s \n", board.getPiece(p).getTeamColor(), board.getPiece(p).getPieceType());
-                } else {
-                    System.out.println("null");
+/*
+            for (int i = 1; i < 9; i++) {
+                for (int j = 1; j < 9; j++) {
+                    ChessPosition p = new ChessPosition(i,j);
+                    if (board.getPiece(p) != null) {
+                        System.out.printf("%s: %s \n", board.getPiece(p).getTeamColor(), board.getPiece(p).getPieceType());
+                    } else {
+                        System.out.println("null");
+                    }
                 }
+                System.out.println("\n");
             }
-            System.out.println("\n");
-        }
-        System.out.println("Entering copyboard\n");
-        for (int i = 1; i < 9; i++) {
-            for (int j = 1; j < 9; j++) {
-                ChessPosition p = new ChessPosition(i,j);
-                if (copiedBoard.getBoard().getPiece(p) != null) {
-                    System.out.printf("%s: %s \n", copiedBoard.getBoard().getPiece(p).getTeamColor(), copiedBoard.getBoard().getPiece(p).getPieceType());
-                } else {
-                    System.out.println("null");
+            System.out.println("Entering copyboard\n");
+            for (int i = 1; i < 9; i++) {
+                for (int j = 1; j < 9; j++) {
+                    ChessPosition p = new ChessPosition(i,j);
+                    if (copiedBoard.getBoard().getPiece(p) != null) {
+                        System.out.printf("%s: %s \n", copiedBoard.getBoard().getPiece(p).getTeamColor(), copiedBoard.getBoard().getPiece(p).getPieceType());
+                    } else {
+                        System.out.println("null");
+                    }
                 }
-            }
-            System.out.println("\n");
-        }*/
-
-        //do I need to reset/throw out copied board?
+                System.out.println("\n");
+            }*/
+        }
 
         return allIsInCheck;
     }
@@ -281,14 +231,14 @@ public class ChessGame {
         this.board = other.getBoard();
         this.team = other.getTeamTurn();
 */
-        /*for (int i = 1; i < 9; i++) {
+        board = new ChessBoard();
+        setTeamTurn(other.getTeamTurn());
+
+        for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
                 ChessPosition p = new ChessPosition(i,j);
-                if (Board.getPiece(p) != null) {
-                    //copy.getBoard().addPiece(p, Board.getPiece(p));
-                    copy.setBoard();
-                }
+                board.addPiece(p, other.getBoard().getPiece(p));
             }
-        }*/
+        }
     }
 }
