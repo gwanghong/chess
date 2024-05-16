@@ -155,12 +155,17 @@ public class ChessGame {
         //getting all the possible moves of the king and see if isincheck
         boolean allIsInCheck = true;
         ChessPiece currKing = new ChessPiece(team, ChessPiece.PieceType.KING);
+
+        //checking if first given position of king is in check
+        if (!isInCheck(team)) {
+            allIsInCheck = false;
+        }
+
         for (ChessMove kingM : board.getPiece(kingP).pieceMoves(board, kingP)) {
 
             ChessGame copiedBoard = new ChessGame(this);
             copiedBoard.getBoard().addPiece(kingP, null);
             copiedBoard.getBoard().addPiece(kingM.getEndPosition(), currKing);
-            //kingP = kingM.getEndPosition();
             System.out.printf("%s, %s  ", kingM.getEndPosition().getRow(), kingM.getEndPosition().getColumn());
             if (!copiedBoard.isInCheck(team)) {
                 allIsInCheck = false;
