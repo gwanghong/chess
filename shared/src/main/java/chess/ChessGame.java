@@ -1,8 +1,6 @@
 package chess;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * For a class that can manage a chess game, making moves on a board
@@ -16,7 +14,9 @@ public class ChessGame {
     private TeamColor team;
 
     public ChessGame() {
-
+            board = new ChessBoard();
+            board.resetBoard();
+            team = TeamColor.WHITE;
     }
 
     /**
@@ -138,65 +138,35 @@ public class ChessGame {
      */
     public boolean isInCheckmate(TeamColor teamColor) {
 
-        //finding position for the current teamturn King.
-        ChessPosition kingP = null;
         setTeamTurn(teamColor);
-
-        for (int i = 1; i < 9; i++) {
-            for (int j = 1; j < 9; j++) {
-                ChessPosition p = new ChessPosition(i, j);
-                if (board.getPiece(p) != null && board.getPiece(p).getPieceType().equals(ChessPiece.PieceType.KING)) {
-                    if (board.getPiece(p).getTeamColor().equals(team)) {
-                        kingP = p;
-                    }
-                }
-            }
-        }
-
         //getting all the possible moves of the king and see if isincheck
         boolean allIsInCheck = true;
-        ChessPiece currKing = new ChessPiece(team, ChessPiece.PieceType.KING);
 
         //checking if first given position of king is in check
         if (!isInCheck(team)) {
             allIsInCheck = false;
         }
 
-        for (ChessMove kingM : board.getPiece(kingP).pieceMoves(board, kingP)) {
-
-            ChessGame copiedBoard = new ChessGame(this);
-            copiedBoard.getBoard().addPiece(kingP, null);
-            copiedBoard.getBoard().addPiece(kingM.getEndPosition(), currKing);
-            System.out.printf("%s, %s  ", kingM.getEndPosition().getRow(), kingM.getEndPosition().getColumn());
-            if (!copiedBoard.isInCheck(team)) {
-                allIsInCheck = false;
-            } else {
-                System.out.printf("%s, %s  ", kingM.getEndPosition().getRow(), kingM.getEndPosition().getColumn());
-            }
-/*
-            for (int i = 1; i < 9; i++) {
-                for (int j = 1; j < 9; j++) {
-                    ChessPosition p = new ChessPosition(i,j);
-                    if (board.getPiece(p) != null) {
-                        System.out.printf("%s: %s \n", board.getPiece(p).getTeamColor(), board.getPiece(p).getPieceType());
-                    } else {
-                        System.out.println("null");
+        for (int i = 1; i < 9; i++) {
+            for (int j = 1; j < 9; j++) {
+                ChessPosition p = new ChessPosition(i, j);
+                if (board.getPiece(p) != null ) {
+                    if (board.getPiece(p).getTeamColor().equals(team)) {
+                        for (ChessMove ChessM : board.getPiece(p).pieceMoves(board, p)) {
+                            ChessPiece currPiece = board.getPiece(p);
+                            ChessGame copiedBoard = new ChessGame(this);
+                            copiedBoard.getBoard().addPiece(p, null);
+                            copiedBoard.getBoard().addPiece(ChessM.getEndPosition(), currPiece);
+                            //System.out.printf("%s, %s  ", kingM.getEndPosition().getRow(), kingM.getEndPosition().getColumn());
+                            if (!copiedBoard.isInCheck(team)) {
+                                allIsInCheck = false;
+                            } else {
+                                //System.out.printf("%s, %s  ", kingM.getEndPosition().getRow(), kingM.getEndPosition().getColumn());
+                            }
+                        }
                     }
                 }
-                System.out.println("\n");
             }
-            System.out.println("Entering copyboard\n");
-            for (int i = 1; i < 9; i++) {
-                for (int j = 1; j < 9; j++) {
-                    ChessPosition p = new ChessPosition(i,j);
-                    if (copiedBoard.getBoard().getPiece(p) != null) {
-                        System.out.printf("%s: %s \n", copiedBoard.getBoard().getPiece(p).getTeamColor(), copiedBoard.getBoard().getPiece(p).getPieceType());
-                    } else {
-                        System.out.println("null");
-                    }
-                }
-                System.out.println("\n");
-            }*/
         }
 
         return allIsInCheck;
