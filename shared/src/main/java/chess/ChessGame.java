@@ -53,17 +53,7 @@ public class ChessGame {
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
 
         Collection<ChessMove> valid = new HashSet<>();
-        /*
-         *get all the valid moves from all pieces, and check for
-         *ischeck and ischeckmate
-         *for isincheck make a copy board and check for chess, after that throw that board away
-         *isStalemate: not in check but there is no legal moves to make
-         *when start working on extra credit - make sure to make a separate branch and work from there
-         *if fail, you can come back to the main branch
-         *chesspiece 에 있는 queen 부분, 중복되는 부분 고쳐보기 - bishop, rook 중복코드 있는거 고치는 방법이 있지 않을까
-         *case QUEEN: 에서 이제 switch(BISHOP), switch(ROOK) 로 가능할까?
 
-         */
         if (board.getPiece(startPosition) != null) {
 
             setTeamTurn(board.getPiece(startPosition).getTeamColor());
@@ -245,6 +235,8 @@ public class ChessGame {
                 }
             }
         }
+
+        if (isInCheckmate(teamColor)) {return false;}
 
         return isStale;
     }
