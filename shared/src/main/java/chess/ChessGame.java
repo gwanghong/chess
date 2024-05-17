@@ -53,8 +53,6 @@ public class ChessGame {
     public Collection<ChessMove> validMoves(ChessPosition startPosition) {
 
         Collection<ChessMove> valid = new HashSet<>();
-        ChessPiece piece = board.getPiece(startPosition);
-        setTeamTurn(piece.getTeamColor());
         /*
          *get all the valid moves from all pieces, and check for
          *ischeck and ischeckmate
@@ -66,14 +64,25 @@ public class ChessGame {
          *case QUEEN: 에서 이제 switch(BISHOP), switch(ROOK) 로 가능할까?
 
          */
-        if (piece != null) {
-            for (ChessMove move : piece.pieceMoves(board, startPosition)) {
-                if (true) {
-                    System.out.printf("%d %d  ", move.getEndPosition().getRow(), move.getEndPosition().getColumn());
-                    valid.add(move);
+        if (board.getPiece(startPosition) != null) {
+
+            setTeamTurn(board.getPiece(startPosition).getTeamColor());
+
+            if (board.getPiece(startPosition).getTeamColor().equals(team)) {
+                for (ChessMove ChessM : board.getPiece(startPosition).pieceMoves(board, startPosition)) {
+                    ChessPiece currPiece = board.getPiece(startPosition);
+                    ChessGame copiedBoard2 = new ChessGame(this);
+                    copiedBoard2.getBoard().addPiece(startPosition, null);
+                    copiedBoard2.getBoard().addPiece(ChessM.getEndPosition(), currPiece);
+
+                    System.out.printf("%d %d  ", ChessM.getEndPosition().getRow(), ChessM.getEndPosition().getColumn());
+
+                    if (!copiedBoard2.isInCheck(team) && !copiedBoard2.isInCheckmate(team)) {
+                        valid.add(ChessM);
+                    }
                 }
             }
-        }
+        } else {return null;}
 
         return valid;
     }
