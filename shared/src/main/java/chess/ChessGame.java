@@ -85,7 +85,46 @@ public class ChessGame {
      * @throws InvalidMoveException if move is invalid
      */
     public void makeMove(ChessMove move) throws InvalidMoveException {
-        throw new RuntimeException("Not implemented");
+
+        boolean isMoveValid = false;
+
+        ChessPosition startP = move.getStartPosition();
+        ChessPosition endP = move.getEndPosition();
+        ChessPiece.PieceType moveP = move.getPromotionPiece();
+
+        if (board.getPiece(startP) == null) {
+            throw new InvalidMoveException();
+        }
+
+        for (ChessMove ChessM : board.getPiece(startP).pieceMoves(board, startP)) {
+            if (move.equals(ChessM)) {
+                isMoveValid = true;
+                break;
+            }
+        }
+
+        if (isMoveValid && !isInCheck(team) && !isInCheckmate(team) && board.getPiece(startP).getTeamColor().equals(team)) {
+            ChessPiece currP = board.getPiece(startP);
+
+            if (currP.getPieceType() == ChessPiece.PieceType.PAWN
+                    && (endP.getRow() == 1) || (endP.getRow() == 8)) {
+                board.addPiece(startP, null);
+                board.addPiece(endP, new ChessPiece(team, moveP));
+
+            } else {
+                board.addPiece(startP, null);
+                board.addPiece(endP, currP);
+            }
+
+            if (team.equals(TeamColor.WHITE)) {
+                setTeamTurn(TeamColor.BLACK);
+            } else {
+                setTeamTurn(TeamColor.WHITE);
+            }
+
+        } else {
+            throw new InvalidMoveException("second");
+        }
     }
 
     /**
@@ -140,28 +179,23 @@ public class ChessGame {
         
         setTeamTurn(teamColor);
         //getting all the possible moves of the king and see if isincheck
-        boolean allIsInCheck = true;
+        boolean allIsInCheck = isInCheck(team);
 
         //checking if first given position of king is in check
-        if (!isInCheck(team)) {
-            allIsInCheck = false;
-        }
 
         for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
                 ChessPosition p = new ChessPosition(i, j);
-                if (board.getPiece(p) != null ) {
+                if (board.getPiece(p) != null) {
                     if (board.getPiece(p).getTeamColor().equals(team)) {
                         for (ChessMove ChessM : board.getPiece(p).pieceMoves(board, p)) {
                             ChessPiece currPiece = board.getPiece(p);
                             ChessGame copiedBoard = new ChessGame(this);
                             copiedBoard.getBoard().addPiece(p, null);
                             copiedBoard.getBoard().addPiece(ChessM.getEndPosition(), currPiece);
-                            //System.out.printf("%s, %s  ", kingM.getEndPosition().getRow(), kingM.getEndPosition().getColumn());
+
                             if (!copiedBoard.isInCheck(team)) {
                                 allIsInCheck = false;
-                            } else {
-                                //System.out.printf("%s, %s  ", kingM.getEndPosition().getRow(), kingM.getEndPosition().getColumn());
                             }
                         }
                     }
