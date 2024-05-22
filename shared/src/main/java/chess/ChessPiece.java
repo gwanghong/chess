@@ -80,12 +80,9 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             queenM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i = 8;
-                            j = 8;
-                        } else {
-                            i = 8;
-                            j = 8;
                         }
+                        i = 8;
+                        j = 8;
                     }
                 }
                 for (int i = row - 1, j = col - 1; i > 0 && j > 0; i--, j--) {
@@ -97,12 +94,9 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             queenM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i = 1;
-                            j = 1;
-                        } else {
-                            i = 1;
-                            j = 1;
                         }
+                        i = 1;
+                        j = 1;
                     }
                 }
                 for (int i = row + 1, j = col - 1; i < 9 && j > 0; i++, j--) {
@@ -114,12 +108,9 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             queenM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i = 8;
-                            j = 1;
-                        } else {
-                            i = 8;
-                            j = 1;
                         }
+                        i = 8;
+                        j = 1;
                     }
                 }
                 for (int i = row - 1, j = col + 1; i > 0 && j < 9; i--, j++) {
@@ -131,12 +122,9 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             queenM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i = 1;
-                            j = 8;
-                        } else {
-                            i = 1;
-                            j = 8;
                         }
+                        i = 1;
+                        j = 8;
                     }
                 }
 
@@ -149,10 +137,8 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, col);
                             queenM.add(new ChessMove(start, new ChessPosition(i, col), null));
 
-                            i = 8;
-                        } else {
-                            i = 8;
                         }
+                        i = 8;
                     }
                 }
                 for (int i = row - 1; i > 0; i--) {
@@ -164,10 +150,8 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, col);
                             queenM.add(new ChessMove(start, new ChessPosition(i, col), null));
 
-                            i = 1;
-                        } else {
-                            i = 1;
                         }
+                        i = 1;
                     }
                 }
                 for (int j = col + 1; j < 9; j++) {
@@ -179,10 +163,8 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", row, j);
                             queenM.add(new ChessMove(start, new ChessPosition(row, j), null));
 
-                            j = 8;
-                        } else {
-                            j = 8;
                         }
+                        j = 8;
                     }
                 }
                 for (int j = col - 1; j > 0; j--) {
@@ -194,10 +176,8 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", row, j);
                             queenM.add(new ChessMove(start, new ChessPosition(row, j), null));
 
-                            j = 1;
-                        } else {
-                            j = 1;
                         }
+                        j = 1;
                     }
                 }
 
@@ -214,12 +194,9 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             bishopM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i = 8;
-                            j = 8;
-                        } else {
-                            i = 8;
-                            j = 8;
                         }
+                        i = 8;
+                        j = 8;
                     }
                 }
                 for (int i = row - 1, j = col - 1; i > 0 && j > 0; i--, j--) {
@@ -231,12 +208,9 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             bishopM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i = 1;
-                            j = 1;
-                        } else {
-                            i = 1;
-                            j = 1;
                         }
+                        i = 1;
+                        j = 1;
                     }
                 }
                 for (int i = row + 1, j = col - 1; i < 9 && j > 0; i++, j--) {
@@ -248,12 +222,9 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             bishopM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i = 8;
-                            j = 1;
-                        } else {
-                            i = 8;
-                            j = 1;
                         }
+                        i = 8;
+                        j = 1;
                     }
                 }
                 for (int i = row - 1, j = col + 1; i > 0 && j < 9; i--, j++) {
@@ -265,12 +236,9 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             bishopM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i = 1;
-                            j = 8;
-                        } else {
-                            i = 1;
-                            j = 8;
                         }
+                        i = 1;
+                        j = 8;
                     }
                 }
 
@@ -318,10 +286,8 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, col);
                             rookM.add(new ChessMove(start, new ChessPosition(i, col), null));
 
-                            i = 8;
-                        } else {
-                            i = 8;
                         }
+                        i = 8;
                     }
                 }
                 for (int i = row - 1; i > 0; i--) {
@@ -333,10 +299,8 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, col);
                             rookM.add(new ChessMove(start, new ChessPosition(i, col), null));
 
-                            i = 1;
-                        } else {
-                            i = 1;
                         }
+                        i = 1;
                     }
                 }
                 for (int j = col + 1; j < 9; j++) {
@@ -348,10 +312,8 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", row, j);
                             rookM.add(new ChessMove(start, new ChessPosition(row, j), null));
 
-                            j = 8;
-                        } else {
-                            j = 8;
                         }
+                        j = 8;
                     }
                 }
                 for (int j = col - 1; j > 0; j--) {
@@ -363,10 +325,8 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", row, j);
                             rookM.add(new ChessMove(start, new ChessPosition(row, j), null));
 
-                            j = 1;
-                        } else {
-                            j = 1;
                         }
+                        j = 1;
                     }
                 }
 
