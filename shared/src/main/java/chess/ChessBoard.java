@@ -96,20 +96,6 @@ public class ChessBoard {
         squares[0][4] = kw;
         ChessPiece kb = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KING);
         squares[7][4] = kb;
-
-
-
-
-        /*for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (squares[i][j] != null) {
-                    System.out.printf("%s %s\n", squares[i][j].getPieceType(), squares[i][j].getTeamColor());
-                } else {
-                    System.out.println("null");
-                }
-            }
-            System.out.println("\n");
-        }*/
     }
 
     @Override
