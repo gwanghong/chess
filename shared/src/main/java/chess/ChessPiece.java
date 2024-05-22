@@ -66,11 +66,11 @@ public class ChessPiece {
                 for (int i = row - 1; i <= row + 1; i++) {
                     for (int j = col - 1; j <= col + 1; j++) {
                         if (i > 0 && i < 9 && j > 0 && j < 9) {
-                            if (board.getPiece(new ChessPosition(i,j)) == null) {
+                            if (board.getPiece(new ChessPosition(i, j)) == null) {
                                 //System.out.printf("%d %d  ", i, j);
                                 kingM.add(new ChessMove(start, new ChessPosition(i, j), null));
                             } else {
-                                if (!board.getPiece(new ChessPosition(i,j)).pieceColor.equals(pieceColor)) {
+                                if (!board.getPiece(new ChessPosition(i, j)).pieceColor.equals(pieceColor)) {
                                     //System.out.printf("%d %d  ", i, j);
                                     kingM.add(new ChessMove(start, new ChessPosition(i, j), null));
                                 }
@@ -84,7 +84,7 @@ public class ChessPiece {
                 Collection<ChessMove> queenM = new HashSet<>();
 
                 for (int i = row + 1, j = col + 1; i < 9 && j < 9; i++, j++) {
-                    if (board.getPiece(new ChessPosition(i,j)) == null) {
+                    if (board.getPiece(new ChessPosition(i, j)) == null) {
                         //System.out.printf("%d %d  ", i, j);
                         queenM.add(new ChessMove(start, new ChessPosition(i, j), null));
                     } else {
@@ -92,16 +92,16 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             queenM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i=8;
-                            j=8;
+                            i = 8;
+                            j = 8;
                         } else {
-                            i=8;
-                            j=8;
+                            i = 8;
+                            j = 8;
                         }
                     }
                 }
                 for (int i = row - 1, j = col - 1; i > 0 && j > 0; i--, j--) {
-                    if (board.getPiece(new ChessPosition(i,j)) == null) {
+                    if (board.getPiece(new ChessPosition(i, j)) == null) {
                         //System.out.printf("%d %d  ", i, j);
                         queenM.add(new ChessMove(start, new ChessPosition(i, j), null));
                     } else {
@@ -109,16 +109,16 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             queenM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i=1;
-                            j=1;
+                            i = 1;
+                            j = 1;
                         } else {
-                            i=1;
-                            j=1;
+                            i = 1;
+                            j = 1;
                         }
                     }
                 }
                 for (int i = row + 1, j = col - 1; i < 9 && j > 0; i++, j--) {
-                    if (board.getPiece(new ChessPosition(i,j)) == null) {
+                    if (board.getPiece(new ChessPosition(i, j)) == null) {
                         //System.out.printf("%d %d  ", i, j);
                         queenM.add(new ChessMove(start, new ChessPosition(i, j), null));
                     } else {
@@ -126,16 +126,16 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             queenM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i=8;
-                            j=1;
+                            i = 8;
+                            j = 1;
                         } else {
-                            i=8;
-                            j=1;
+                            i = 8;
+                            j = 1;
                         }
                     }
                 }
                 for (int i = row - 1, j = col + 1; i > 0 && j < 9; i--, j++) {
-                    if (board.getPiece(new ChessPosition(i,j)) == null) {
+                    if (board.getPiece(new ChessPosition(i, j)) == null) {
                         //System.out.printf("%d %d  ", i, j);
                         queenM.add(new ChessMove(start, new ChessPosition(i, j), null));
                     } else {
@@ -143,11 +143,11 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             queenM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i=1;
-                            j=8;
+                            i = 1;
+                            j = 8;
                         } else {
-                            i=1;
-                            j=8;
+                            i = 1;
+                            j = 8;
                         }
                     }
                 }
@@ -157,7 +157,7 @@ public class ChessPiece {
                         //tem.out.printf("%d %d  ", i, col);
                         queenM.add(new ChessMove(start, new ChessPosition(i, col), null));
                     } else {
-                        if (!board.getPiece(new ChessPosition(i,col)).pieceColor.equals(pieceColor)) {
+                        if (!board.getPiece(new ChessPosition(i, col)).pieceColor.equals(pieceColor)) {
                             //System.out.printf("%d %d  ", i, col);
                             queenM.add(new ChessMove(start, new ChessPosition(i, col), null));
 
@@ -172,7 +172,7 @@ public class ChessPiece {
                         //System.out.printf("%d %d  ", i, col);
                         queenM.add(new ChessMove(start, new ChessPosition(i, col), null));
                     } else {
-                        if (!board.getPiece(new ChessPosition(i,col)).pieceColor.equals(pieceColor)) {
+                        if (!board.getPiece(new ChessPosition(i, col)).pieceColor.equals(pieceColor)) {
                             //System.out.printf("%d %d  ", i, col);
                             queenM.add(new ChessMove(start, new ChessPosition(i, col), null));
 
@@ -192,8 +192,7 @@ public class ChessPiece {
                             queenM.add(new ChessMove(start, new ChessPosition(row, j), null));
 
                             j = 8;
-                        }
-                        else {
+                        } else {
                             j = 8;
                         }
                     }
@@ -208,8 +207,7 @@ public class ChessPiece {
                             queenM.add(new ChessMove(start, new ChessPosition(row, j), null));
 
                             j = 1;
-                        }
-                        else {
+                        } else {
                             j = 1;
                         }
                     }
@@ -220,7 +218,7 @@ public class ChessPiece {
                 Collection<ChessMove> bishopM = new HashSet<>();
 
                 for (int i = row + 1, j = col + 1; i < 9 && j < 9; i++, j++) {
-                    if (board.getPiece(new ChessPosition(i,j)) == null) {
+                    if (board.getPiece(new ChessPosition(i, j)) == null) {
                         //System.out.printf("%d %d  ", i, j);
                         bishopM.add(new ChessMove(start, new ChessPosition(i, j), null));
                     } else {
@@ -228,16 +226,16 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             bishopM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i=8;
-                            j=8;
+                            i = 8;
+                            j = 8;
                         } else {
-                            i=8;
-                            j=8;
+                            i = 8;
+                            j = 8;
                         }
                     }
                 }
                 for (int i = row - 1, j = col - 1; i > 0 && j > 0; i--, j--) {
-                    if (board.getPiece(new ChessPosition(i,j)) == null) {
+                    if (board.getPiece(new ChessPosition(i, j)) == null) {
                         //System.out.printf("%d %d  ", i, j);
                         bishopM.add(new ChessMove(start, new ChessPosition(i, j), null));
                     } else {
@@ -245,16 +243,16 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             bishopM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i=1;
-                            j=1;
+                            i = 1;
+                            j = 1;
                         } else {
-                            i=1;
-                            j=1;
+                            i = 1;
+                            j = 1;
                         }
                     }
                 }
                 for (int i = row + 1, j = col - 1; i < 9 && j > 0; i++, j--) {
-                    if (board.getPiece(new ChessPosition(i,j)) == null) {
+                    if (board.getPiece(new ChessPosition(i, j)) == null) {
                         //System.out.printf("%d %d  ", i, j);
                         bishopM.add(new ChessMove(start, new ChessPosition(i, j), null));
                     } else {
@@ -262,16 +260,16 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             bishopM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i=8;
-                            j=1;
+                            i = 8;
+                            j = 1;
                         } else {
-                            i=8;
-                            j=1;
+                            i = 8;
+                            j = 1;
                         }
                     }
                 }
                 for (int i = row - 1, j = col + 1; i > 0 && j < 9; i--, j++) {
-                    if (board.getPiece(new ChessPosition(i,j)) == null) {
+                    if (board.getPiece(new ChessPosition(i, j)) == null) {
                         //System.out.printf("%d %d  ", i, j);
                         bishopM.add(new ChessMove(start, new ChessPosition(i, j), null));
                     } else {
@@ -279,11 +277,11 @@ public class ChessPiece {
                             //System.out.printf("%d %d  ", i, j);
                             bishopM.add(new ChessMove(start, new ChessPosition(i, j), null));
 
-                            i=1;
-                            j=8;
+                            i = 1;
+                            j = 8;
                         } else {
-                            i=1;
-                            j=8;
+                            i = 1;
+                            j = 8;
                         }
                     }
                 }
@@ -306,7 +304,7 @@ public class ChessPiece {
                             }
                         }
 
-                        if ((row + 2 * i > 0) && (row + 2 * i < 9) && (col + j > 0) && (col + j < 9)){
+                        if ((row + 2 * i > 0) && (row + 2 * i < 9) && (col + j > 0) && (col + j < 9)) {
                             if (board.getPiece(new ChessPosition(row + 2 * i, col + j)) == null) {
                                 //System.out.printf("%d %d  ", row + 2 * i, col + j);
                                 knightM.add(new ChessMove(start, new ChessPosition(row + 2 * i, col + j), null));
@@ -328,7 +326,7 @@ public class ChessPiece {
                         //System.out.printf("%d %d  ", i, col);
                         rookM.add(new ChessMove(start, new ChessPosition(i, col), null));
                     } else {
-                        if (!board.getPiece(new ChessPosition(i,col)).pieceColor.equals(pieceColor)) {
+                        if (!board.getPiece(new ChessPosition(i, col)).pieceColor.equals(pieceColor)) {
                             //System.out.printf("%d %d  ", i, col);
                             rookM.add(new ChessMove(start, new ChessPosition(i, col), null));
 
@@ -343,7 +341,7 @@ public class ChessPiece {
                         //System.out.printf("%d %d  ", i, col);
                         rookM.add(new ChessMove(start, new ChessPosition(i, col), null));
                     } else {
-                        if (!board.getPiece(new ChessPosition(i,col)).pieceColor.equals(pieceColor)) {
+                        if (!board.getPiece(new ChessPosition(i, col)).pieceColor.equals(pieceColor)) {
                             //System.out.printf("%d %d  ", i, col);
                             rookM.add(new ChessMove(start, new ChessPosition(i, col), null));
 
@@ -363,8 +361,7 @@ public class ChessPiece {
                             rookM.add(new ChessMove(start, new ChessPosition(row, j), null));
 
                             j = 8;
-                        }
-                        else {
+                        } else {
                             j = 8;
                         }
                     }
@@ -379,8 +376,7 @@ public class ChessPiece {
                             rookM.add(new ChessMove(start, new ChessPosition(row, j), null));
 
                             j = 1;
-                        }
-                        else {
+                        } else {
                             j = 1;
                         }
                     }

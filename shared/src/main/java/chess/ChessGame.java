@@ -14,9 +14,9 @@ public class ChessGame {
     private TeamColor team;
 
     public ChessGame() {
-            board = new ChessBoard();
-            board.resetBoard();
-            team = TeamColor.WHITE;
+        board = new ChessBoard();
+        board.resetBoard();
+        team = TeamColor.WHITE;
     }
 
     /**
@@ -72,7 +72,9 @@ public class ChessGame {
                     }
                 }
             }
-        } else {return null;}
+        } else {
+            return null;
+        }
 
         return valid;
     }
@@ -175,7 +177,7 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        
+
         setTeamTurn(teamColor);
         //getting all the possible moves of the king and see if isincheck
         boolean allIsInCheck = isInCheck(team);
@@ -236,7 +238,9 @@ public class ChessGame {
             }
         }
 
-        if (isInCheckmate(teamColor)) {return false;}
+        if (isInCheckmate(teamColor)) {
+            return false;
+        }
 
         return isStale;
     }
@@ -270,7 +274,7 @@ public class ChessGame {
 
         for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
-                ChessPosition p = new ChessPosition(i,j);
+                ChessPosition p = new ChessPosition(i, j);
                 board.addPiece(p, other.getBoard().getPiece(p));
             }
         }
