@@ -1,6 +1,8 @@
 package chess;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * For a class that can manage a chess game, making moves on a board
@@ -19,6 +21,23 @@ public class ChessGame {
         team = TeamColor.WHITE;
     }
 
+    //Created constructor for deep copy
+    public ChessGame(ChessGame other) {
+/*
+        this.board = other.getBoard();
+        this.team = other.getTeamTurn();
+*/
+        board = new ChessBoard();
+        setTeamTurn(other.getTeamTurn());
+
+        for (int i = 1; i < 9; i++) {
+            for (int j = 1; j < 9; j++) {
+                ChessPosition p = new ChessPosition(i, j);
+                board.addPiece(p, other.getBoard().getPiece(p));
+            }
+        }
+    }
+
     /**
      * @return Which team's turn it is
      */
@@ -33,14 +52,6 @@ public class ChessGame {
      */
     public void setTeamTurn(TeamColor team) {
         this.team = team;
-    }
-
-    /**
-     * Enum identifying the 2 possible teams in a chess game
-     */
-    public enum TeamColor {
-        WHITE,
-        BLACK
     }
 
     /**
@@ -107,8 +118,7 @@ public class ChessGame {
         if (isMoveValid && !isInCheck(team) && !isInCheckmate(team) && board.getPiece(startP).getTeamColor().equals(team)) {
             ChessPiece currP = board.getPiece(startP);
 
-            if (currP.getPieceType() == ChessPiece.PieceType.PAWN
-                    && (endP.getRow() == 1) || (endP.getRow() == 8)) {
+            if (currP.getPieceType() == ChessPiece.PieceType.PAWN && (endP.getRow() == 1) || (endP.getRow() == 8)) {
                 board.addPiece(startP, null);
                 board.addPiece(endP, new ChessPiece(team, moveP));
 
@@ -246,15 +256,6 @@ public class ChessGame {
     }
 
     /**
-     * Sets this game's chessboard with a given board
-     *
-     * @param board the new board to use
-     */
-    public void setBoard(ChessBoard board) {
-        this.board = board;
-    }
-
-    /**
      * Gets the current chessboard
      *
      * @return the chessboard
@@ -263,21 +264,13 @@ public class ChessGame {
         return board;
     }
 
-    //Created constructor for deep copy
-    public ChessGame(ChessGame other) {
-/*
-        this.board = other.getBoard();
-        this.team = other.getTeamTurn();
-*/
-        board = new ChessBoard();
-        setTeamTurn(other.getTeamTurn());
-
-        for (int i = 1; i < 9; i++) {
-            for (int j = 1; j < 9; j++) {
-                ChessPosition p = new ChessPosition(i, j);
-                board.addPiece(p, other.getBoard().getPiece(p));
-            }
-        }
+    /**
+     * Sets this game's chessboard with a given board
+     *
+     * @param board the new board to use
+     */
+    public void setBoard(ChessBoard board) {
+        this.board = board;
     }
 
     @Override
@@ -291,5 +284,12 @@ public class ChessGame {
     @Override
     public int hashCode() {
         return Objects.hash(board, team);
+    }
+
+    /**
+     * Enum identifying the 2 possible teams in a chess game
+     */
+    public enum TeamColor {
+        WHITE, BLACK
     }
 }
