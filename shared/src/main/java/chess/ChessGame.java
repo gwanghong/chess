@@ -23,10 +23,7 @@ public class ChessGame {
 
     //Created constructor for deep copy
     public ChessGame(ChessGame other) {
-/*
-        this.board = other.getBoard();
-        this.team = other.getTeamTurn();
-*/
+
         board = new ChessBoard();
         setTeamTurn(other.getTeamTurn());
 
@@ -189,7 +186,7 @@ public class ChessGame {
     public boolean isInCheckmate(TeamColor teamColor) {
 
         setTeamTurn(teamColor);
-        //getting all the possible moves of the king and see if isincheck
+        //getting all the possible moves of the king and see if isInCheck
         boolean allIsInCheck = isInCheck(team);
 
         //checking if first given position of king is in check
