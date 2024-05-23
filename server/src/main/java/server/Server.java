@@ -1,5 +1,6 @@
 package server;
 
+import handler.ClearHandler;
 import spark.*;
 
 public class Server {
@@ -17,7 +18,12 @@ public class Server {
     }
 
     public void Clear() {
-        Spark.delete("/db", );
+        Spark.delete("/db", (req, res) -> new ClearHandler() {
+            @Override
+            public Object handle(Request request, Response response) throws Exception {
+                return null;
+            }
+        });
     }
 
     public void stop() {
