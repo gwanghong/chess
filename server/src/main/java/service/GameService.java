@@ -1,4 +1,4 @@
 package service;
 
-public interface GameService {
+public class GameService {
 }
