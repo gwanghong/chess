@@ -4,28 +4,24 @@ import dataaccess.DataAccessException;
 import model.UserData;
 import model.AuthData;
 import dataaccess.UserDAO;
-import dataaccess.AuthDAO;
 
 public class UserService {
 
     private final UserDAO userDao;
-    private final AuthDAO authDao;
 
-    public UserService(UserDAO userDao, AuthDAO authDao) {
+    public UserService(UserDAO userDao) {
         this.userDao = userDao;
-        this.authDao = authDao;
-    }
-
-    public void clear() throws DataAccessException {
-        userDao.clear();
     }
 
     public AuthData register(UserData user) throws DataAccessException {
         userDao.insertUser(user);
-        
+
+        return null;
     }
 
     public AuthData login(UserData user) {
+
+        return null;
     }
 
     public void logout(UserData user) {

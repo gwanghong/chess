@@ -24,6 +24,6 @@ public class ClearTest {
     @Test
     @DisplayName("Testing if clear return success")
     public void positiveTestClear() throws Exception {
-        userData
+        Server.main(new String[]{"8080"});
     }
 }
