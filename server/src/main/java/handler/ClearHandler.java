@@ -1,10 +1,13 @@
 package handler;
 
+import com.google.gson.Gson;
 import dataaccess.DataAccessException;
 import service.ClearService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+
+import java.util.Map;
 
 public class ClearHandler implements Route {
 

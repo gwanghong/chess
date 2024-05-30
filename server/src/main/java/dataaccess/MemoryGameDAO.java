@@ -2,10 +2,16 @@ package dataaccess;
 
 import model.GameData;
 
+import java.util.Map;
+import java.util.HashMap;
+
 public class MemoryGameDAO implements GameDAO {
+
+    private static final Map<Integer, GameData> games = new HashMap<>();
+
     @Override
     public void clear() throws DataAccessException {
-
+        games.clear();
     }
 
     @Override
@@ -14,13 +20,13 @@ public class MemoryGameDAO implements GameDAO {
     }
 
     @Override
-    public void getGame(GameData game) throws DataAccessException {
+    public GameData getGame(int gameID) throws DataAccessException {
 
     }
 
     @Override
-    public void listGame(GameData game) throws DataAccessException {
-
+    public Map<String, GameData> listGame() throws DataAccessException {
+        return new HashMap<>(games);
     }
 
     @Override

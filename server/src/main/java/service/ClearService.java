@@ -1,12 +1,16 @@
 package service;
 
-import dataaccess.DataAccessException;
-import dataaccess.ClearDAO;
+import dataaccess.*;
 
 public class ClearService {
 
+    UserDAO userDao = new MemoryUserDAO();
+    AuthDAO authDao = new MemoryAuthDAO();
+    GameDAO gameDao = new MemoryGameDAO();
+
     public void clear() throws DataAccessException {
-        ClearDAO clearDao = new ClearDAO();
-        clearDao.clear();
+        userDao.clear();
+        authDao.clear();
+        gameDao.clear();
     }
 }
