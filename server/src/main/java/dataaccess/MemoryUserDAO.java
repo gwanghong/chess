@@ -28,10 +28,12 @@ public class MemoryUserDAO implements UserDAO {
 
         UserData user = users.get(userName);
 
-        if (user != null) {
+        /*if (user != null) {
             return user;
         } else {
             throw new DataAccessException("can't find user");
-        }
+        }*/
+
+        return user;
     }
 }

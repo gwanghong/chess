@@ -29,11 +29,13 @@ public class MemoryGameDAO implements GameDAO {
 
         GameData game = games.get(gameID);
 
-        if (game != null) {
+        /*if (game != null) {
             return game;
         } else {
             throw new DataAccessException("game not found");
-        }
+        }*/
+
+        return game;
     }
 
     @Override

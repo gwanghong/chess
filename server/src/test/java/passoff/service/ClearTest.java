@@ -1,5 +1,6 @@
 package passoff.service;
 
+import chess.ChessGame;
 import org.junit.jupiter.api.*;
 import passoff.model.*;
 import passoff.server.TestServerFacade;
@@ -30,13 +31,22 @@ public class ClearTest {
     public void positiveTestClear() {
         try {
             UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
+            AuthData newAuth = new AuthData("123", "AthUser");
+            GameData newGame = new GameData(1234, "whiteUser", "blackUser", "newGame", new ChessGame());
 
             userDao.insertUser(newUser);
-            //authDao.createAuth(new AuthData());
-            //gameDao.createGame(new GameData());
+            authDao.createAuth(newAuth);
+            gameDao.createGame(newGame);
+
+            Assertions.assertEquals(newUser, userDao.getUser(newUser.username()));
+            Assertions.assertEquals(newAuth, authDao.getAuth(newAuth.authToken()));
+            Assertions.assertEquals(newGame, gameDao.getGame(newGame.gameID()));
 
             clearS.clear();
+
             Assertions.assertNull(userDao.getUser(newUser.username()));
+            Assertions.assertNull(authDao.getAuth(newAuth.authToken()));
+            Assertions.assertNull(gameDao.getGame(newGame.gameID()));
 
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
