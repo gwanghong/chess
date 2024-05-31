@@ -2,6 +2,7 @@ package dataaccess;
 
 import model.GameData;
 
+import java.util.Collection;
 import java.util.Map;
 
 public interface GameDAO {
@@ -12,7 +13,7 @@ public interface GameDAO {
 
     GameData getGame(int gameID) throws DataAccessException;
 
-    Map<String, GameData> listGame() throws DataAccessException;
+    Collection<GameData> listGame();
 
     void updateGame(GameData game) throws DataAccessException;
 
