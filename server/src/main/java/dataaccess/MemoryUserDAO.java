@@ -16,10 +16,15 @@ public class MemoryUserDAO implements UserDAO {
 
     @Override
     public void insertUser(UserData u) throws DataAccessException {
-        if (!users.containsKey(u.username())) {
-            users.put(u.username(), u);
-        } else {
-            throw new DataAccessException("user exists");
+
+        try {
+            if (!users.containsKey(u.username())) {
+                users.put(u.username(), u);
+            } else {
+                throw new DataAccessException("user exists");
+            }
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 

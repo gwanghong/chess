@@ -3,16 +3,16 @@ package handler;
 import com.google.gson.Gson;
 import dataaccess.DataAccessException;
 import model.AuthData;
+import model.UserData;
 import service.UserService;
 import spark.Request;
 import spark.Response;
-import model.UserData;
 
-public class RegisterHandler extends MainHandler {
+public class LoginHandler extends MainHandler {
 
     private final UserService userService;
 
-    public RegisterHandler(UserService userService) {
+    public LoginHandler(UserService userService) {
         this.userService = userService;
     }
 
@@ -20,18 +20,17 @@ public class RegisterHandler extends MainHandler {
     public Object handle(Request request, Response response) {
         try {
             UserData req = getBody(request, UserData.class);
-            AuthData result = userService.register(req);
+            AuthData result = userService.login(req);
             response.status(200);
 
             return new Gson().toJson(result);
 
         } catch (IllegalArgumentException e) {
-            badRequest(response, "Error: bad request");
-        } catch (RuntimeException e) {
-            alreadyTaken(response, "Error: already taken");
+            unauthorized(response, "Error: unauthorized");
         } catch (DataAccessException e) {
             internalServerError(response, "Error: " + e.getMessage());
         }
+
         return null;
     }
 }

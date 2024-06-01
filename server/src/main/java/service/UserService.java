@@ -22,14 +22,10 @@ public class UserService {
     public AuthData register(UserData user) throws DataAccessException {
 
         if (user.username().isEmpty()) {
-            throw new DataAccessException("Should not be null");
+            throw new IllegalArgumentException("Should not be null");
         }
 
-        try {
-            userDao.insertUser(user);
-        } catch (DataAccessException e) {
-            throw new DataAccessException("Failed to insert user");
-        }
+        userDao.insertUser(user);
 
         String authToken = UUID.randomUUID().toString();
         AuthData auth = new AuthData(authToken, user.username());
@@ -38,13 +34,14 @@ public class UserService {
         return auth;
     }
 
-    public AuthData login(UserData user) {
+    public AuthData login(UserData user) throws DataAccessException {
+
 
         try {
             UserData containUser = userDao.getUser(user.username());
 
             if (!containUser.password().equals(user.password())) {
-                throw new DataAccessException("password doesn't match");
+                throw new IllegalArgumentException("password doesn't match");
             }
 
             String authToken = UUID.randomUUID().toString();
@@ -54,7 +51,7 @@ public class UserService {
             return auth;
 
         } catch (DataAccessException e) {
-            throw new RuntimeException(e);
+            throw new DataAccessException("login failed");
         }
     }
 
