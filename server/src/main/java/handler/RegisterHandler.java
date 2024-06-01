@@ -26,9 +26,9 @@ public class RegisterHandler extends MainHandler {
             return new Gson().toJson(result);
 
         } catch (IllegalArgumentException e) {
-            badRequest(response, "Error: bad request");
+            badRequest(response);
         } catch (RuntimeException e) {
-            alreadyTaken(response, "Error: already taken");
+            alreadyTaken(response);
         } catch (DataAccessException e) {
             internalServerError(response, "Error: " + e.getMessage());
         }

@@ -23,24 +23,24 @@ public abstract class MainHandler implements Route {
         return body;
     }
 
-    protected void unauthorized(Response res, String message) {
-        res.status(401);
-        halt(401, gson.toJson(new ErrorResponse(message)));
-    }
-
-    protected void badRequest(Response res, String message) {
+    protected void badRequest(Response res) {
         res.status(400);
-        halt(400, gson.toJson(new ErrorResponse(message)));
+        halt(400, gson.toJson("Error: bad request"));
     }
 
-    protected void alreadyTaken(Response res, String message) {
+    protected void unauthorized(Response res) {
+        res.status(401);
+        halt(401, gson.toJson("Error: unauthorized"));
+    }
+
+    protected void alreadyTaken(Response res) {
         res.status(403);
-        halt(403, gson.toJson(new ErrorResponse(message)));
+        halt(403, gson.toJson("Error: already taken"));
     }
 
     protected void internalServerError(Response res, String message) {
         res.status(500);
-        halt(500, gson.toJson(new ErrorResponse(message)));
+        halt(500, gson.toJson("Error: " + new ErrorResponse(message)));
     }
 
     protected record ErrorResponse(String message) {

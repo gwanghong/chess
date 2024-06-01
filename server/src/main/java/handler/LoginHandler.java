@@ -26,9 +26,9 @@ public class LoginHandler extends MainHandler {
             return new Gson().toJson(result);
 
         } catch (IllegalArgumentException e) {
-            unauthorized(response, "Error: unauthorized");
+            unauthorized(response);
         } catch (DataAccessException e) {
-            internalServerError(response, "Error: " + e.getMessage());
+            internalServerError(response, e.getMessage());
         }
 
         return null;
