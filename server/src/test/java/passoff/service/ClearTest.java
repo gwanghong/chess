@@ -2,14 +2,9 @@ package passoff.service;
 
 import chess.ChessGame;
 import org.junit.jupiter.api.*;
-import passoff.model.*;
-import passoff.server.TestServerFacade;
-import server.Server;
 import model.*;
 import dataaccess.*;
 import service.ClearService;
-
-import java.net.HttpURLConnection;
 
 public class ClearTest {
 

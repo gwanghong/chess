@@ -5,22 +5,24 @@ import dataaccess.DataAccessException;
 import service.ClearService;
 import spark.Request;
 import spark.Response;
-import spark.Route;
 
-import java.util.Map;
+public class ClearHandler extends MainHandler {
 
-public class ClearHandler implements Route {
+    private final ClearService clearService;
+
+    public ClearHandler(ClearService clearService) {
+        this.clearService = clearService;
+    }
 
     @Override
-    public Object handle(Request request, Response response) throws DataAccessException {
-        ClearService clearService = new ClearService();
+    public Object handle(Request request, Response response) {
         try {
             clearService.clear();
             response.status(200);
-            return new Gson().toJson(new Object()); // Empty JSON response
+            return new Gson().toJson(new Object());
         } catch (DataAccessException e) {
-            response.status(500);
-            return new Gson().toJson(Map.of("message", "Error: " + e.getMessage()));
+            internalServerError(response, "Error: " + e.getMessage());
+            return null;
         }
     }
 }
