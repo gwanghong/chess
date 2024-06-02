@@ -26,7 +26,7 @@ public class UserService {
         }
 
         if (userDao.getUser(user.username()) != null) {
-            throw new DataAccessException("alreay exists");
+            throw new DataAccessException("already exists");
         }
 
         userDao.insertUser(user);

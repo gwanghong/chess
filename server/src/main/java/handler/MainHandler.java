@@ -1,7 +1,6 @@
 package handler;
 
 import com.google.gson.Gson;
-import dataaccess.DataAccessException;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -48,10 +47,10 @@ public abstract class MainHandler implements Route {
         halt(403, gson.toJson(errorRes));
     }
 
-    protected void internalServerError(Response res, DataAccessException e) {
+    protected <T> void internalServerError(Response res, T e) {
         res.status(500);
         Map<String, String> errorRes = new HashMap<>();
-        errorRes.put("message", "Error: " + e.getMessage());
+        errorRes.put("message", "Error: " + e.toString());
         halt(500, gson.toJson(errorRes));
     }
 

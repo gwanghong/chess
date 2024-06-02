@@ -7,6 +7,7 @@ import dataaccess.GameDAO;
 import model.GameData;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,29 +37,34 @@ public class GameService {
 
         isAuthTokenValid(authToken);
 
-        return (Collection<GameData>) gameDao.listGame();
+        return gameDao.listGames();
     }
 
 
-    public void joinGame(String authToken, String playerColor, int gameID) throws DataAccessException {
+    public void joinGame(String authToken, String playerColor, int gameID) throws Exception {
         isAuthTokenValid(authToken);
 
         GameData joinGame = gameDao.getGame(gameID);
         String userName = authDao.getAuth(authToken).username();
         List<String> acceptableColor = List.of("WHITE", "BLACK", "", "empty");
         if (!acceptableColor.contains(playerColor)) {
-            throw new DataAccessException("Player Color input is wrong");
+            throw new Exception("Player Color input is wrong");
         }
 
         if (joinGame == null) {
-            throw new DataAccessException("Wrong gameID or game doesn't exist");
+            throw new Exception("Wrong gameID or game doesn't exist");
+        }
+
+        if ((joinGame.whiteUsername() != null && playerColor.equals("WHITE"))
+                || (joinGame.blackUsername() != null && playerColor.equals("BLACK"))) {
+            throw new IllegalArgumentException("Player color already taken");
         }
 
         if (playerColor.equals("WHITE")) {
-            GameData newGame = new GameData(gameID, userName, gameDao.getGame(gameID).blackUsername(), gameDao.getGame(gameID).gameName(), gameDao.getGame(gameID).game());
+            GameData newGame = new GameData(gameID, userName, joinGame.blackUsername(), joinGame.gameName(), joinGame.game());
             gameDao.updateGame(newGame);
         } else if (playerColor.equals("BLACK")) {
-            GameData newGame = new GameData(gameID, gameDao.getGame(gameID).whiteUsername(), userName, gameDao.getGame(gameID).gameName(), gameDao.getGame(gameID).game());
+            GameData newGame = new GameData(gameID, joinGame.whiteUsername(), userName, joinGame.gameName(), joinGame.game());
             gameDao.updateGame(newGame);
         } else {
             gameDao.updateGame(joinGame);

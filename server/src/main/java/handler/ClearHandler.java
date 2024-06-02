@@ -22,7 +22,7 @@ public class ClearHandler extends MainHandler {
             return new Gson().toJson(new Object());
         } catch (DataAccessException e) {
             internalServerError(response, e);
-            return null;
         }
+        return null;
     }
 }

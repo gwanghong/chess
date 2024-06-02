@@ -35,6 +35,8 @@ public class ListGamesHandler extends MainHandler {
             return new Gson().toJson(combineRes);
 
         } catch (DataAccessException e) {
+            unauthorized(response);
+        } catch (RuntimeException e) {
             internalServerError(response, e);
         }
 
