@@ -25,10 +25,10 @@ public class LoginHandler extends MainHandler {
 
             return new Gson().toJson(result);
 
-        } catch (IllegalArgumentException e) {
-            unauthorized(response);
         } catch (DataAccessException e) {
-            internalServerError(response, e.getMessage());
+            alreadyTaken(response);
+        } catch (Exception e) {
+            unauthorized(response);
         }
 
         return null;

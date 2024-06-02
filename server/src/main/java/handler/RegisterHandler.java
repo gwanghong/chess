@@ -8,6 +8,8 @@ import spark.Request;
 import spark.Response;
 import model.UserData;
 
+import javax.management.BadAttributeValueExpException;
+
 public class RegisterHandler extends MainHandler {
 
     private final UserService userService;
@@ -25,12 +27,10 @@ public class RegisterHandler extends MainHandler {
 
             return new Gson().toJson(result);
 
-        } catch (IllegalArgumentException e) {
-            badRequest(response);
-        } catch (RuntimeException e) {
-            alreadyTaken(response);
         } catch (DataAccessException e) {
-            internalServerError(response, "Error: " + e.getMessage());
+            alreadyTaken(response);
+        } catch (Exception e) {
+            badRequest(response);
         }
         return null;
     }

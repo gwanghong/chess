@@ -9,7 +9,9 @@ import spark.Response;
 
 import javax.xml.crypto.Data;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ListGamesHandler extends MainHandler {
 
@@ -26,10 +28,14 @@ public class ListGamesHandler extends MainHandler {
             String authToken = request.headers("authorization");
             Collection<GameData> result = gameService.listGames(authToken);
             response.status(200);
-            return new Gson().toJson(result);
+
+            Map<String, Collection<GameData>> combineRes = new HashMap<>();
+            combineRes.put("game", result);
+
+            return new Gson().toJson(combineRes);
 
         } catch (DataAccessException e) {
-            internalServerError(response, e.getMessage());
+            internalServerError(response, e);
         }
 
         return null;

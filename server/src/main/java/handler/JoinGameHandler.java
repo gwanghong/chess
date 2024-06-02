@@ -27,7 +27,7 @@ public class JoinGameHandler extends MainHandler {
 
             return new Gson().toJson(new Object());
         } catch (DataAccessException e) {
-            internalServerError(response, e.getMessage());
+            internalServerError(response, e);
         }
 
         return null;

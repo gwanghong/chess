@@ -30,7 +30,9 @@ public class LogoutHandler extends MainHandler {
             return new Gson().toJson(new Object());
 
         } catch (DataAccessException e) {
-            internalServerError(response, e.getMessage());
+            badRequest(response);
+        } catch (Exception e) {
+            unauthorized(response);
         }
 
         return null;

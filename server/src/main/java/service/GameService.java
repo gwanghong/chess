@@ -24,7 +24,7 @@ public class GameService {
 
         isAuthTokenValid(authToken);
 
-        int gameID = UUID.randomUUID().hashCode();
+        int gameID = Math.abs(UUID.randomUUID().hashCode());
         GameData newGame = new GameData(gameID, null, null, gameName, new ChessGame());
 
         gameDao.createGame(newGame);
@@ -64,6 +64,7 @@ public class GameService {
             gameDao.updateGame(joinGame);
         }
     }
+
 
     void isAuthTokenValid(String authToken) throws DataAccessException {
         try {

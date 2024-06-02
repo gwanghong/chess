@@ -8,6 +8,11 @@ import service.GameService;
 import spark.Request;
 import spark.Response;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static spark.Spark.halt;
+
 public class CreateGameHandler extends MainHandler {
 
     private final GameService gameService;
@@ -25,10 +30,14 @@ public class CreateGameHandler extends MainHandler {
             GameData result = gameService.createGame(authToken, req.gameName());
 
             response.status(200);
-            return new Gson().toJson(result.gameID());
+
+            Map<String, Integer> combineResult = new HashMap<>();
+            combineResult.put("gameID", result.gameID());
+
+            return new Gson().toJson(combineResult);
 
         } catch (DataAccessException e) {
-            internalServerError(response, e.getMessage());
+            unauthorized(response);
         }
 
         return null;

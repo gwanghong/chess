@@ -31,7 +31,7 @@ public class UserTest {
 
     @Test
     @DisplayName("Valid request / return success")
-    public void positiveTest() throws DataAccessException {
+    public void positiveTest() throws Exception {
         UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
 
         AuthData auth = userService.register(newUser);
@@ -53,5 +53,5 @@ public class UserTest {
     public void negativeTest() throws DataAccessException {
 
     }
-    
+
 }

@@ -19,10 +19,14 @@ public class UserService {
         this.authDao = authDao;
     }
 
-    public AuthData register(UserData user) throws DataAccessException {
+    public AuthData register(UserData user) throws Exception {
 
-        if (user.username().isEmpty()) {
-            throw new IllegalArgumentException("Should not be null");
+        if (user.username().isEmpty() || user.password().isEmpty()) {
+            throw new Exception("Should not be null");
+        }
+
+        if (userDao.getUser(user.username()) != null) {
+            throw new DataAccessException("alreay exists");
         }
 
         userDao.insertUser(user);
@@ -34,14 +38,18 @@ public class UserService {
         return auth;
     }
 
-    public AuthData login(UserData user) throws DataAccessException {
+    public AuthData login(UserData user) throws Exception {
 
 
         try {
             UserData containUser = userDao.getUser(user.username());
 
+            if (containUser == null) {
+                throw new Exception("Error: containUser is null");
+            }
+
             if (!containUser.password().equals(user.password())) {
-                throw new IllegalArgumentException("password doesn't match");
+                throw new Exception("Error: password doesn't match");
             }
 
             String authToken = UUID.randomUUID().toString();

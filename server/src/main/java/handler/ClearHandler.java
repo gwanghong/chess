@@ -21,7 +21,7 @@ public class ClearHandler extends MainHandler {
             response.status(200);
             return new Gson().toJson(new Object());
         } catch (DataAccessException e) {
-            internalServerError(response, "Error: " + e.getMessage());
+            internalServerError(response, e);
             return null;
         }
     }
