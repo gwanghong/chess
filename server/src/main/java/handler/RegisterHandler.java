@@ -8,8 +8,6 @@ import spark.Request;
 import spark.Response;
 import model.UserData;
 
-import javax.management.BadAttributeValueExpException;
-
 public class RegisterHandler extends MainHandler {
 
     private final UserService userService;

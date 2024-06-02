@@ -53,7 +53,4 @@ public abstract class MainHandler implements Route {
         errorRes.put("message", "Error: " + e.toString());
         halt(500, gson.toJson(errorRes));
     }
-
-    protected record ErrorResponse(String message) {
-    }
 }

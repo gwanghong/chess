@@ -15,7 +15,7 @@ public class MemoryUserDAO implements UserDAO {
     }
 
     @Override
-    public void insertUser(UserData u) throws DataAccessException {
+    public void insertUser(UserData u) {
 
         try {
             if (!users.containsKey(u.username())) {
@@ -29,16 +29,8 @@ public class MemoryUserDAO implements UserDAO {
     }
 
     @Override
-    public UserData getUser(String userName) throws DataAccessException {
+    public UserData getUser(String userName) {
 
-        UserData user = users.get(userName);
-
-        /*if (user != null) {
-            return user;
-        } else {
-            throw new DataAccessException("can't find user");
-        }*/
-
-        return user;
+        return users.get(userName);
     }
 }

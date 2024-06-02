@@ -2,13 +2,10 @@ package server;
 
 import dataaccess.*;
 import handler.*;
-import org.eclipse.jetty.server.Authentication;
 import service.ClearService;
 import service.GameService;
 import service.UserService;
 import spark.*;
-
-import java.util.List;
 
 public class Server {
 

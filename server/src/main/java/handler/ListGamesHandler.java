@@ -7,10 +7,8 @@ import service.GameService;
 import spark.Request;
 import spark.Response;
 
-import javax.xml.crypto.Data;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ListGamesHandler extends MainHandler {
@@ -23,7 +21,7 @@ public class ListGamesHandler extends MainHandler {
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         try {
             String authToken = request.headers("authorization");
             Collection<GameData> result = gameService.listGames(authToken);
