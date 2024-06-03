@@ -4,11 +4,14 @@ import chess.ChessGame;
 import dataaccess.AuthDAO;
 import dataaccess.DataAccessException;
 import dataaccess.GameDAO;
+import model.AuthData;
 import model.GameData;
 
 import java.util.Collection;
+
 import java.util.List;
 import java.util.UUID;
+
 
 public class GameService {
 
@@ -34,6 +37,10 @@ public class GameService {
 
     public Collection<GameData> listGames(String authToken) throws DataAccessException {
 
+        AuthData auth = authDao.getAuth(authToken);
+        if (auth == null) {
+            throw new DataAccessException("authToken doesn't match or is null");
+        }
         isAuthTokenValid(authToken);
 
         return gameDao.listGames();
@@ -43,30 +50,30 @@ public class GameService {
     public void joinGame(String authToken, String playerColor, int gameID) throws Exception {
         isAuthTokenValid(authToken);
 
-        GameData joinGame = gameDao.getGame(gameID);
+        GameData joinedGame = gameDao.getGame(gameID);
         String userName = authDao.getAuth(authToken).username();
         List<String> acceptableColor = List.of("WHITE", "BLACK", "", "empty");
         if (!acceptableColor.contains(playerColor)) {
             throw new Exception("Player Color input is wrong");
         }
 
-        if (joinGame == null) {
+        if (joinedGame == null) {
             throw new Exception("Wrong gameID or game doesn't exist");
         }
 
-        if ((joinGame.whiteUsername() != null && playerColor.equals("WHITE"))
-                || (joinGame.blackUsername() != null && playerColor.equals("BLACK"))) {
+        if ((joinedGame.whiteUsername() != null && playerColor.equals("WHITE"))
+                || (joinedGame.blackUsername() != null && playerColor.equals("BLACK"))) {
             throw new IllegalArgumentException("Player color already taken");
         }
 
         if (playerColor.equals("WHITE")) {
-            GameData newGame = new GameData(gameID, userName, joinGame.blackUsername(), joinGame.gameName(), joinGame.game());
+            GameData newGame = new GameData(gameID, userName, joinedGame.blackUsername(), joinedGame.gameName(), joinedGame.game());
             gameDao.updateGame(newGame);
         } else if (playerColor.equals("BLACK")) {
-            GameData newGame = new GameData(gameID, joinGame.whiteUsername(), userName, joinGame.gameName(), joinGame.game());
+            GameData newGame = new GameData(gameID, joinedGame.whiteUsername(), userName, joinedGame.gameName(), joinedGame.game());
             gameDao.updateGame(newGame);
         } else {
-            gameDao.updateGame(joinGame);
+            gameDao.updateGame(joinedGame);
         }
     }
 
