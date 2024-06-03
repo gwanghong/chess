@@ -31,7 +31,7 @@ public class ClearTest {
     public void positiveTestClear() throws Exception {
 
         UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
-        userService.register(newUser);
+        userDao.insertUser(newUser);
 
         AuthData auth = userService.login(newUser);
         GameData game = gameService.createGame(auth.authToken(), "newGame");
