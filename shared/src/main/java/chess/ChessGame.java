@@ -67,16 +67,16 @@ public class ChessGame {
             setTeamTurn(board.getPiece(startPosition).getTeamColor());
 
             if (board.getPiece(startPosition).getTeamColor().equals(team)) {
-                for (ChessMove ChessM : board.getPiece(startPosition).pieceMoves(board, startPosition)) {
+                for (ChessMove CHESS_M : board.getPiece(startPosition).pieceMoves(board, startPosition)) {
                     ChessPiece currPiece = board.getPiece(startPosition);
                     ChessGame copiedBoard2 = new ChessGame(this);
                     copiedBoard2.getBoard().addPiece(startPosition, null);
-                    copiedBoard2.getBoard().addPiece(ChessM.getEndPosition(), currPiece);
+                    copiedBoard2.getBoard().addPiece(CHESS_M.getEndPosition(), currPiece);
 
-                    System.out.printf("%d %d  ", ChessM.getEndPosition().getRow(), ChessM.getEndPosition().getColumn());
+                    System.out.printf("%d %d  ", CHESS_M.getEndPosition().getRow(), CHESS_M.getEndPosition().getColumn());
 
                     if (!copiedBoard2.isInCheck(team) && !copiedBoard2.isInCheckmate(team)) {
-                        valid.add(ChessM);
+                        valid.add(CHESS_M);
                     }
                 }
             }
@@ -105,8 +105,8 @@ public class ChessGame {
             throw new InvalidMoveException();
         }
 
-        for (ChessMove ChessM : board.getPiece(startP).pieceMoves(board, startP)) {
-            if (move.equals(ChessM)) {
+        for (ChessMove CHESS_M : board.getPiece(startP).pieceMoves(board, startP)) {
+            if (move.equals(CHESS_M)) {
                 isMoveValid = true;
                 break;
             }
@@ -196,11 +196,11 @@ public class ChessGame {
                 ChessPosition p = new ChessPosition(i, j);
                 if (board.getPiece(p) != null) {
                     if (board.getPiece(p).getTeamColor().equals(team)) {
-                        for (ChessMove ChessM : board.getPiece(p).pieceMoves(board, p)) {
+                        for (ChessMove CHESS_M : board.getPiece(p).pieceMoves(board, p)) {
                             ChessPiece currPiece = board.getPiece(p);
                             ChessGame copiedBoard = new ChessGame(this);
                             copiedBoard.getBoard().addPiece(p, null);
-                            copiedBoard.getBoard().addPiece(ChessM.getEndPosition(), currPiece);
+                            copiedBoard.getBoard().addPiece(CHESS_M.getEndPosition(), currPiece);
 
                             if (!copiedBoard.isInCheck(team)) {
                                 allIsInCheck = false;
@@ -230,11 +230,11 @@ public class ChessGame {
                 ChessPosition p = new ChessPosition(i, j);
                 if (board.getPiece(p) != null) {
                     if (board.getPiece(p).getTeamColor().equals(teamColor)) {
-                        for (ChessMove ChessM : board.getPiece(p).pieceMoves(board, p)) {
+                        for (ChessMove CHESS_M : board.getPiece(p).pieceMoves(board, p)) {
                             ChessPiece currPiece = board.getPiece(p);
                             ChessGame copiedBoard2 = new ChessGame(this);
                             copiedBoard2.getBoard().addPiece(p, null);
-                            copiedBoard2.getBoard().addPiece(ChessM.getEndPosition(), currPiece);
+                            copiedBoard2.getBoard().addPiece(CHESS_M.getEndPosition(), currPiece);
 
                             if (copiedBoard2.isInCheck(teamColor)) {
                                 isStale = true;
