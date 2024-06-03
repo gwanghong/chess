@@ -30,16 +30,16 @@ public class ClearTest {
     @DisplayName("Testing if clear return success")
     public void positiveTestClear() throws Exception {
 
-        userDao.insertUser(new UserData("NewUser", "newUserPassword", "nu@mail.com"));
+        userDao.insertUser(new UserData("NewUse", "newUserPasswor", "nu@mail.co"));
 
-        AuthData auth = userService.login(new UserData("NewUser", "newUserPassword", "nu@mail.com"));
+        AuthData auth = userService.login(new UserData("NewUse", "newUserPasswor", "nu@mail.co"));
 
         GameData game = gameService.createGame(auth.authToken(), "newGame");
         int gameID = game.gameID();
 
         clearS.clear();
 
-        Assertions.assertNull(userDao.getUser("NewUser"));
+        Assertions.assertNull(userDao.getUser("NewUse"));
         try {
             authDao.getAuth(auth.authToken());
 

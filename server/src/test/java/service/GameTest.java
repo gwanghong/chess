@@ -27,8 +27,8 @@ public class GameTest {
     }
 
     @Test
-    @DisplayName("Valid request / return success")
-    public void positiveTest() throws Exception {
+    @DisplayName("authToken is valid")
+    public void isAuthTokenValidTest() throws Exception {
         AuthData auth = new AuthData("1234", "newU");
         authDao.createAuth(auth);
 
@@ -45,6 +45,12 @@ public class GameTest {
 
         gameService.joinGame("1234", "WHITE", createGame.gameID());
         Assertions.assertEquals("newU", gameDao.getGame(createGame.gameID()).whiteUsername());
+    }
+
+    @Test
+    @DisplayName("create game positive test")
+    public void createGameTest() throws DataAccessException {
+        
     }
 
     @Test
