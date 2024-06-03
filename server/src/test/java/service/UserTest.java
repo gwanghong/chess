@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import spark.utils.Assert;
 
 public class UserTest {
 
@@ -37,7 +38,13 @@ public class UserTest {
 
         userService.logout(authLogin.authToken());
 
-        Assertions.assertNull(authDao.getAuth(authLogin.authToken()));
+        try {
+            Assertions.assertNull(authDao.getAuth(authLogin.authToken()));
+
+            Assertions.assertTrue(false);
+        } catch (DataAccessException e) {
+            Assertions.assertTrue(true);
+        }
     }
 
     @Test
