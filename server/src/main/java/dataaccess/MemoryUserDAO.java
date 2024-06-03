@@ -7,19 +7,19 @@ import java.util.HashMap;
 
 public class MemoryUserDAO implements UserDAO {
 
-    private static final Map<String, UserData> users = new HashMap<>();
+    private static final Map<String, UserData> Users = new HashMap<>();
 
     @Override
     public void clear() throws DataAccessException {
-        users.clear();
+        Users.clear();
     }
 
     @Override
     public void insertUser(UserData u) {
 
         try {
-            if (!users.containsKey(u.username())) {
-                users.put(u.username(), u);
+            if (!Users.containsKey(u.username())) {
+                Users.put(u.username(), u);
             } else {
                 throw new DataAccessException("user exists");
             }
@@ -31,6 +31,6 @@ public class MemoryUserDAO implements UserDAO {
     @Override
     public UserData getUser(String userName) {
 
-        return users.get(userName);
+        return Users.get(userName);
     }
 }

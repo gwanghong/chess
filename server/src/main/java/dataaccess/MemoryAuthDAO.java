@@ -7,17 +7,17 @@ import java.util.HashMap;
 
 public class MemoryAuthDAO implements AuthDAO {
 
-    private static final Map<String, AuthData> authTokens = new HashMap<>();
+    private static final Map<String, AuthData> AuthTokens = new HashMap<>();
 
     @Override
     public void clear() throws DataAccessException {
-        authTokens.clear();
+        AuthTokens.clear();
     }
 
     @Override
     public void createAuth(AuthData auth) throws DataAccessException {
-        if (!authTokens.containsKey(auth.authToken())) {
-            authTokens.put(auth.authToken(), auth);
+        if (!AuthTokens.containsKey(auth.authToken())) {
+            AuthTokens.put(auth.authToken(), auth);
         } else {
             throw new DataAccessException("authToken exists");
         }
@@ -26,7 +26,7 @@ public class MemoryAuthDAO implements AuthDAO {
     @Override
     public AuthData getAuth(String authToken) throws DataAccessException {
 
-        AuthData auth = authTokens.get(authToken);
+        AuthData auth = AuthTokens.get(authToken);
 
         if (auth != null) {
             return auth;
@@ -39,10 +39,10 @@ public class MemoryAuthDAO implements AuthDAO {
     @Override
     public void deleteAuth(String authToken) throws DataAccessException {
 
-        AuthData auth = authTokens.get(authToken);
+        AuthData auth = AuthTokens.get(authToken);
 
         if (auth != null) {
-            authTokens.remove(authToken);
+            AuthTokens.remove(authToken);
         } else {
             throw new DataAccessException("authToken not found");
         }
