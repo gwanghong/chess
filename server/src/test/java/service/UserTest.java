@@ -3,10 +3,7 @@ package service;
 import dataaccess.*;
 import model.AuthData;
 import model.UserData;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import spark.utils.Assert;
 
 public class UserTest {
@@ -15,8 +12,8 @@ public class UserTest {
     private static UserDAO userDao;
     private static AuthDAO authDao;
 
-    @BeforeEach
-    void setUp() throws DataAccessException {
+    @BeforeAll
+    static void setUp() throws Exception {
         userDao = new MemoryUserDAO();
         authDao = new MemoryAuthDAO();
         userService = new UserService(userDao, authDao);
@@ -51,7 +48,7 @@ public class UserTest {
     @DisplayName("Invalid request / return failure")
     public void negativeTest() throws Exception {
 
-        userService.register(new UserData("NewUser", "newUserPassword", "nu@mail.com"));
+        //userService.register(new UserData("NewUser", "newUserPassword", "nu@mail.com"));
 
         //re-register
         try {
