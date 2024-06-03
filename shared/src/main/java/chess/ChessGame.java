@@ -73,8 +73,6 @@ public class ChessGame {
                     copiedBoard2.getBoard().addPiece(startPosition, null);
                     copiedBoard2.getBoard().addPiece(chessMovement.getEndPosition(), currPiece);
 
-                    System.out.printf("%d %d  ", chessMovement.getEndPosition().getRow(), chessMovement.getEndPosition().getColumn());
-
                     if (!copiedBoard2.isInCheck(team) && !copiedBoard2.isInCheckmate(team)) {
                         valid.add(chessMovement);
                     }
@@ -152,7 +150,6 @@ public class ChessGame {
                 if (board.getPiece(p) != null && board.getPiece(p).getPieceType().equals(ChessPiece.PieceType.KING)) {
                     if (board.getPiece(p).getTeamColor().equals(team)) {
                         kingP = p;
-                        //System.out.printf("%d %d ", i, j);
                     }
                 }
             }
