@@ -15,7 +15,6 @@ public class ClearTest {
     private static UserDAO userDao;
     private static AuthDAO authDao;
     private static GameDAO gameDao;
-    private static UserData newUser;
 
     @BeforeEach
     public void setUp() {
@@ -25,14 +24,15 @@ public class ClearTest {
         gameDao = new MemoryGameDAO();
         userService = new UserService(userDao, authDao);
         gameService = new GameService(gameDao, authDao);
-        newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
     }
 
     @Test
     @DisplayName("Testing if clear return success")
     public void positiveTestClear() throws Exception {
 
+        UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
         userService.register(newUser);
+
         AuthData auth = userService.login(newUser);
         GameData game = gameService.createGame(auth.authToken(), "newGame");
         int gameID = game.gameID();
