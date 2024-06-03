@@ -8,6 +8,8 @@ import service.ClearService;
 
 public class ClearTest {
 
+    private static UserService userService;
+    private static GameService gameService;
     private static ClearService clearS;
     private static UserDAO userDao;
     private static AuthDAO authDao;
@@ -19,33 +21,31 @@ public class ClearTest {
         userDao = new MemoryUserDAO();
         authDao = new MemoryAuthDAO();
         gameDao = new MemoryGameDAO();
+        userService = new UserService(userDao, authDao);
+        gameService = new GameService(gameDao, authDao);
     }
 
     @Test
     @DisplayName("Testing if clear return success")
-    public void positiveTestClear() {
+    public void positiveTestClear() throws Exception {
+
+        UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
+        userService.register(newUser);
+        AuthData auth = userService.login(newUser);
+        GameData game = gameService.createGame(auth.authToken(), "newGame");
+        int gameID = game.gameID();
+
+        clearS.clear();
+
+        Assertions.assertNull(userDao.getUser("NewUser"));
         try {
-            UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
-            AuthData newAuth = new AuthData("123", "AthUser");
-            GameData newGame = new GameData(1234, "whiteUser", "blackUser", "newGame", new ChessGame());
+            authDao.getAuth(auth.authToken());
 
-            userDao.insertUser(newUser);
-            authDao.createAuth(newAuth);
-            gameDao.createGame(newGame);
-
-            Assertions.assertEquals(newUser, userDao.getUser(newUser.username()));
-            Assertions.assertEquals(newAuth, authDao.getAuth(newAuth.authToken()));
-            Assertions.assertEquals(newGame, gameDao.getGame(newGame.gameID()));
-
-            clearS.clear();
-
-            Assertions.assertNull(userDao.getUser(newUser.username()));
-            Assertions.assertNull(authDao.getAuth(newAuth.authToken()));
-            Assertions.assertNull(gameDao.getGame(newGame.gameID()));
-
+            Assertions.assertTrue(false);
         } catch (DataAccessException e) {
-            throw new RuntimeException(e);
+            Assertions.assertTrue(true);
         }
+        Assertions.assertNull(gameDao.getGame(gameID));
 
     }
 }
