@@ -28,7 +28,7 @@ public class ListGamesHandler extends MainHandler {
             response.status(200);
 
             Map<String, Collection<GameData>> combineRes = new HashMap<>();
-            combineRes.put("game", result);
+            combineRes.put("games", result);
 
             return new Gson().toJson(combineRes);
 
