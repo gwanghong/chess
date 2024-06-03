@@ -11,25 +11,36 @@ public class UserTest {
     private static UserService userService;
     private static UserDAO userDao;
     private static AuthDAO authDao;
+    private ClearService clearService;
 
     @BeforeAll
     static void setUp() throws Exception {
+
         userDao = new MemoryUserDAO();
         authDao = new MemoryAuthDAO();
         userService = new UserService(userDao, authDao);
     }
 
     @Test
-    @DisplayName("Valid request / return success")
-    public void positiveTest() throws Exception {
+    @DisplayName("register")
+    public void registerTest() throws Exception {
+        userDao.clear();
+        ;
         UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
 
         AuthData auth = userService.register(newUser);
 
         Assertions.assertEquals(newUser, userDao.getUser(newUser.username()));
         Assertions.assertEquals(auth.authToken(), authDao.getAuth(auth.authToken()).authToken());
+    }
 
+    @Test
+    @DisplayName("login")
+    public void logingTest() throws Exception {
+        UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
+        AuthData auth = userService.register(newUser);
         AuthData authLogin = userService.login(newUser);
+
 
         Assertions.assertNotNull(authLogin);
 
@@ -45,12 +56,18 @@ public class UserTest {
     }
 
     @Test
+    @DisplayName("login")
+    public void logoutTest() throws Exception {
+        UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
+        AuthData authLogin = userService.login(newUser);
+
+    }
+
+
+    @Test
     @DisplayName("Invalid request / return failure")
-    public void negativeTest() throws Exception {
+    public void negativeRegister() throws Exception {
 
-        //userService.register(new UserData("NewUser", "newUserPassword", "nu@mail.com"));
-
-        //re-register
         try {
             userService.register(new UserData("NewUser", "newUserPassword", "nu@mail.com"));
 
@@ -59,6 +76,11 @@ public class UserTest {
             Assertions.assertTrue(true);
         }
 
+    }
+
+    @Test
+    @DisplayName("Invalid request / return failure")
+    public void negativeLogin() throws Exception {
         //not registered user
         try {
             userService.login(new UserData("notregisteredUser", "passwo", "asdf@asd"));
@@ -77,6 +99,11 @@ public class UserTest {
             Assertions.assertTrue(true);
         }
 
+    }
+
+    @Test
+    @DisplayName("Invalid request / return failure")
+    public void negativeLogout() throws Exception {
         //wrong logout
         try {
             userService.logout("asdf");
