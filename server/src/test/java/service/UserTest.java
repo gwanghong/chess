@@ -7,14 +7,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import passoff.model.TestAuthResult;
-import passoff.model.TestResult;
-import passoff.model.TestUser;
-import passoff.server.TestServerFacade;
-import service.UserService;
-
-import java.net.HttpURLConnection;
-import java.util.Locale;
 
 public class UserTest {
 
@@ -50,8 +42,45 @@ public class UserTest {
 
     @Test
     @DisplayName("Invalid request / return failure")
-    public void negativeTest() throws DataAccessException {
+    public void negativeTest() throws Exception {
 
+        userService.register(new UserData("NewUser", "newUserPassword", "nu@mail.com"));
+
+        //re-register
+        try {
+            userService.register(new UserData("NewUser", "newUserPassword", "nu@mail.com"));
+
+            Assertions.assertTrue(false);
+        } catch (DataAccessException e) {
+            Assertions.assertTrue(true);
+        }
+
+        //not registered user
+        try {
+            userService.login(new UserData("notregisteredUser", "passwo", "asdf@asd"));
+
+            Assertions.assertTrue(false);
+        } catch (Exception e) {
+            Assertions.assertTrue(true);
+        }
+
+        //wrong password
+        try {
+            userService.login(new UserData("NewUser", "passwo", "nu@mail.com"));
+
+            Assertions.assertTrue(false);
+        } catch (Exception e) {
+            Assertions.assertTrue(true);
+        }
+
+        //wrong logout
+        try {
+            userService.logout("asdf");
+
+            Assertions.assertTrue(false);
+        } catch (RuntimeException e) {
+            Assertions.assertTrue(true);
+        }
     }
 
 }
