@@ -32,7 +32,7 @@ public class ClearTest {
     @DisplayName("Testing if clear return success")
     public void positiveTestClear() throws Exception {
 
-        //userService.register(newUser);
+        userService.register(newUser);
         AuthData auth = userService.login(newUser);
         GameData game = gameService.createGame(auth.authToken(), "newGame");
         int gameID = game.gameID();

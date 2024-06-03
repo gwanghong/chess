@@ -43,6 +43,13 @@ public class UserTest {
 
 
         Assertions.assertNotNull(authLogin);
+    }
+
+    @Test
+    @DisplayName("logout")
+    public void logoutTest() throws Exception {
+        UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
+        AuthData authLogin = userService.login(newUser);
 
         userService.logout(authLogin.authToken());
 
@@ -53,19 +60,12 @@ public class UserTest {
         } catch (DataAccessException e) {
             Assertions.assertTrue(true);
         }
-    }
-
-    @Test
-    @DisplayName("login")
-    public void logoutTest() throws Exception {
-        UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
-        AuthData authLogin = userService.login(newUser);
 
     }
 
 
     @Test
-    @DisplayName("Invalid request / return failure")
+    @DisplayName("negative register")
     public void negativeRegister() throws Exception {
 
         try {
@@ -79,7 +79,7 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("Invalid request / return failure")
+    @DisplayName("login negative test")
     public void negativeLogin() throws Exception {
         //not registered user
         try {
@@ -102,7 +102,7 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("Invalid request / return failure")
+    @DisplayName("negative logout test")
     public void negativeLogout() throws Exception {
         //wrong logout
         try {
