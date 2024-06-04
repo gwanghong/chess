@@ -5,10 +5,13 @@ import model.GameData;
 import java.util.Collection;
 import java.util.List;
 
-public class MySqlGameDAo implements GameDAO {
+public class MySqlGameDAO extends MySqlDataAccess implements GameDAO {
+    public MySqlGameDAO() throws DataAccessException {
+    }
+
     @Override
     public void clear() throws DataAccessException {
-
+        
     }
 
     @Override
@@ -29,5 +32,12 @@ public class MySqlGameDAo implements GameDAO {
     @Override
     public void updateGame(GameData game) throws DataAccessException {
 
+    }
+
+    @Override
+    public String[] createStatements() {
+        return new String[]{"""
+            
+           """};
     }
 }

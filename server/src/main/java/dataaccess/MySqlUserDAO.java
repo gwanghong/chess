@@ -2,7 +2,10 @@ package dataaccess;
 
 import model.UserData;
 
-public class MySqlUserDAO implements UserDAO {
+public class MySqlUserDAO extends MySqlDataAccess implements UserDAO {
+    public MySqlUserDAO() throws DataAccessException {
+    }
+
     @Override
     public void clear() throws DataAccessException {
 
@@ -16,5 +19,12 @@ public class MySqlUserDAO implements UserDAO {
     @Override
     public UserData getUser(String userName) throws DataAccessException {
         return null;
+    }
+
+    @Override
+    public String[] createStatements() {
+        return new String[]{"""
+            
+           """};
     }
 }

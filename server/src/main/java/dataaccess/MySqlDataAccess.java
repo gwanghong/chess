@@ -10,11 +10,14 @@ public class MySqlDataAccess {
         configureDatabase();
     }
 
-    private final String[] createStatements = {
-            """
-            CREATE TABLE IF NOT EXISTS 
-"""
-    };
+    public String[] createStatements() {
+        return null;
+    }
+
+    private int executeUpdate(String statement, Object... params) throws DataAccessException {
+
+        return 0;
+    }
 
     private void configureDatabase() throws DataAccessException {
 
@@ -24,9 +27,13 @@ public class MySqlDataAccess {
         }
 
         try (var conn = DatabaseManager.getConnection()) {
-
+            for (var statement : createStatements()) {
+                try (var preparedStatement = conn.prepareStatement(statement)) {
+                    preparedStatement.executeUpdate();
+                }
+            }
         } catch (SQLException e) {
-
+            throw new DataAccessException("sqlException...");
         }
     }
 }
