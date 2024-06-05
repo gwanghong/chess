@@ -1,10 +1,9 @@
 package dataaccess;
 
+import com.google.gson.Gson;
 import model.UserData;
 
 public class MySqlUserDAO extends MySqlDataAccess implements UserDAO {
-    public MySqlUserDAO() throws DataAccessException {
-    }
 
     @Override
     public void clear() throws DataAccessException {
@@ -13,6 +12,8 @@ public class MySqlUserDAO extends MySqlDataAccess implements UserDAO {
 
     @Override
     public void insertUser(UserData u) throws DataAccessException {
+        var statement = "INSERT INTO user (name, password, email), VALUES (?, ?, ?)";
+        var json = new Gson().toJson(u);
 
     }
 
