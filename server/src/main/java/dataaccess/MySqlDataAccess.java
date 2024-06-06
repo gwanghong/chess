@@ -28,7 +28,7 @@ public class MySqlDataAccess {
 
     protected void executeUpdate(String statement, Object... params) throws DataAccessException {
         try (var conn = DatabaseManager.getConnection()) {
-            try (var ps = conn.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS)) {
+            try (var ps = conn.prepareStatement(statement, RETURN_GENERATED_KEYS)) {
                 for (var i = 0; i < params.length; i++) {
                     var param = params[i];
                     //System.out.println("Setting parameter " + (i + 1) + ": " + param + ": " + param.getClass());

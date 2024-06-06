@@ -46,7 +46,7 @@ public class MySqlAuthDAO extends MySqlDataAccess implements AuthDAO {
             throw new DataAccessException(e.getMessage());
         }
 
-        if (passUsername == null) {
+        if (passAuthToken == null) {
             return null;
         }
         return new AuthData(passAuthToken, passUsername);
