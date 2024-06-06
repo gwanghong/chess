@@ -26,6 +26,7 @@ public class RegisterHandler extends MainHandler {
             return new Gson().toJson(result);
 
         } catch (DataAccessException e) {
+            System.out.println(e.getMessage());
             alreadyTaken(response);
         } catch (Exception e) {
             badRequest(response);

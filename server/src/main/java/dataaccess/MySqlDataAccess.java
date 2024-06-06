@@ -56,6 +56,7 @@ public class MySqlDataAccess {
             DatabaseManager.createDatabase();
             isDatabaseExist = true;
         }
+        //DatabaseManager.createDatabase();
 
         try (var conn = DatabaseManager.getConnection()) {
             for (var statement : createStatements()) {
@@ -64,7 +65,7 @@ public class MySqlDataAccess {
                 }
             }
         } catch (SQLException e) {
-            throw new DataAccessException("sqlException...");
+            throw new DataAccessException(e.getMessage());
         }
     }
 }
