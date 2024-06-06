@@ -7,9 +7,13 @@ import java.util.List;
 
 public class MySqlGameDAO extends MySqlDataAccess implements GameDAO {
 
+    public MySqlGameDAO() {
+        super();
+    }
+
     @Override
     public void clear() throws DataAccessException {
-
+        executeUpdate("TRUNCATE TABLE game");
     }
 
     @Override

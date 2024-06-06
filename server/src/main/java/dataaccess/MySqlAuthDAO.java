@@ -4,9 +4,13 @@ import model.AuthData;
 
 public class MySqlAuthDAO extends MySqlDataAccess implements AuthDAO {
 
+    public MySqlAuthDAO() {
+        super();
+    }
+
     @Override
     public void clear() throws DataAccessException {
-
+        executeUpdate("TRUNCATE TABLE auth");
     }
 
     @Override
