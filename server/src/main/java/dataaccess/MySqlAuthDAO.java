@@ -16,7 +16,7 @@ public class MySqlAuthDAO extends MySqlDataAccess implements AuthDAO {
 
     @Override
     public void createAuth(AuthData auth) throws DataAccessException {
-        if (getAuth(auth.authToken()) != null) {
+        if (getAuth(auth.authToken()) == null) {
             var statement = "INSERT INTO auth (authToken, username) VALUES (?, ?)";
             executeUpdate(statement, auth.authToken(), auth.username());
         }
@@ -46,10 +46,9 @@ public class MySqlAuthDAO extends MySqlDataAccess implements AuthDAO {
             throw new DataAccessException(e.getMessage());
         }
 
-        if (passAuthToken == null) {
+        if (passUsername == null) {
             return null;
         }
-
         return new AuthData(passAuthToken, passUsername);
     }
 
@@ -59,6 +58,8 @@ public class MySqlAuthDAO extends MySqlDataAccess implements AuthDAO {
         if (getAuth(authToken) != null) {
             var statement = "DELETE FROM auth WHERE authToken=?";
             executeUpdate(statement, authToken);
+        } else {
+            throw new DataAccessException("couldn't find auth");
         }
     }
 
