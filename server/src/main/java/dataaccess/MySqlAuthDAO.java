@@ -31,8 +31,8 @@ public class MySqlAuthDAO extends MySqlDataAccess implements AuthDAO {
         try (var conn = DatabaseManager.getConnection()) {
             var statement = "SELECT * FROM auth WHERE authToken=?";
             try (var ps = conn.prepareStatement(statement)) {
+                ps.setString(1, authToken);
                 try (var rs = ps.executeQuery()) {
-                    ps.setString(1, authToken);
                     if (rs.next()) {
                         var getAuthToken = rs.getString("authToken");
                         var getUsername = rs.getString("username");
@@ -44,6 +44,10 @@ public class MySqlAuthDAO extends MySqlDataAccess implements AuthDAO {
             }
         } catch (Exception e) {
             throw new DataAccessException(e.getMessage());
+        }
+
+        if (passAuthToken == null) {
+            return null;
         }
 
         return new AuthData(passAuthToken, passUsername);
@@ -64,7 +68,7 @@ public class MySqlAuthDAO extends MySqlDataAccess implements AuthDAO {
                             CREATE TABLE IF NOT EXISTS  auth (
                             `authToken` varchar(256) NOT NULL,
                             `username` varchar(256) NOT NULL,
-                            PRIMARY KEY (authToken)
+                            PRIMARY KEY (`authToken`)
                             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
                             """
         };
