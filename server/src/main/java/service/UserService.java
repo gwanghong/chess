@@ -48,7 +48,7 @@ public class UserService {
                 throw new Exception("Error: containUser is null");
             }
 
-            if (!containUser.password().equals(user.password())) {
+            if (!userDao.verifyUser(user.username(), user.password())) {
                 throw new Exception("Error: password doesn't match");
             }
 

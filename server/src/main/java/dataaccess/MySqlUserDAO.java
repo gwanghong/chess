@@ -37,6 +37,14 @@ public class MySqlUserDAO extends MySqlDataAccess implements UserDAO {
     }
 
     @Override
+    public boolean verifyUser(String username, String password) throws DataAccessException {
+
+        var hashedPassword = getUser(username).password();
+
+        return BCrypt.checkpw(password, hashedPassword);
+    }
+
+    @Override
     public UserData getUser(String userName) throws DataAccessException {
 
         String passUsername = null;
@@ -63,13 +71,11 @@ public class MySqlUserDAO extends MySqlDataAccess implements UserDAO {
             throw new DataAccessException(e.getMessage());
         }
 
-        String hashedPassword = BCrypt.hashpw(passwordPasser, BCrypt.gensalt());
-
         if (passUsername == null) {
             return null;
         }
 
-        return new UserData(userName, hashedPassword, emailPasser);
+        return new UserData(userName, passwordPasser, emailPasser);
     }
 
     @Override
