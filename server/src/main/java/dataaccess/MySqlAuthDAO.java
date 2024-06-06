@@ -27,7 +27,12 @@ public class MySqlAuthDAO extends MySqlDataAccess implements AuthDAO {
     @Override
     public String[] createStatements() {
         return new String[]{"""
-            
-           """};
+                            CREATE TABLE IF NOT EXISTS  auth (
+                            'authToken' varchar(256) NOT NULL,
+                            'username' varchar(256) NOT NULL,
+                            PRIMARY KEY (authToken)
+                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+                            """
+        };
     }
 }

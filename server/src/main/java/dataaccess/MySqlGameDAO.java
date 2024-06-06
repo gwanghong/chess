@@ -35,7 +35,15 @@ public class MySqlGameDAO extends MySqlDataAccess implements GameDAO {
     @Override
     public String[] createStatements() {
         return new String[]{"""
-            
-           """};
+                            CREATE TABLE IF NOT EXISTS  game (
+                            'gameID' int NOT NULL,
+                            'whiteUsername' varchar(256) NOT NULL,
+                            'blackUsername' varchar(256) NOT NULL,
+                            'gameName' varchar(256) NOT NULL,
+                            'chessGame' TEXT NOT NULL,
+                            PRIMARY KEY (gameID)
+                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+                            """
+        };
     }
 }
