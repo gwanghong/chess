@@ -33,7 +33,7 @@ public class UserTest {
 
     @Test
     @DisplayName("login")
-    public void LoginTest() throws Exception {
+    public void loginTest() throws Exception {
         UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
 
         AuthData authLogin = userService.login(newUser);

@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import service.ClearService;
 import service.GameService;
 import service.UserService;
-import spark.utils.Assert;
 
 public class ClearUnitTest {
     private static UserService userService;
@@ -34,9 +33,9 @@ public class ClearUnitTest {
     @DisplayName("Testing if clear return success")
     public void positiveTestClear() throws Exception {
 
-        userDao.insertUser(new UserData("NewUse", "newUserPasswor", "nu@mail.co"));
+        userDao.insertUser(new UserData("NewUse", "newUserPassword", "nu@mail.co"));
 
-        AuthData auth = userService.login(new UserData("NewUse", "newUserPasswor", "nu@mail.co"));
+        AuthData auth = userService.login(new UserData("NewUse", "newUserPassword", "nu@mail.co"));
 
         GameData game = gameService.createGame(auth.authToken(), "newGame");
         int gameID = game.gameID();
