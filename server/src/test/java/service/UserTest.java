@@ -10,10 +10,9 @@ public class UserTest {
     private static UserService userService;
     private static UserDAO userDao;
     private static AuthDAO authDao;
-    private ClearService clearService;
 
     @BeforeAll
-    static void setUp() throws Exception {
+    static void setUp() {
 
         userDao = new MemoryUserDAO();
         authDao = new MemoryAuthDAO();
@@ -24,7 +23,6 @@ public class UserTest {
     @DisplayName("register")
     public void registerTest() throws Exception {
         userDao.clear();
-        ;
         UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
 
         AuthData auth = userService.register(newUser);
@@ -35,9 +33,9 @@ public class UserTest {
 
     @Test
     @DisplayName("login")
-    public void logingTest() throws Exception {
+    public void LoginTest() throws Exception {
         UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
-        AuthData auth = userService.register(newUser);
+
         AuthData authLogin = userService.login(newUser);
 
 
@@ -55,7 +53,7 @@ public class UserTest {
         try {
             Assertions.assertNull(authDao.getAuth(authLogin.authToken()));
 
-            Assertions.assertTrue(false);
+            Assertions.fail();
         } catch (DataAccessException e) {
             Assertions.assertTrue(true);
         }
@@ -70,7 +68,7 @@ public class UserTest {
         try {
             userService.register(new UserData("NewUser", "newUserPassword", "nu@mail.com"));
 
-            Assertions.assertTrue(false);
+            Assertions.fail();
         } catch (DataAccessException e) {
             Assertions.assertTrue(true);
         }
@@ -82,18 +80,18 @@ public class UserTest {
     public void negativeLogin() throws Exception {
         //not registered user
         try {
-            userService.login(new UserData("notregisteredUser", "passwo", "asdf@asd"));
+            userService.login(new UserData("notRegisteredUser", "password", "asdf@asd"));
 
-            Assertions.assertTrue(false);
+            Assertions.fail();
         } catch (Exception e) {
             Assertions.assertTrue(true);
         }
 
         //wrong password
         try {
-            userService.login(new UserData("NewUser", "passwo", "nu@mail.com"));
+            userService.login(new UserData("NewUser", "password", "nu@mail.com"));
 
-            Assertions.assertTrue(false);
+            Assertions.fail();
         } catch (Exception e) {
             Assertions.assertTrue(true);
         }
@@ -107,7 +105,7 @@ public class UserTest {
         try {
             userService.logout("asdf");
 
-            Assertions.assertTrue(false);
+            Assertions.fail();
         } catch (RuntimeException e) {
             Assertions.assertTrue(true);
         }

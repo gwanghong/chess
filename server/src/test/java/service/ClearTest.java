@@ -1,11 +1,8 @@
 package service;
 
-import chess.ChessGame;
 import org.junit.jupiter.api.*;
 import model.*;
 import dataaccess.*;
-import passoff.model.TestUser;
-import service.ClearService;
 
 public class ClearTest {
 
@@ -30,9 +27,9 @@ public class ClearTest {
     @DisplayName("Testing if clear return success")
     public void positiveTestClear() throws Exception {
 
-        userDao.insertUser(new UserData("NewUse", "newUserPasswor", "nu@mail.co"));
+        userDao.insertUser(new UserData("NewUse", "newUserPassword", "nu@mail.co"));
 
-        AuthData auth = userService.login(new UserData("NewUse", "newUserPasswor", "nu@mail.co"));
+        AuthData auth = userService.login(new UserData("NewUse", "newUserPassword", "nu@mail.co"));
 
         GameData game = gameService.createGame(auth.authToken(), "newGame");
         int gameID = game.gameID();
@@ -43,7 +40,7 @@ public class ClearTest {
         try {
             authDao.getAuth(auth.authToken());
 
-            Assertions.assertTrue(false);
+            Assertions.fail();
         } catch (DataAccessException e) {
             Assertions.assertTrue(true);
         }
