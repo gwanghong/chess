@@ -42,6 +42,13 @@ public class UserUnitTest extends UserTest {
     }
 
     @Test
+    @DisplayName("login")
+    @Override
+    public void logingTest() throws Exception {
+        super.logingTest();
+    }
+
+    @Test
     @DisplayName("logout")
     @Override
     public void logoutTest() throws Exception {
@@ -53,5 +60,26 @@ public class UserUnitTest extends UserTest {
         Assertions.assertNull(authDao.getAuth(authLogin.authToken()));
 
 
+    }
+
+    @Test
+    @DisplayName("negative register")
+    @Override
+    public void negativeRegister() throws Exception {
+        super.negativeRegister();
+    }
+
+    @Test
+    @DisplayName("login negative test")
+    @Override
+    public void negativeLogin() throws Exception {
+        super.negativeLogin();
+    }
+
+    @Test
+    @DisplayName("negative logout test")
+    @Override
+    public void negativeLogout() throws Exception {
+        super.negativeLogout();
     }
 }
