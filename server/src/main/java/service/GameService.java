@@ -78,7 +78,7 @@ public class GameService {
     }
 
 
-    void isAuthTokenValid(String authToken) throws DataAccessException {
+    public void isAuthTokenValid(String authToken) throws DataAccessException {
         if (authDao.getAuth(authToken) == null) {
             throw new DataAccessException("authToken not exists");
         }

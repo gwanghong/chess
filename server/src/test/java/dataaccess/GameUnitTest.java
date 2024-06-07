@@ -26,7 +26,26 @@ public class GameUnitTest {
         auth = new AuthData("1234", "newU");
         authDao.createAuth(auth);
     }
-    
+
+    @Test
+    @DisplayName("authToken is valid")
+    public void isAuthTokenValidTest() throws Exception {
+
+        try {
+            gameService.isAuthTokenValid("1234");
+        } catch (DataAccessException e) {
+            Assertions.fail();
+        }
+
+        Assertions.assertEquals(0, gameService.listGames(auth.authToken()).size());
+        GameData createGame = gameService.createGame(auth.authToken(), "newGame");
+        Assertions.assertNotNull(createGame);
+        Assertions.assertEquals(1, gameService.listGames(auth.authToken()).size());
+
+        gameService.joinGame("1234", "WHITE", createGame.gameID());
+        Assertions.assertEquals("newU", gameDao.getGame(createGame.gameID()).whiteUsername());
+    }
+
     @Test
     @DisplayName("create game positive test")
     public void createGameTest() throws DataAccessException {
