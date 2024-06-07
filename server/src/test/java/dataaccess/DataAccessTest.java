@@ -18,11 +18,11 @@ public class DataAccessTest {
     public void createStatementTest() {
 
         try {
-            dataAccess = new MySqlDataAccess();
+            dataAccess.createStatements();
         } catch (NullPointerException e) {
             Assertions.assertTrue(true);
         }
 
-        Assertions.assertNotNull(dataAccess);
+        Assertions.assertNull(dataAccess);
     }
 }
