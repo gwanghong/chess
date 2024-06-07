@@ -33,7 +33,7 @@ public class GameTest {
         try {
             gameService.isAuthTokenValid("1234");
         } catch (DataAccessException e) {
-            Assertions.assertTrue(false);
+            Assertions.fail();
         }
 
         Assertions.assertEquals(0, gameService.listGames(auth.authToken()).size());
