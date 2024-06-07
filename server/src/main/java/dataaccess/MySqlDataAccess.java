@@ -1,7 +1,6 @@
 package dataaccess;
 
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import chess.ChessGame;
 
@@ -37,9 +36,7 @@ public class MySqlDataAccess {
                         case Integer p -> ps.setInt(i + 1, p);
                         case ChessGame p -> ps.setString(i + 1, new Gson().toJson(p));
                         case null -> ps.setNull(i + 1, NULL);
-                        default -> {
-                            throw new SQLException("Unhandled parameter type: " + param.getClass().getName());
-                        }
+                        default -> throw new SQLException("Unhandled parameter type: " + param.getClass().getName());
                     }
                 }
                 try {

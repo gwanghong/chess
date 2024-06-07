@@ -1,11 +1,7 @@
 package dataaccess;
 
-import com.google.gson.Gson;
 import model.UserData;
-import org.eclipse.jetty.server.Authentication;
 import org.mindrot.jbcrypt.BCrypt;
-
-import java.sql.SQLException;
 
 public class MySqlUserDAO extends MySqlDataAccess implements UserDAO {
 
@@ -20,7 +16,7 @@ public class MySqlUserDAO extends MySqlDataAccess implements UserDAO {
     }
 
     @Override
-    public void insertUser(UserData u) throws DataAccessException {
+    public void insertUser(UserData u) {
 
         //if (getUser(u.username()) != null) {
         var statement = "INSERT INTO user (username, password, email) VALUES (?, ?, ?)";
