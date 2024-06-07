@@ -77,7 +77,7 @@ public class UserTest {
 
     @Test
     @DisplayName("login negative test")
-    public void negativeLogin() throws Exception {
+    public void negativeLogin() {
         //not registered user
         try {
             userService.login(new UserData("notRegisteredUser", "password", "asdf@asd"));
@@ -100,7 +100,7 @@ public class UserTest {
 
     @Test
     @DisplayName("negative logout test")
-    public void negativeLogout() throws Exception {
+    public void negativeLogout() {
         //wrong logout
         try {
             userService.logout("asdf");
