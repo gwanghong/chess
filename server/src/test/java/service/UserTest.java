@@ -4,7 +4,6 @@ import dataaccess.*;
 import model.AuthData;
 import model.UserData;
 import org.junit.jupiter.api.*;
-import spark.utils.Assert;
 
 public class UserTest {
 

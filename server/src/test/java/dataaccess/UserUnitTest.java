@@ -9,8 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.mindrot.jbcrypt.BCrypt;
 import service.ClearService;
 import service.UserService;
+import service.UserTest;
 
-public class UserUnitTest {
+public class UserUnitTest extends UserTest {
     private static UserService userService;
     private static UserDAO userDao;
     private static AuthDAO authDao;
@@ -26,6 +27,7 @@ public class UserUnitTest {
 
     @Test
     @DisplayName("register")
+    @Override
     public void registerTest() throws Exception {
         userDao.clear();
         ;
@@ -40,18 +42,8 @@ public class UserUnitTest {
     }
 
     @Test
-    @DisplayName("login")
-    public void logingTest() throws Exception {
-        UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
-        AuthData auth = userService.register(newUser);
-        AuthData authLogin = userService.login(newUser);
-
-
-        Assertions.assertNotNull(authLogin);
-    }
-
-    @Test
     @DisplayName("logout")
+    @Override
     public void logoutTest() throws Exception {
         UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
         AuthData authLogin = userService.login(newUser);
@@ -61,56 +53,5 @@ public class UserUnitTest {
         Assertions.assertNull(authDao.getAuth(authLogin.authToken()));
 
 
-    }
-
-
-    @Test
-    @DisplayName("negative register")
-    public void negativeRegister() throws Exception {
-
-        try {
-            userService.register(new UserData("NewUser", "newUserPassword", "nu@mail.com"));
-
-            Assertions.assertTrue(false);
-        } catch (DataAccessException e) {
-            Assertions.assertTrue(true);
-        }
-
-    }
-
-    @Test
-    @DisplayName("login negative test")
-    public void negativeLogin() throws Exception {
-        //not registered user
-        try {
-            userService.login(new UserData("notregisteredUser", "passwo", "asdf@asd"));
-
-            Assertions.assertTrue(false);
-        } catch (Exception e) {
-            Assertions.assertTrue(true);
-        }
-
-        //wrong password
-        try {
-            userService.login(new UserData("NewUser", "passwo", "nu@mail.com"));
-
-            Assertions.assertTrue(false);
-        } catch (Exception e) {
-            Assertions.assertTrue(true);
-        }
-
-    }
-
-    @Test
-    @DisplayName("negative logout test")
-    public void negativeLogout() throws Exception {
-        //wrong logout
-        try {
-            userService.logout("asdf");
-
-            Assertions.assertTrue(false);
-        } catch (RuntimeException e) {
-            Assertions.assertTrue(true);
-        }
     }
 }
