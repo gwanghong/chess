@@ -29,10 +29,8 @@ public class MySqlGameDAO extends MySqlDataAccess implements GameDAO {
     @Override
     public void createGame(GameData game) throws DataAccessException {
         if (getGame(game.gameID()) == null) {
-            var statement = "INSERT INTO game (gameID, whiteUsername, blackUsername, gameName, chessGame) VALUES (?, ?, ?, ?. ?)";
-            var serializer = new Gson();
-            var json = serializer.toJson(game.game());
-            executeUpdate(statement, game.gameID(), game.whiteUsername(), game.blackUsername(), game.gameName(), json);
+            var statement = "INSERT INTO game (gameID, whiteUsername, blackUsername, gameName, chessGame) VALUES (?, ?, ?, ?, ?)";
+            executeUpdate(statement, game.gameID(), game.whiteUsername(), game.blackUsername(), game.gameName(), game.game());
         } else {
             throw new DataAccessException("game exists");
         }
@@ -116,13 +114,15 @@ public class MySqlGameDAO extends MySqlDataAccess implements GameDAO {
                 var statement = "UPDATE game SET whiteUsername=?, blackUsername=?, gameName=?, chessGame=? WHERE gameID=?";
                 try (var ps = conn.prepareStatement(statement)) {
                     ps.setString(1, game.whiteUsername());
-                    ps.setString(1, game.blackUsername());
-                    ps.setString(1, game.gameName());
+                    ps.setString(2, game.blackUsername());
+                    ps.setString(3, game.gameName());
                     var serializer = new Gson();
                     var json = serializer.toJson(game.game());
-                    ps.setString(1, json);
+                    ps.setString(4, json);
 
-                    ps.setInt(2, game.gameID());
+                    ps.setInt(5, game.gameID());
+
+                    ps.executeUpdate();
                 }
             } catch (SQLException e) {
                 throw new DataAccessException(e.getMessage());
