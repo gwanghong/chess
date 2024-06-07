@@ -15,7 +15,6 @@ public class UserUnitTest extends UserTest {
     private static UserService userService;
     private static UserDAO userDao;
     private static AuthDAO authDao;
-    private static ClearService clearService;
 
     @BeforeAll
     static void setUp() throws Exception {
@@ -23,6 +22,7 @@ public class UserUnitTest extends UserTest {
         authDao = new MySqlAuthDAO();
         userService = new UserService(userDao, authDao);
         userDao.clear();
+        authDao.clear();
     }
 
     @Test
@@ -45,7 +45,12 @@ public class UserUnitTest extends UserTest {
     @DisplayName("login")
     @Override
     public void logingTest() throws Exception {
-        super.logingTest();
+        UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
+        AuthData auth = userService.register(newUser);
+        AuthData authLogin = userService.login(newUser);
+
+
+        Assertions.assertNotNull(authLogin);
     }
 
     @Test
@@ -66,20 +71,51 @@ public class UserUnitTest extends UserTest {
     @DisplayName("negative register")
     @Override
     public void negativeRegister() throws Exception {
-        super.negativeRegister();
+
+        try {
+            userService.register(new UserData("NewUser", "newUserPassword", "nu@mail.com"));
+
+            Assertions.assertTrue(false);
+        } catch (DataAccessException e) {
+            Assertions.assertTrue(true);
+        }
+
     }
 
     @Test
     @DisplayName("login negative test")
     @Override
     public void negativeLogin() throws Exception {
-        super.negativeLogin();
+        //not registered user
+        try {
+            userService.login(new UserData("notregisteredUser", "passwo", "asdf@asd"));
+
+            Assertions.assertTrue(false);
+        } catch (Exception e) {
+            Assertions.assertTrue(true);
+        }
+
+        //wrong password
+        try {
+            userService.login(new UserData("NewUser", "passwo", "nu@mail.com"));
+
+            Assertions.assertTrue(false);
+        } catch (Exception e) {
+            Assertions.assertTrue(true);
+        }
     }
 
     @Test
     @DisplayName("negative logout test")
     @Override
     public void negativeLogout() throws Exception {
-        super.negativeLogout();
+        //wrong logout
+        try {
+            userService.logout("asdf");
+
+            Assertions.assertTrue(false);
+        } catch (RuntimeException e) {
+            Assertions.assertTrue(true);
+        }
     }
 }

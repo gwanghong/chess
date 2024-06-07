@@ -1,4 +1,8 @@
 package dataaccess;
 
-public class GameUnitTest {
+import service.GameTest;
+
+public class GameUnitTest extends GameTest {
+
+
 }
