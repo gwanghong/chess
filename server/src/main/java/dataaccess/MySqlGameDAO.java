@@ -54,13 +54,13 @@ public class MySqlGameDAO extends MySqlDataAccess implements GameDAO {
                         var getGameName = rs.getString("gameName");
                         var getChessGame = rs.getString("chessGame");
 
-                        var deserialized_ChessGame = new Gson().fromJson(getChessGame, ChessGame.class);
+                        var deserializedChessGame = new Gson().fromJson(getChessGame, ChessGame.class);
 
                         passGameID = getGameID;
                         passWhiteUser = getWhiteUser;
                         passBlackUser = getBlackUser;
                         passGameName = getGameName;
-                        passGame = deserialized_ChessGame;
+                        passGame = deserializedChessGame;
                     }
                 }
             }

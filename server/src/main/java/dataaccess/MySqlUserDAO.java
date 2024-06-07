@@ -17,8 +17,7 @@ public class MySqlUserDAO extends MySqlDataAccess implements UserDAO {
 
     @Override
     public void insertUser(UserData u) {
-
-        //if (getUser(u.username()) != null) {
+        
         var statement = "INSERT INTO user (username, password, email) VALUES (?, ?, ?)";
         String hashedPassword = BCrypt.hashpw(u.password(), BCrypt.gensalt());
 
@@ -27,9 +26,6 @@ public class MySqlUserDAO extends MySqlDataAccess implements UserDAO {
         } catch (DataAccessException e) {
             System.out.println("error: " + e.getMessage());
         }
-        //} else {
-        //    throw new DataAccessException("User already exists");
-        //}
     }
 
     @Override
