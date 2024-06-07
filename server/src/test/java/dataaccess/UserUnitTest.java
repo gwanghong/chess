@@ -9,9 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.mindrot.jbcrypt.BCrypt;
 
 import service.UserService;
-import service.UserTest;
 
-public class UserUnitTest extends UserTest {
+public class UserUnitTest {
     private static UserService userService;
     private static UserDAO userDao;
     private static AuthDAO authDao;
@@ -27,7 +26,6 @@ public class UserUnitTest extends UserTest {
 
     @Test
     @DisplayName("register")
-    @Override
     public void registerTest() throws Exception {
         userDao.clear();
         UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
@@ -42,7 +40,6 @@ public class UserUnitTest extends UserTest {
 
     @Test
     @DisplayName("login")
-    @Override
     public void loginTest() throws Exception {
         UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
         userService.register(newUser);
@@ -54,7 +51,6 @@ public class UserUnitTest extends UserTest {
 
     @Test
     @DisplayName("logout")
-    @Override
     public void logoutTest() throws Exception {
         UserData newUser = new UserData("NewUser", "newUserPassword", "nu@mail.com");
         AuthData authLogin = userService.login(newUser);
@@ -68,7 +64,6 @@ public class UserUnitTest extends UserTest {
 
     @Test
     @DisplayName("negative register")
-    @Override
     public void negativeRegister() throws Exception {
 
         try {
@@ -83,7 +78,6 @@ public class UserUnitTest extends UserTest {
 
     @Test
     @DisplayName("login negative test")
-    @Override
     public void negativeLogin() {
         try {
             userService.login(new UserData("notRegisteredUser", "password", "asdf@asd"));
@@ -104,7 +98,6 @@ public class UserUnitTest extends UserTest {
 
     @Test
     @DisplayName("negative logout test")
-    @Override
     public void negativeLogout() {
         try {
             userService.logout("asdf");

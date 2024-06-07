@@ -7,9 +7,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.GameService;
-import service.GameTest;
 
-public class GameUnitTest extends GameTest {
+public class GameUnitTest {
 
     private static GameService gameService;
     private static GameDAO gameDao;
@@ -27,14 +26,9 @@ public class GameUnitTest extends GameTest {
         auth = new AuthData("1234", "newU");
         authDao.createAuth(auth);
     }
-
-    @Override
-    public void isAuthTokenValidTest() {
-    }
-
+    
     @Test
     @DisplayName("create game positive test")
-    @Override
     public void createGameTest() throws DataAccessException {
 
         GameData createGame = gameService.createGame(auth.authToken(), "newGame");
@@ -43,7 +37,6 @@ public class GameUnitTest extends GameTest {
 
     @Test
     @DisplayName("list game positive test")
-    @Override
     public void listGameTest() throws DataAccessException {
 
         gameDao.clear();
@@ -56,7 +49,6 @@ public class GameUnitTest extends GameTest {
 
     @Test
     @DisplayName("join game positive test")
-    @Override
     public void joinGameTest() throws Exception {
 
         gameDao.clear();
@@ -72,8 +64,7 @@ public class GameUnitTest extends GameTest {
 
     @Test
     @DisplayName("createGame negative")
-    @Override
-    public void creatGameNegativeTest() {
+    public void createGameNegativeTest() {
         try {
             gameService.createGame("1365", "newGame");
 
@@ -85,8 +76,7 @@ public class GameUnitTest extends GameTest {
 
     @Test
     @DisplayName("listGame negative")
-    @Override
-    public void listgameNegativeTest() {
+    public void listGameNegativeTest() {
         try {
             gameService.listGames("1365");
 
@@ -98,8 +88,7 @@ public class GameUnitTest extends GameTest {
 
     @Test
     @DisplayName("joinGame negative")
-    @Override
-    public void joingameNegativeTest() throws DataAccessException {
+    public void joinGameNegativeTest() throws DataAccessException {
         GameData game = gameService.createGame("1234", "new");
         try {
             gameService.joinGame("1365", "WHITE", game.gameID());
