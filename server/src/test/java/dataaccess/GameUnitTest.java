@@ -47,6 +47,31 @@ public class GameUnitTest {
     }
 
     @Test
+    @DisplayName("authToken is not valid")
+    public void isAuthTokenValidNegativeTest() throws Exception {
+
+        try {
+            gameService.isAuthTokenValid("1234");
+        } catch (DataAccessException e) {
+            Assertions.fail();
+        }
+
+        Assertions.assertEquals(0, gameService.listGames(auth.authToken()).size());
+        GameData createGame = gameService.createGame(auth.authToken(), "newGame");
+        Assertions.assertNotNull(createGame);
+        Assertions.assertEquals(1, gameService.listGames(auth.authToken()).size());
+
+        try {
+            gameService.joinGame("123", "WHITE", createGame.gameID());
+            Assertions.fail();
+
+        } catch (DataAccessException e) {
+            Assertions.assertTrue(true);
+        }
+
+    }
+
+    @Test
     @DisplayName("create game positive test")
     public void createGameTest() throws DataAccessException {
 
