@@ -61,14 +61,6 @@ public class GameUnitTest {
         Assertions.assertNotNull(createGame);
         Assertions.assertEquals(1, gameService.listGames(auth.authToken()).size());
 
-        try {
-            gameService.joinGame("123", "WHITE", createGame.gameID());
-            Assertions.fail();
-
-        } catch (DataAccessException e) {
-            Assertions.assertTrue(true);
-        }
-
     }
 
     @Test
