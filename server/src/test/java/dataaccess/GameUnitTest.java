@@ -51,15 +51,12 @@ public class GameUnitTest {
     public void isAuthTokenValidNegativeTest() throws Exception {
 
         try {
-            gameService.isAuthTokenValid("1234");
-        } catch (DataAccessException e) {
-            Assertions.fail();
-        }
+            gameService.isAuthTokenValid("123");
 
-        Assertions.assertEquals(0, gameService.listGames(auth.authToken()).size());
-        GameData createGame = gameService.createGame(auth.authToken(), "newGame");
-        Assertions.assertNotNull(createGame);
-        Assertions.assertEquals(1, gameService.listGames(auth.authToken()).size());
+            Assertions.fail();
+        } catch (DataAccessException e) {
+            Assertions.assertTrue(true);
+        }
 
     }
 
