@@ -6,7 +6,6 @@ import model.AuthData;
 import dataaccess.UserDAO;
 import dataaccess.AuthDAO;
 
-import java.sql.SQLException;
 import java.util.UUID;
 
 
