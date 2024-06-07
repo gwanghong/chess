@@ -21,6 +21,10 @@ public class MySqlDataAccess {
         }
     }
 
+    public MySqlDataAccess(String statement) {
+        createStatements();
+    }
+
     public String[] createStatements() {
         return null;
     }
