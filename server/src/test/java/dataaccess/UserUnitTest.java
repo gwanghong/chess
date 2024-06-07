@@ -85,7 +85,6 @@ public class UserUnitTest extends UserTest {
     @DisplayName("login negative test")
     @Override
     public void negativeLogin() {
-        //not registered user
         try {
             userService.login(new UserData("notRegisteredUser", "password", "asdf@asd"));
 
@@ -94,7 +93,6 @@ public class UserUnitTest extends UserTest {
             Assertions.assertTrue(true);
         }
 
-        //wrong password
         try {
             userService.login(new UserData("NewUser", "password", "nu@mail.com"));
 
@@ -108,7 +106,6 @@ public class UserUnitTest extends UserTest {
     @DisplayName("negative logout test")
     @Override
     public void negativeLogout() {
-        //wrong logout
         try {
             userService.logout("asdf");
 

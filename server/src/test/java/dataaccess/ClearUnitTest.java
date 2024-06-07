@@ -8,10 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.ClearService;
+import service.ClearTest;
 import service.GameService;
 import service.UserService;
 
-public class ClearUnitTest {
+public class ClearUnitTest extends ClearTest {
     private static UserService userService;
     private static GameService gameService;
     private static ClearService clearS;
@@ -31,6 +32,7 @@ public class ClearUnitTest {
 
     @Test
     @DisplayName("Testing if clear return success")
+    @Override
     public void positiveTestClear() throws Exception {
 
         userDao.insertUser(new UserData("NewUse", "newUserPassword", "nu@mail.co"));
