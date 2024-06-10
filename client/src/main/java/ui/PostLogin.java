@@ -1,18 +1,17 @@
 package ui;
 
+import static ui.EscapeSequences.*;
+
 public class PostLogin {
 
-    String helpTextColor = EscapeSequences.SET_TEXT_COLOR_BLUE;
-    String resetTextColor = EscapeSequences.RESET_TEXT_COLOR;
-
     public void help() {
-        System.out.println(helpTextColor + "    create <NAME>" + resetTextColor + " - a game");
-        System.out.println(helpTextColor + "    list" + resetTextColor + " - games");
-        System.out.println(helpTextColor + "    join <ID> [WHITE|BLACK]" + resetTextColor + " - a game");
-        System.out.println(helpTextColor + "    observe <ID>" + resetTextColor + " - a game");
-        System.out.println(helpTextColor + "    logout" + resetTextColor + " - when you are done");
-        System.out.println(helpTextColor + "    quit" + resetTextColor + " - playing chess");
-        System.out.println(helpTextColor + "    help" + resetTextColor + " - with possible commands\n");
+        System.out.println(SET_TEXT_COLOR_BLUE + "    create <NAME>" + RESET_TEXT_COLOR + " - a game");
+        System.out.println(SET_TEXT_COLOR_BLUE + "    list" + RESET_TEXT_COLOR + " - games");
+        System.out.println(SET_TEXT_COLOR_BLUE + "    join <ID> [WHITE|BLACK]" + RESET_TEXT_COLOR + " - a game");
+        System.out.println(SET_TEXT_COLOR_BLUE + "    observe <ID>" + RESET_TEXT_COLOR + " - a game");
+        System.out.println(SET_TEXT_COLOR_BLUE + "    logout" + RESET_TEXT_COLOR + " - when you are done");
+        System.out.println(SET_TEXT_COLOR_BLUE + "    quit" + RESET_TEXT_COLOR + " - playing chess");
+        System.out.println(SET_TEXT_COLOR_BLUE + "    help" + RESET_TEXT_COLOR + " - with possible commands\n");
     }
 
     public void logout() {

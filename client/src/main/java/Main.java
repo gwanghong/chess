@@ -1,7 +1,8 @@
 import chess.*;
 import ui.*;
 
-import java.util.Locale;
+import static ui.EscapeSequences.*;
+
 import java.util.Scanner;
 
 public class Main {
@@ -41,20 +42,20 @@ public class Main {
                     }
                     case "login", "l" -> {
                         if (splitInput.length != 3) {
-                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong input length for Login");
+                            System.out.println(SET_TEXT_ITALIC + "Wrong input length for Login");
                         } else {
                             isLogged = preLogin.login(splitInput);
                         }
                     }
                     case "register", "r" -> {
                         if (splitInput.length != 4) {
-                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong input length for Register");
+                            System.out.println(SET_TEXT_ITALIC + "Wrong input length for Register");
                         } else {
                             preLogin.register(splitInput);
                         }
                     }
                     default ->
-                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong command input. Type (h)elp to see the commands");
+                            System.out.println(SET_TEXT_ITALIC + "Wrong command input. Type (h)elp to see the commands");
                 }
             } else {
 
@@ -63,7 +64,7 @@ public class Main {
                     case "logout", "lo" -> postLogin.logout();
                     case "create", "c" -> {
                         if (splitInput.length != 2) {
-                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong input length for create");
+                            System.out.println(SET_TEXT_ITALIC + "Wrong input length for create");
                         } else {
                             postLogin.createGame(splitInput);
                         }
@@ -71,21 +72,21 @@ public class Main {
                     case "list", "li" -> postLogin.listGames();
                     case "join", "j" -> {
                         if (splitInput.length != 3) {
-                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong input length for join");
+                            System.out.println(SET_TEXT_ITALIC + "Wrong input length for join");
                         } else {
                             postLogin.playGame(splitInput);
                         }
                     }
                     case "observe", "o" -> {
                         if (splitInput.length != 2) {
-                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong input length for observe");
+                            System.out.println(SET_TEXT_ITALIC + "Wrong input length for observe");
                         } else {
                             postLogin.observe(splitInput);
                         }
                     }
                     case "quit", "q" -> postLogin.quit();
                     default ->
-                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong command input. Type (h)elp to see the commands");
+                            System.out.println(SET_TEXT_ITALIC + "Wrong command input. Type (h)elp to see the commands");
                 }
             }
 
