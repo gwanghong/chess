@@ -18,38 +18,77 @@ public class Main {
 
         System.out.println("♕ Welcome to 240 chess. Type Help to get started ♕");
 
+        label:
         while (true) {
 
+            if (!isLogged) {
+                System.out.print("[LOGGED_OUT] >>> ");
+            } else {
+                System.out.print("[LOGGED_IN] >>> ");
+            }
+
             Scanner scanner = new Scanner(System.in);
-            String[] userInput = new String[]{scanner.nextLine()};
-            String lowerCaseUI = userInput[0].toLowerCase();
+            String userInput = scanner.nextLine();
+            String[] splitInput = userInput.split(" ");
+            String lowerCaseUI = splitInput[0].toLowerCase();
 
             if (!isLogged) {
 
-                System.out.print("[LOGGED_OUT] >>> ");
-
-                if (lowerCaseUI.equals("help") || lowerCaseUI.equals("h")) {
-                    preLogin.help();
-                } else if (lowerCaseUI.equals("quit") || lowerCaseUI.equals("q")) {
-                    break;
-                } else if (lowerCaseUI.equals("login") || lowerCaseUI.equals("l")) {
-                    isLogged = preLogin.login();
-                } else if (lowerCaseUI.equals("register") || lowerCaseUI.equals("r")) {
-                    preLogin.register();
-                } else {
-                    System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong input. Type (h)elp to see the commands");
+                switch (lowerCaseUI) {
+                    case "help", "h" -> preLogin.help();
+                    case "quit", "q" -> {
+                        break label;
+                    }
+                    case "login", "l" -> {
+                        if (splitInput.length != 3) {
+                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong input length for Login");
+                        } else {
+                            isLogged = preLogin.login(splitInput);
+                        }
+                    }
+                    case "register", "r" -> {
+                        if (splitInput.length != 4) {
+                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong input length for Register");
+                        } else {
+                            preLogin.register(splitInput);
+                        }
+                    }
+                    default ->
+                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong command input. Type (h)elp to see the commands");
                 }
             } else {
 
-                System.out.print("[LOGGED_IN] >>> ");
-
-                if (lowerCaseUI.equals("help")) {
-                    postLogin.help();
+                switch (lowerCaseUI) {
+                    case "help", "h" -> postLogin.help();
+                    case "logout", "lo" -> postLogin.logout();
+                    case "create", "c" -> {
+                        if (splitInput.length != 2) {
+                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong input length for create");
+                        } else {
+                            postLogin.createGame(splitInput);
+                        }
+                    }
+                    case "list", "li" -> postLogin.listGames();
+                    case "join", "j" -> {
+                        if (splitInput.length != 3) {
+                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong input length for join");
+                        } else {
+                            postLogin.playGame(splitInput);
+                        }
+                    }
+                    case "observe", "o" -> {
+                        if (splitInput.length != 2) {
+                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong input length for observe");
+                        } else {
+                            postLogin.observe(splitInput);
+                        }
+                    }
+                    case "quit", "q" -> postLogin.quit();
+                    default ->
+                            System.out.println(EscapeSequences.SET_TEXT_ITALIC + "Wrong command input. Type (h)elp to see the commands");
                 }
             }
 
         }
-        //var piece = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN);
-        //System.out.println("♕ 240 Chess Client: " + piece);
     }
 }

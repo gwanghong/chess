@@ -18,16 +18,16 @@ public class PostLogin {
     public void logout() {
     }
 
-    public void createGame() {
+    public void createGame(String[] input) {
     }
 
     public void listGames() {
     }
 
-    public void playGame() {
+    public void playGame(String[] input) {
     }
 
-    public void observe() {
+    public void observe(String[] input) {
     }
 
     public void quit() {

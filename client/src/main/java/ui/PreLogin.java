@@ -12,11 +12,11 @@ public class PreLogin {
         System.out.println(helpTextColor + "    help" + resetTextColor + " - with possible commands\n");
     }
 
-    public boolean login() {
+    public boolean login(String[] input) {
 
         return false;
     }
 
-    public void register() {
+    public void register(String[] input) {
     }
 }
