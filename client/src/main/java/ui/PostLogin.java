@@ -24,9 +24,11 @@ public class PostLogin {
     }
 
     public void playGame(String[] input) {
+        DisplayBoard.callMain();
     }
 
     public void observe(String[] input) {
+        DisplayBoard.callMain();
     }
 
     public void quit() {

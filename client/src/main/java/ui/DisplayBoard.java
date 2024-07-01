@@ -9,10 +9,9 @@ public class DisplayBoard {
 
     private static final int BOARD_SIZE_IN_SQUARES = 10;
     private static final int SQUARE_SIZE_IN_CHARS = 1;
-    private static final int LINE_WIDTH_IN_CHARS = 1;
     private static final String EMPTY = "   ";
 
-    public static void main(String[] args) {
+    public static void callMain() {
         var out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
 
         out.print(ERASE_SCREEN);
