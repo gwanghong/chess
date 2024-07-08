@@ -20,7 +20,7 @@ public class PreLogin {
 
         try {
             UserData user = new UserData(input[1], input[2], input[3]);
-            facade.login(user);
+            //facade.login(user);
         } catch (Exception e) {
             return false;
         }
@@ -31,6 +31,6 @@ public class PreLogin {
     public void register(String[] input) {
 
         UserData user = new UserData(input[1], input[2], input[3]);
-        facade.register(user);
+        //facade.register(user);
     }
 }
