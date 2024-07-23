@@ -157,21 +157,29 @@ public class ChessGame {
 
         for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
-                ChessPosition p = new ChessPosition(i, j);
-                ChessPiece pt = board.getPiece(p);
 
-                if (pt != null && !pt.getTeamColor().equals(team)) {
-                    for (ChessMove move : pt.pieceMoves(board, p)) {
-                        if (move.getEndPosition().equals(kingP)) {
-                            return true;
-                        }
-                    }
+                if (isKingInDanger(i, j, kingP)) {
+                    return true;
                 }
             }
         }
 
         return false;
 
+    }
+
+    private boolean isKingInDanger(int i, int j, ChessPosition kingP) {
+        ChessPosition p = new ChessPosition(i, j);
+        ChessPiece pt = board.getPiece(p);
+
+        if (pt != null && !pt.getTeamColor().equals(team)) {
+            for (ChessMove move : pt.pieceMoves(board, p)) {
+                if (move.getEndPosition().equals(kingP)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -190,25 +198,33 @@ public class ChessGame {
 
         for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
-                ChessPosition p = new ChessPosition(i, j);
-                if (board.getPiece(p) != null) {
-                    if (board.getPiece(p).getTeamColor().equals(team)) {
-                        for (ChessMove chessMovement : board.getPiece(p).pieceMoves(board, p)) {
-                            ChessPiece currPiece = board.getPiece(p);
-                            ChessGame copiedBoard = new ChessGame(this);
-                            copiedBoard.getBoard().addPiece(p, null);
-                            copiedBoard.getBoard().addPiece(chessMovement.getEndPosition(), currPiece);
-
-                            if (!copiedBoard.isInCheck(team)) {
-                                allIsInCheck = false;
-                            }
-                        }
-                    }
+                if (!isInCheckMateHelper(i, j)) {
+                    allIsInCheck = false;
                 }
             }
         }
 
         return allIsInCheck;
+    }
+
+    private boolean isInCheckMateHelper(int i, int j) {
+        ChessPosition p = new ChessPosition(i, j);
+        if (board.getPiece(p) != null) {
+            if (board.getPiece(p).getTeamColor().equals(team)) {
+                for (ChessMove chessMovement : board.getPiece(p).pieceMoves(board, p)) {
+                    ChessPiece currPiece = board.getPiece(p);
+                    ChessGame copiedBoard = new ChessGame(this);
+                    copiedBoard.getBoard().addPiece(p, null);
+                    copiedBoard.getBoard().addPiece(chessMovement.getEndPosition(), currPiece);
+
+                    if (!copiedBoard.isInCheck(team)) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -224,20 +240,8 @@ public class ChessGame {
 
         for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
-                ChessPosition p = new ChessPosition(i, j);
-                if (board.getPiece(p) != null) {
-                    if (board.getPiece(p).getTeamColor().equals(teamColor)) {
-                        for (ChessMove chessMovement : board.getPiece(p).pieceMoves(board, p)) {
-                            ChessPiece currPiece = board.getPiece(p);
-                            ChessGame copiedBoard2 = new ChessGame(this);
-                            copiedBoard2.getBoard().addPiece(p, null);
-                            copiedBoard2.getBoard().addPiece(chessMovement.getEndPosition(), currPiece);
-
-                            if (copiedBoard2.isInCheck(teamColor)) {
-                                isStale = true;
-                            }
-                        }
-                    }
+                if (isInStalemateHelper(i, j, teamColor)) {
+                    isStale = true;
                 }
             }
         }
@@ -247,6 +251,25 @@ public class ChessGame {
         }
 
         return isStale;
+    }
+
+    private boolean isInStalemateHelper(int i, int j, TeamColor teamColor) {
+        ChessPosition p = new ChessPosition(i, j);
+        if (board.getPiece(p) != null) {
+            if (board.getPiece(p).getTeamColor().equals(teamColor)) {
+                for (ChessMove chessMovement : board.getPiece(p).pieceMoves(board, p)) {
+                    ChessPiece currPiece = board.getPiece(p);
+                    ChessGame copiedBoard2 = new ChessGame(this);
+                    copiedBoard2.getBoard().addPiece(p, null);
+                    copiedBoard2.getBoard().addPiece(chessMovement.getEndPosition(), currPiece);
+
+                    if (copiedBoard2.isInCheck(teamColor)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -269,8 +292,12 @@ public class ChessGame {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ChessGame chessGame = (ChessGame) o;
         return Objects.equals(board, chessGame.board) && team == chessGame.team;
     }
