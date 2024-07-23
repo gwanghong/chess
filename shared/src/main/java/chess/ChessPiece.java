@@ -73,17 +73,21 @@ public class ChessPiece {
         for (int i = row - 1; i <= row + 1; i++) {
             for (int j = col - 1; j <= col + 1; j++) {
                 if (i > 0 && i < 9 && j > 0 && j < 9) {
-                    if (board.getPiece(new ChessPosition(i, j)) == null) {
-                        kingM.add(new ChessMove(start, new ChessPosition(i, j), null));
-                    } else {
-                        if (!board.getPiece(new ChessPosition(i, j)).pieceColor.equals(pieceColor)) {
-                            kingM.add(new ChessMove(start, new ChessPosition(i, j), null));
-                        }
-                    }
+                    kingMoveHelper(board, i, j, kingM, start);
                 }
             }
         }
         return kingM;
+    }
+
+    private void kingMoveHelper(ChessBoard board, int i, int j, Collection<ChessMove> kingM, ChessPosition start) {
+        if (board.getPiece(new ChessPosition(i, j)) == null) {
+            kingM.add(new ChessMove(start, new ChessPosition(i, j), null));
+        } else {
+            if (!board.getPiece(new ChessPosition(i, j)).pieceColor.equals(pieceColor)) {
+                kingM.add(new ChessMove(start, new ChessPosition(i, j), null));
+            }
+        }
     }
 
     public Collection<ChessMove> bishopMove(ChessBoard board, int row, int col, ChessPosition start) {
