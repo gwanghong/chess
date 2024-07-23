@@ -157,21 +157,29 @@ public class ChessGame {
 
         for (int i = 1; i < 9; i++) {
             for (int j = 1; j < 9; j++) {
-                ChessPosition p = new ChessPosition(i, j);
-                ChessPiece pt = board.getPiece(p);
 
-                if (pt != null && !pt.getTeamColor().equals(team)) {
-                    for (ChessMove move : pt.pieceMoves(board, p)) {
-                        if (move.getEndPosition().equals(kingP)) {
-                            return true;
-                        }
-                    }
+                if (isKingInDanger(i, j, kingP)) {
+                    return true;
                 }
             }
         }
 
         return false;
 
+    }
+
+    private boolean isKingInDanger(int i, int j, ChessPosition kingP) {
+        ChessPosition p = new ChessPosition(i, j);
+        ChessPiece pt = board.getPiece(p);
+
+        if (pt != null && !pt.getTeamColor().equals(team)) {
+            for (ChessMove move : pt.pieceMoves(board, p)) {
+                if (move.getEndPosition().equals(kingP)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
