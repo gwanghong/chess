@@ -149,27 +149,35 @@ public class ChessPiece {
         for (int i = -1; i <= 1; i += 2) {
             for (int j = -1; j <= 1; j += 2) {
                 if (row + i > 0 && row + i < 9 && col + 2 * j > 0 && col + 2 * j < 9) {
-                    if (board.getPiece(new ChessPosition(row + i, col + 2 * j)) == null) {
-                        knightM.add(new ChessMove(start, new ChessPosition(row + i, col + 2 * j), null));
-                    } else {
-                        if (!board.getPiece(new ChessPosition(row + i, col + 2 * j)).pieceColor.equals(pieceColor)) {
-                            knightM.add(new ChessMove(start, new ChessPosition(row + i, col + 2 * j), null));
-                        }
-                    }
+                    knightMoveHelperType1(board, row, col, start, i, j, knightM);
                 }
 
                 if ((row + 2 * i > 0) && (row + 2 * i < 9) && (col + j > 0) && (col + j < 9)) {
-                    if (board.getPiece(new ChessPosition(row + 2 * i, col + j)) == null) {
-                        knightM.add(new ChessMove(start, new ChessPosition(row + 2 * i, col + j), null));
-                    } else {
-                        if (!board.getPiece(new ChessPosition(row + 2 * i, col + j)).pieceColor.equals(pieceColor)) {
-                            knightM.add(new ChessMove(start, new ChessPosition(row + 2 * i, col + j), null));
-                        }
-                    }
+                    knightMoveHelperType2(board, row, col, start, i, j, knightM);
                 }
             }
         }
         return knightM;
+    }
+
+    private void knightMoveHelperType1(ChessBoard board, int row, int col, ChessPosition start, int i, int j, Collection<ChessMove> knightM) {
+        if (board.getPiece(new ChessPosition(row + i, col + 2 * j)) == null) {
+            knightM.add(new ChessMove(start, new ChessPosition(row + i, col + 2 * j), null));
+        } else {
+            if (!board.getPiece(new ChessPosition(row + i, col + 2 * j)).pieceColor.equals(pieceColor)) {
+                knightM.add(new ChessMove(start, new ChessPosition(row + i, col + 2 * j), null));
+            }
+        }
+    }
+
+    private void knightMoveHelperType2(ChessBoard board, int row, int col, ChessPosition start, int i, int j, Collection<ChessMove> knightM) {
+        if (board.getPiece(new ChessPosition(row + 2 * i, col + j)) == null) {
+            knightM.add(new ChessMove(start, new ChessPosition(row + 2 * i, col + j), null));
+        } else {
+            if (!board.getPiece(new ChessPosition(row + 2 * i, col + j)).pieceColor.equals(pieceColor)) {
+                knightM.add(new ChessMove(start, new ChessPosition(row + 2 * i, col + j), null));
+            }
+        }
     }
 
     public Collection<ChessMove> rookMove(ChessBoard board, int row, int col, ChessPosition start) {
