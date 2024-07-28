@@ -48,7 +48,7 @@ public class GameUnitTest {
 
     @Test
     @DisplayName("authToken is not valid")
-    public void isAuthTokenValidNegativeTest() throws Exception {
+    public void isAuthTokenValidNegativeTest() {
 
         try {
             gameService.isAuthTokenValid("123");
