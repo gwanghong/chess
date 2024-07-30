@@ -22,11 +22,11 @@ public class ClearUnitTest {
     @BeforeEach
     public void setUp() {
         clearS = new ClearService();
+        userService = new UserService(userDao, authDao);
+        gameService = new GameService(gameDao, authDao);
         userDao = new MySqlUserDAO();
         authDao = new MySqlAuthDAO();
         gameDao = new MySqlGameDAO();
-        userService = new UserService(userDao, authDao);
-        gameService = new GameService(gameDao, authDao);
     }
 
     @Test

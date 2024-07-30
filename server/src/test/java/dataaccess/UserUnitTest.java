@@ -67,13 +67,11 @@ public class UserUnitTest {
     public void negativeRegister() throws Exception {
 
         try {
-            userService.register(new UserData("NewUser", "newUserPassword", "nu@mail.com"));
-
+            userService.register(new UserData("NewUsers", "newUserPasswords", "nu@mails.com"));
             Assertions.fail();
         } catch (DataAccessException e) {
             Assertions.assertTrue(true);
         }
-
     }
 
     @Test
