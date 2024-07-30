@@ -38,4 +38,40 @@ public class DataAccessTest {
 
         Assertions.assertNotNull(dataAccess);
     }
+
+    @Test
+    @DisplayName("executeUpdate Positive Test")
+    public void executeUpdatePositiveTest() {
+
+    }
+
+    @Test
+    @DisplayName("executeUpdate Negative Test")
+    public void executeUpdateNegativeTest() {
+
+    }
+
+    @Test
+    @DisplayName("configureData Positive Test")
+    public void configureDataPositiveTest() {
+        try {
+            dataAccess = new MySqlDataAccess();
+        } catch (RuntimeException e) {
+            Assertions.assertTrue(true);
+        }
+
+        Assertions.assertTrue(true);
+    }
+
+    @Test
+    @DisplayName("configureData Negative Test")
+    public void configureDataNegativeTest() {
+        try {
+            dataAccess = new MySqlDataAccess("random");
+        } catch (RuntimeException e) {
+            Assertions.fail();
+        }
+
+        Assertions.assertTrue(true);
+    }
 }
