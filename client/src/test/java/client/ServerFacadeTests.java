@@ -4,6 +4,8 @@ import org.junit.jupiter.api.*;
 import server.Server;
 import Facade.ServerFacade;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class ServerFacadeTests {
 
@@ -32,14 +34,68 @@ public class ServerFacadeTests {
 
     @Test
     public void sampleTest() {
-        Assertions.assertTrue(true);
+        assertTrue(true);
     }
 
     @Test
-    void register() throws Exception {
+    void registerPositive() throws Exception {
         var authData = facade.register("player1", "password", "p1@email.com");
         assertTrue(authData.authToken().length() > 10);
     }
 
+    @Test
+    void registerNegative() {
+
+    }
+
+    @Test
+    void loginPositive() {
+
+    }
+
+    @Test
+    void loginNegative() {
+
+    }
+
+    @Test
+    void logoutPositive() {
+
+    }
+
+    @Test
+    void logoutNegative() {
+
+    }
+
+    @Test
+    void createGamePos() {
+
+    }
+
+    @Test
+    void createGameNeg() {
+
+    }
+
+    @Test
+    void joinGamePos() {
+
+    }
+
+    @Test
+    void joinGameNeg() {
+
+    }
+
+    @Test
+    void listGamePos() {
+
+    }
+
+    @Test
+    void listGameNeg() {
+
+    }
 
 }
