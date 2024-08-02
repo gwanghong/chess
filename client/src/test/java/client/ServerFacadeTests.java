@@ -21,7 +21,7 @@ public class ServerFacadeTests {
     @BeforeEach
     public void setup() {
         //clear Database
-        facade.clear();
+
     }
 
     @AfterAll
