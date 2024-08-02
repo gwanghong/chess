@@ -1,6 +1,8 @@
 package Facade;
 
 import com.google.gson.Gson;
+import spark.Request;
+import spark.Response;
 import model.*;
 
 import java.io.IOException;
@@ -9,11 +11,40 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collection;
 import java.util.Map;
 
 public class ServerFacade {
 
-    public ServerFacade(int url) {
+    private int port;
+
+    public ServerFacade(int port) {
+        this.port = port;
+
+    }
+
+    public AuthData login(UserData user) {
+        AuthData auth = ;
+    }
+
+    public void logout() {
+
+    }
+
+    public AuthData register(UserData user) {
+
+    }
+
+    public GameData createGame() {
+
+    }
+
+    public Collection<GameData> listGames() {
+
+    }
+
+    public void joinGame() {
+
     }
 
     public static void main(String[] args) throws Exception {
