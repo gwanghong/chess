@@ -55,9 +55,9 @@ public class ServerFacadeTests {
 
         boolean assertion = false;
 
-        var authData1 = facade.register("player1", "password", "p1@email.com");
+        facade.register("player1", "password", "p1@email.com");
         try {
-            var authData2 = facade.register("player1", "password", "p1@email.com");
+            facade.register("player1", "password", "p1@email.com");
         } catch (IOException e) {
             assertion = true;
         }
@@ -70,13 +70,34 @@ public class ServerFacadeTests {
     }
 
     @Test
-    void loginPositive() {
+    void loginPositive() throws URISyntaxException, IOException {
+        facade.register("player1", "password", "p1@email.com");
+        var authData = facade.login("player1", "password");
 
+        if (authData.authToken().length() > 10) {
+            assertTrue(true);
+        } else {
+            fail();
+        }
     }
 
     @Test
-    void loginNegative() {
+    void loginNegative() throws URISyntaxException, IOException {
 
+        boolean assertion = false;
+        facade.register("player1", "password", "p1@email.com");
+
+        try {
+            facade.login("player2", "password2");
+        } catch (IOException e) {
+            assertion = true;
+        }
+
+        if (assertion) {
+            assertTrue(true);
+        } else {
+            fail();
+        }
     }
 
     @Test

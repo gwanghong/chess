@@ -2,6 +2,7 @@ package Facade;
 
 import com.google.gson.Gson;
 import model.*;
+import org.eclipse.jetty.server.Authentication;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +24,10 @@ public class ServerFacade {
         url = "http://localhost:" + port;
     }
 
-    public AuthData login(UserData user) throws URISyntaxException, IOException {
+    public AuthData login(String username, String password) throws URISyntaxException, IOException {
+
+        UserData user = new UserData(username, password, null);
+
         return sendRequest("/session", "POST", user, AuthData.class);
     }
 
