@@ -1,11 +1,13 @@
 package client;
 
+import dataaccess.DataAccessException;
 import org.junit.jupiter.api.*;
 import server.Server;
 import Facade.ServerFacade;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import service.ClearService;
 
 public class ServerFacadeTests {
 
@@ -21,9 +23,10 @@ public class ServerFacadeTests {
     }
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws DataAccessException {
         //clear Database
-
+        ClearService clearService = new ClearService();
+        clearService.clear();
     }
 
     @AfterAll

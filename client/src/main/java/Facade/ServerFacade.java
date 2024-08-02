@@ -3,9 +3,11 @@ package Facade;
 import com.google.gson.Gson;
 import model.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -49,13 +51,14 @@ public class ServerFacade {
     }
 
     private <T> T sendRequest(String path, String method, Object request, Class<T> clazz) throws URISyntaxException, IOException {
-
         Gson gson = new Gson();
-
         URI uri = new URI(url + path);
         HttpURLConnection http = (HttpURLConnection) uri.toURL().openConnection();
         http.setRequestMethod(method);
-        writeRequestBody(gson.toJson(request), http);
+
+        if (request != null) {
+            writeRequestBody(gson.toJson(request), http);
+        }
 
         http.connect();
 
@@ -68,21 +71,24 @@ public class ServerFacade {
     }
 
     private static void writeRequestBody(String body, HttpURLConnection http) throws IOException {
-        if (!body.isEmpty()) {
+        if (body != null && !body.isEmpty()) {
             http.setDoOutput(true);
-            try (var outputStream = http.getOutputStream()) {
+            try (OutputStream outputStream = http.getOutputStream()) {
                 outputStream.write(body.getBytes());
+                outputStream.flush();
             }
         }
     }
 
     private static String readResponseBody(HttpURLConnection http) throws IOException {
-        String responseBody = "";
-        try (InputStream respBody = http.getInputStream()) {
-            InputStreamReader inputStreamReader = new InputStreamReader(respBody);
-            responseBody = new Gson().fromJson(inputStreamReader, String.class);
+        StringBuilder responseBody = new StringBuilder();
+        try (InputStream respBody = http.getInputStream();
+             BufferedReader reader = new BufferedReader(new InputStreamReader(respBody))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                responseBody.append(line);
+            }
         }
-        return responseBody;
+        return responseBody.toString();
     }
-
 }
