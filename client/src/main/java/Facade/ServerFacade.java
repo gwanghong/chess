@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class ServerFacade {
 
-    public ServerFacade(String url) {
+    public ServerFacade(int url) {
     }
 
     public static void main(String[] args) throws Exception {
