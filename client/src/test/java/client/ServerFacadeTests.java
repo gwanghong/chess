@@ -6,8 +6,12 @@ import server.Server;
 import Facade.ServerFacade;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import service.ClearService;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class ServerFacadeTests {
 
@@ -47,8 +51,22 @@ public class ServerFacadeTests {
     }
 
     @Test
-    void registerNegative() {
+    void registerNegative() throws URISyntaxException, IOException {
 
+        boolean assertion = false;
+
+        var authData1 = facade.register("player1", "password", "p1@email.com");
+        try {
+            var authData2 = facade.register("player1", "password", "p1@email.com");
+        } catch (IOException e) {
+            assertion = true;
+        }
+
+        if (assertion) {
+            assertTrue(true);
+        } else {
+            fail();
+        }
     }
 
     @Test
