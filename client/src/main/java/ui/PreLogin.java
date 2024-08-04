@@ -13,8 +13,8 @@ public class PreLogin {
 
     private final ServerFacade facade;
 
-    public PreLogin(ServerFacade facade) {
-        this.facade = facade;
+    public PreLogin(int port) {
+        this.facade = new ServerFacade(port);
     }
 
     public void help() {
