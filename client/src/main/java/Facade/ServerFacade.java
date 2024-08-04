@@ -2,7 +2,6 @@ package Facade;
 
 import com.google.gson.Gson;
 import model.*;
-import org.eclipse.jetty.server.Authentication;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,30 +27,30 @@ public class ServerFacade {
 
         UserData user = new UserData(username, password, null);
 
-        return sendRequest("/session", "POST", user, AuthData.class);
+        return this.sendRequest("/session", "POST", user, AuthData.class);
     }
 
     public void logout() throws URISyntaxException, IOException {
-        sendRequest("/session", "DELETE", null, null);
+        this.sendRequest("/session", "DELETE", null, null);
     }
 
     public AuthData register(String username, String password, String email) throws URISyntaxException, IOException {
 
         UserData user = new UserData(username, password, email);
 
-        return sendRequest("/user", "POST", user, AuthData.class);
+        return this.sendRequest("/user", "POST", user, AuthData.class);
     }
 
     public GameData createGame() throws URISyntaxException, IOException {
-        return sendRequest("/game", "POST", null, GameData.class);
+        return this.sendRequest("/game", "POST", null, GameData.class);
     }
 
     public Collection<GameData> listGames() throws URISyntaxException, IOException {
-        return sendRequest("/game", "GET", null, Collection.class);
+        return this.sendRequest("/game", "GET", null, Collection.class);
     }
 
     public void joinGame() throws URISyntaxException, IOException {
-        sendRequest("/game", "PUT", null, null);
+        this.sendRequest("/game", "PUT", null, null);
     }
 
     private <T> T sendRequest(String path, String method, Object request, Class<T> clazz) throws URISyntaxException, IOException {

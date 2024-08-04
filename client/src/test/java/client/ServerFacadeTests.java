@@ -71,6 +71,7 @@ public class ServerFacadeTests {
 
     @Test
     void loginPositive() throws URISyntaxException, IOException {
+
         facade.register("player1", "password", "p1@email.com");
         var authData = facade.login("player1", "password");
 
@@ -101,7 +102,16 @@ public class ServerFacadeTests {
     }
 
     @Test
-    void logoutPositive() {
+    void logoutPositive() throws URISyntaxException, IOException {
+
+        facade.register("player1", "password", "p1@email.com");
+        facade.login("player1", "password");
+        /*try {
+            facade.logout();
+        } catch (IOException e) {
+            System.out.println("caught error");
+        }
+        assertTrue(true);*/
 
     }
 
@@ -112,7 +122,7 @@ public class ServerFacadeTests {
 
     @Test
     void createGamePos() {
-
+        
     }
 
     @Test

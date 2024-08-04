@@ -1,4 +1,3 @@
-import chess.*;
 import ui.*;
 
 import static ui.EscapeSequences.*;
