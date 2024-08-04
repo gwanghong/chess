@@ -1,13 +1,16 @@
-import ui.*;
-
-import static ui.EscapeSequences.*;
-
-import java.util.Scanner;
+import ui.Repl;
 
 public class Main {
     public static void main(String[] args) {
 
-        PreLogin preLogin = new PreLogin();
+        var serverUrl = "http://localhost:8080";
+        if (args.length == 1) {
+            serverUrl = args[0];
+        }
+
+        new Repl(serverUrl).run();
+
+        /*PreLogin preLogin = new PreLogin();
         PostLogin postLogin = new PostLogin();
         boolean isLogged = false;
 
@@ -89,6 +92,6 @@ public class Main {
                 }
             }
 
-        }
+        }*/
     }
 }

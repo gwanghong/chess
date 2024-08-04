@@ -15,12 +15,10 @@ import java.util.Collection;
 
 public class ServerFacade {
 
-    private final int port;
     private static String url;
 
-    public ServerFacade(int port) {
-        this.port = port;
-        url = "http://localhost:" + port;
+    public ServerFacade(String url) {
+        this.url = url;
     }
 
     public AuthData login(String username, String password) throws URISyntaxException, IOException {

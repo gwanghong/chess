@@ -23,7 +23,8 @@ public class ServerFacadeTests {
         server = new Server();
         var port = server.run(0);
         System.out.println("Started test HTTP server on " + port);
-        facade = new ServerFacade(port);
+        String url = "http://localhost:" + port;
+        facade = new ServerFacade(url);
     }
 
     @BeforeEach
@@ -122,7 +123,7 @@ public class ServerFacadeTests {
 
     @Test
     void createGamePos() {
-        
+
     }
 
     @Test

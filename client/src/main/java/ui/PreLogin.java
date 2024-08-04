@@ -3,7 +3,7 @@ package ui;
 import static ui.EscapeSequences.*;
 
 import Facade.ServerFacade;
-import data.DataStorage;
+import ui.Combo;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,39 +13,54 @@ public class PreLogin {
 
     private final ServerFacade facade;
 
-    public PreLogin(int port) {
-        this.facade = new ServerFacade(port);
+    public PreLogin(String url) {
+        this.facade = new ServerFacade(url);
     }
 
-    public void help() {
-        System.out.println(SET_TEXT_COLOR_BLUE + "    register <USERNAME> <PASSWORD> <EMAIL>" + SET_TEXT_COLOR_WHITE + " - to create an account");
-        System.out.println(SET_TEXT_COLOR_BLUE + "    login <USERNAME> <PASSWORD>" + SET_TEXT_COLOR_WHITE + " - to play chess");
-        System.out.println(SET_TEXT_COLOR_BLUE + "    quit" + SET_TEXT_COLOR_WHITE + " - playing chess");
-        System.out.println(SET_TEXT_COLOR_BLUE + "    help" + SET_TEXT_COLOR_WHITE + " - with possible commands\n");
+    public Combo eval(String input) {
+        var tokens = input.toLowerCase().split(" ");
+        var cmd = (tokens.length > 0) ? tokens[0] : "help";
+        var params = Arrays.copyOfRange(tokens, 1, tokens.length);
+        return switch (cmd) {
+            case "h", "help" -> new Combo(help(), true);
+            case "l", "login" -> login(params);
+            case "r", "register" -> register(params);
+            case "quit" -> new Combo("quit", true);
+            default -> new Combo(help(), true);
+        };
     }
 
-    public boolean login(String[] input) {
+    public String help() {
+        return """
+                   register <USERNAME> <PASSWORD> <EMAIL> - to create an account"
+                   login <USERNAME> <PASSWORD> - to play chess
+                   quit - playing chess
+                   help - with possible commands
+                                
+                """;
+    }
+
+    public Combo login(String[] input) {
 
         try {
             facade.login(input[1], input[2]);
         } catch (IOException | URISyntaxException e) {
-            System.out.println("Wrong input, try again");
-            return false;
+            return new Combo("Wrong input, try again", false);
         }
 
-        return true;
+        return new Combo("Login Success", true);
     }
 
-    public void register(String[] input) {
+    public Combo register(String[] input) {
 
         System.out.println(Arrays.toString(input));
 
         try {
             facade.register(input[1], input[2], input[3]);
         } catch (IOException | URISyntaxException e) {
-            System.out.println("Wrong input, try again");
+            return new Combo("Wrong input, try again", false);
         }
 
-        System.out.println("Register Successful");
+        return new Combo("Register Success", true);
     }
 }
