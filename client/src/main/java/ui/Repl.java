@@ -13,8 +13,8 @@ public class Repl {
     }
 
     public void run() {
-        System.out.println("\uD83D\uDC36 Welcome to Chess. Sign in to start.");
-        System.out.print(prelogin.help());
+        System.out.println("♕ Welcome to Chess. Sign in to start.\n");
+        System.out.print(SET_TEXT_COLOR_BLUE + prelogin.help());
 
         Scanner scanner = new Scanner(System.in);
         var result = "";
@@ -24,7 +24,7 @@ public class Repl {
 
             try {
                 result = prelogin.eval(line).str();
-                System.out.print(BLUE + result);
+                System.out.print(SET_TEXT_COLOR_BLUE + result);
             } catch (Throwable e) {
                 var msg = e.toString();
                 System.out.print(msg);
@@ -34,6 +34,6 @@ public class Repl {
     }
 
     private void printPrompt() {
-        System.out.print("\n" + RESET + ">>> " + GREEN);
+        System.out.print("\n" + SET_TEXT_COLOR_WHITE + ">>> " + SET_TEXT_COLOR_GREEN);
     }
 }

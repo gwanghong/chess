@@ -36,14 +36,13 @@ public class PreLogin {
                    login <USERNAME> <PASSWORD> - to play chess
                    quit - playing chess
                    help - with possible commands
-                                
                 """;
     }
 
     public Combo login(String[] input) {
 
         try {
-            facade.login(input[1], input[2]);
+            facade.login(input[0], input[1]);
         } catch (IOException | URISyntaxException e) {
             return new Combo("Wrong input, try again", false);
         }
@@ -56,7 +55,7 @@ public class PreLogin {
         System.out.println(Arrays.toString(input));
 
         try {
-            facade.register(input[1], input[2], input[3]);
+            facade.register(input[0], input[1], input[2]);
         } catch (IOException | URISyntaxException e) {
             return new Combo("Wrong input, try again", false);
         }
