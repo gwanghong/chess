@@ -1,6 +1,7 @@
 package Facade;
 
 import com.google.gson.Gson;
+import data.DataStorage;
 import model.*;
 
 import java.io.BufferedReader;
@@ -25,8 +26,9 @@ public class ServerFacade {
     public AuthData login(String username, String password) throws URISyntaxException, IOException {
 
         UserData user = new UserData(username, password, null);
-
-        return this.makeRequest("/session", "POST", user, AuthData.class);
+        AuthData auth = this.makeRequest("/session", "POST", user, AuthData.class);
+        DataStorage.getInstance().setAuthToken(auth.authToken());
+        return auth;
     }
 
     public void logout() throws URISyntaxException, IOException {
@@ -36,8 +38,9 @@ public class ServerFacade {
     public AuthData register(String username, String password, String email) throws URISyntaxException, IOException {
 
         UserData user = new UserData(username, password, email);
-
-        return this.makeRequest("/user", "POST", user, AuthData.class);
+        AuthData auth = this.makeRequest("/user", "POST", user, AuthData.class);
+        DataStorage.getInstance().setAuthToken(auth.authToken());
+        return auth;
     }
 
     public GameData createGame() throws URISyntaxException, IOException {
@@ -53,6 +56,7 @@ public class ServerFacade {
     }
 
     private <T> T makeRequest(String path, String method, Object request, Class<T> responseClass) {
+
         try {
             URL url = (new URI(ServerFacade.url + path)).toURL();
             HttpURLConnection http = (HttpURLConnection) url.openConnection();
@@ -64,6 +68,7 @@ public class ServerFacade {
             throwIfNotSuccessful(http);
             return readBody(http, responseClass);
         } catch (Exception ex) {
+            ex.printStackTrace(); // Print the stack trace to identify the issue
             throw new RuntimeException(ex.getMessage());
         }
     }
@@ -82,7 +87,7 @@ public class ServerFacade {
     private void throwIfNotSuccessful(HttpURLConnection http) throws Exception {
         var status = http.getResponseCode();
         if (!isSuccessful(status)) {
-            throw new Exception();
+            throw new Exception("HTTP request failed with status code: " + status + ", message: " + http.getResponseMessage());
         }
     }
 
@@ -104,7 +109,8 @@ public class ServerFacade {
         return status / 100 == 2;
     }
 
-    /*private <T> T sendRequest(String path, String method, Object request, Class<T> clazz) throws URISyntaxException, IOException {
+    /*
+    private <T> T makeRequest(String path, String method, Object request, Class<T> clazz) throws URISyntaxException, IOException {
         Gson gson = new Gson();
         URI uri = new URI(url + path);
         HttpURLConnection http = (HttpURLConnection) uri.toURL().openConnection();

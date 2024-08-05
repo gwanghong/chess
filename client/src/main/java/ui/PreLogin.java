@@ -1,10 +1,10 @@
 package ui;
 
-import static ui.EscapeSequences.*;
-
 import Facade.ServerFacade;
-import ui.Combo;
+import data.DataStorage;
+import org.eclipse.jetty.websocket.api.SuspendToken;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -12,9 +12,11 @@ import java.util.Arrays;
 public class PreLogin {
 
     private final ServerFacade facade;
+    private final String serverUrl;
 
-    public PreLogin(String url) {
-        this.facade = new ServerFacade(url);
+    public PreLogin(String serverUrl) {
+        facade = new ServerFacade(serverUrl);
+        this.serverUrl = serverUrl;
     }
 
     public Combo eval(String input) {
@@ -47,6 +49,7 @@ public class PreLogin {
             return new Combo("Wrong input, try again", false);
         }
 
+        DataStorage.getInstance().setState(DataStorage.State.LOGGED_IN);
         return new Combo("Login Success", true);
     }
 
