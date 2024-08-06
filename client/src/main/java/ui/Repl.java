@@ -2,27 +2,23 @@ package ui;
 
 import data.DataStorage;
 
+import javax.xml.crypto.Data;
 import java.util.Scanner;
 
 import static ui.EscapeSequences.*;
 
 public class Repl {
 
-    private final PreLogin prelogin;
-    private final PostLogin postLogin;
-
-
-    public Repl(String serverUrl) {
-        prelogin = new PreLogin(serverUrl);
-        postLogin = new PostLogin(serverUrl);
-    }
 
     public void run() {
+
+        PreLogin preLogin = DataStorage.getInstance().getPreLogin();
+        PostLogin postLogin = DataStorage.getInstance().getPostLogin();
 
         DataStorage.getInstance().setState(DataStorage.State.LOGGED_OUT);
 
         System.out.println("♕ Welcome to Chess. Sign in to start.\n");
-        System.out.print(SET_TEXT_COLOR_BLUE + prelogin.help());
+        System.out.print(SET_TEXT_COLOR_BLUE + preLogin.help());
 
         Scanner scanner = new Scanner(System.in);
         var result = "";
@@ -32,7 +28,7 @@ public class Repl {
 
             try {
                 if (DataStorage.getInstance().getState().equals(DataStorage.State.LOGGED_OUT)) {
-                    result = prelogin.eval(line).str();
+                    result = preLogin.eval(line).str();
                 } else if (DataStorage.getInstance().getState().equals(DataStorage.State.LOGGED_IN)) {
                     result = postLogin.eval(line).str();
                 }
@@ -47,6 +43,6 @@ public class Repl {
     }
 
     private void printPrompt() {
-        System.out.print("\n" + SET_TEXT_COLOR_WHITE + "[" + DataStorage.getInstance().getState() + "]" + ">>> " + SET_TEXT_COLOR_GREEN);
+        System.out.print("\n" + SET_TEXT_COLOR_WHITE + "[" + DataStorage.getInstance().getState() + "] " + ">>> " + SET_TEXT_COLOR_GREEN);
     }
 }

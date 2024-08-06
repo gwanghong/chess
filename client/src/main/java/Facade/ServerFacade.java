@@ -28,11 +28,14 @@ public class ServerFacade {
         UserData user = new UserData(username, password, null);
         AuthData auth = this.makeRequest("/session", "POST", user, AuthData.class);
         DataStorage.getInstance().setAuthToken(auth.authToken());
+        //System.out.println(DataStorage.getInstance().getAuthToken());
         return auth;
     }
 
     public void logout() throws URISyntaxException, IOException {
-        this.makeRequest("/session", "DELETE", null, null);
+        //AuthData auth = new AuthData(DataStorage.getInstance().getAuthToken(), null);
+        AuthData auth = new AuthData(DataStorage.getInstance().getAuthToken(), null);
+        this.makeRequest("/session", "DELETE", auth, null);
     }
 
     public AuthData register(String username, String password, String email) throws URISyntaxException, IOException {
@@ -43,8 +46,8 @@ public class ServerFacade {
         return auth;
     }
 
-    public GameData createGame() throws URISyntaxException, IOException {
-        return this.makeRequest("/game", "POST", null, GameData.class);
+    public GameData createGame(GameData game) throws URISyntaxException, IOException {
+        return this.makeRequest("/game", "POST", game, GameData.class);
     }
 
     public Collection<GameData> listGames() throws URISyntaxException, IOException {
@@ -77,6 +80,13 @@ public class ServerFacade {
     private static void writeBody(Object request, HttpURLConnection http) throws IOException {
         if (request != null) {
             http.addRequestProperty("Content-Type", "application/json");
+
+            String authToken = DataStorage.getInstance().getAuthToken();
+            //System.out.println(authToken);
+            if (authToken != null) {
+                http.addRequestProperty("authorization", authToken);
+            }
+
             String reqData = new Gson().toJson(request);
             try (OutputStream reqBody = http.getOutputStream()) {
                 reqBody.write(reqData.getBytes());

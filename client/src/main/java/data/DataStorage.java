@@ -2,19 +2,30 @@ package data;
 
 import Facade.ServerFacade;
 import model.AuthData;
+import ui.PostLogin;
+import ui.PreLogin;
 
 public class DataStorage {
 
-    private static final DataStorage instance = new DataStorage();
+    private DataStorage() {
+        this.facade = new ServerFacade("http://localhost:8080");
+        this.preLogin = new PreLogin();
+        this.postLogin = new PostLogin();
+    }
+
+    private static class Holder {
+        private static final DataStorage INSTANCE = new DataStorage();
+    }
 
     public static DataStorage getInstance() {
-        return instance;
+        return Holder.INSTANCE;
     }
 
     private State state;
-    //private State state = State.LOGGED_OUT;
-
     private String authToken;
+    private ServerFacade facade;
+    private PreLogin preLogin;
+    private PostLogin postLogin;
 
     public void setState(State state) {
         this.state = state;
@@ -32,8 +43,24 @@ public class DataStorage {
         this.authToken = authToken;
     }
 
+    public ServerFacade getFacade() {
+        return facade;
+    }
+
+    public PreLogin getPreLogin() {
+        return preLogin;
+    }
+
+    public PostLogin getPostLogin() {
+        return postLogin;
+    }
+
     public enum State {
         LOGGED_OUT,
         LOGGED_IN
+    }
+
+    public void setRun(String url) {
+        facade = new ServerFacade(url);
     }
 }

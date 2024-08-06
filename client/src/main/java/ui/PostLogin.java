@@ -1,20 +1,20 @@
 package ui;
 
 import Facade.ServerFacade;
+import chess.ChessGame;
+import data.DataStorage;
+import model.GameData;
 
+import javax.xml.crypto.Data;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import static ui.EscapeSequences.*;
 
 public class PostLogin {
 
-    private final ServerFacade facade;
-    private final String serverUrl;
-
-    public PostLogin(String serverUrl) {
-        facade = new ServerFacade(serverUrl);
-        this.serverUrl = serverUrl;
-    }
+    //private ServerFacade facade;
 
     public Combo eval(String input) {
         var tokens = input.toLowerCase().split(" ");
@@ -22,7 +22,8 @@ public class PostLogin {
         var params = Arrays.copyOfRange(tokens, 1, tokens.length);
         return switch (cmd) {
             case "h", "help" -> new Combo(help(), true);
-
+            case "l", "logout" -> logout();
+            case "c", "create" -> createGame(params);
             case "quit" -> new Combo("quit", true);
             default -> new Combo(help(), true);
         };
@@ -40,10 +41,29 @@ public class PostLogin {
                 """;
     }
 
-    public void logout() {
+    public Combo logout() {
+
+        try {
+            DataStorage.getInstance().getFacade().logout();
+        } catch (IOException | URISyntaxException e) {
+            return new Combo("Logout Failure", false);
+        }
+
+        DataStorage.getInstance().setState(DataStorage.State.LOGGED_OUT);
+        return new Combo("Logout Success", true);
     }
 
-    public void createGame(String[] input) {
+    public Combo createGame(String[] input) {
+
+        GameData game = new GameData(0, null, null, input[0], new ChessGame());
+
+        try {
+            DataStorage.getInstance().getFacade().createGame(game);
+        } catch (IOException | URISyntaxException e) {
+            return new Combo("Wrong input, try again", false);
+        }
+
+        return new Combo("Game " + input[0] + " created", true);
     }
 
     public void listGames() {
@@ -55,9 +75,5 @@ public class PostLogin {
 
     public void observe(String[] input) {
         DisplayBoard.callMain();
-    }
-
-    public void quit() {
-
     }
 }

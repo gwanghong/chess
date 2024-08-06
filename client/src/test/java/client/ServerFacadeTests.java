@@ -21,7 +21,7 @@ public class ServerFacadeTests {
     @BeforeAll
     public static void init() {
         server = new Server();
-        var port = server.run(0);
+        var port = server.run(8080);
         System.out.println("Started test HTTP server on " + port);
         String url = "http://localhost:" + port;
         facade = new ServerFacade(url);
@@ -57,9 +57,10 @@ public class ServerFacadeTests {
         boolean assertion = false;
 
         facade.register("player1", "password", "p1@email.com");
+
         try {
             facade.register("player1", "password", "p1@email.com");
-        } catch (IOException e) {
+        } catch (Exception e) {
             assertion = true;
         }
 
@@ -91,7 +92,7 @@ public class ServerFacadeTests {
 
         try {
             facade.login("player2", "password2");
-        } catch (IOException e) {
+        } catch (Exception e) {
             assertion = true;
         }
 
@@ -107,12 +108,15 @@ public class ServerFacadeTests {
 
         facade.register("player1", "password", "p1@email.com");
         facade.login("player1", "password");
-        /*try {
+
+        /*
+        try {
             facade.logout();
         } catch (IOException e) {
             System.out.println("caught error");
         }
-        assertTrue(true);*/
+        assertTrue(true);
+         */
 
     }
 

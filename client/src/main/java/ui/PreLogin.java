@@ -11,13 +11,7 @@ import java.util.Arrays;
 
 public class PreLogin {
 
-    private final ServerFacade facade;
-    private final String serverUrl;
-
-    public PreLogin(String serverUrl) {
-        facade = new ServerFacade(serverUrl);
-        this.serverUrl = serverUrl;
-    }
+    //private ServerFacade facade;
 
     public Combo eval(String input) {
         var tokens = input.toLowerCase().split(" ");
@@ -44,7 +38,7 @@ public class PreLogin {
     public Combo login(String[] input) {
 
         try {
-            facade.login(input[0], input[1]);
+            DataStorage.getInstance().getFacade().login(input[0], input[1]);
         } catch (IOException | URISyntaxException e) {
             return new Combo("Wrong input, try again", false);
         }
@@ -58,7 +52,7 @@ public class PreLogin {
         System.out.println(Arrays.toString(input));
 
         try {
-            facade.register(input[0], input[1], input[2]);
+            DataStorage.getInstance().getFacade().register(input[0], input[1], input[2]);
         } catch (IOException | URISyntaxException e) {
             return new Combo("Wrong input, try again", false);
         }
