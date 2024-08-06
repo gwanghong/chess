@@ -31,13 +31,13 @@ public class PostLogin {
 
     public String help() {
         return """
-                    create <NAME>" + RESET_TEXT_COLOR + " - a game
-                    list" + RESET_TEXT_COLOR + " - games
-                    join <ID> [WHITE|BLACK]" + RESET_TEXT_COLOR + " - a game
-                    observe <ID>" + RESET_TEXT_COLOR + " - a game
-                    logout" + RESET_TEXT_COLOR + " - when you are done
-                    quit" + RESET_TEXT_COLOR + " - playing chess
-                    help" + RESET_TEXT_COLOR + " - with possible commands
+                    create <NAME>"  - a game
+                    list - games
+                    join <ID> [WHITE|BLACK] - a game
+                    observe <ID> - a game
+                    logout - when you are done
+                    quit - playing chess
+                    help - with possible commands
                 """;
     }
 
@@ -56,14 +56,14 @@ public class PostLogin {
     public Combo createGame(String[] input) {
 
         GameData game = new GameData(0, null, null, input[0], new ChessGame());
-
+        GameData gameRes;
         try {
-            DataStorage.getInstance().getFacade().createGame(game);
+            gameRes = DataStorage.getInstance().getFacade().createGame(game);
         } catch (IOException | URISyntaxException e) {
             return new Combo("Wrong input, try again", false);
         }
 
-        return new Combo("Game " + input[0] + " created", true);
+        return new Combo("Game " + input[0] + " created. GameID is " + gameRes.gameID(), true);
     }
 
     public void listGames() {

@@ -1,6 +1,8 @@
 package client;
 
+import chess.ChessGame;
 import dataaccess.DataAccessException;
+import model.GameData;
 import org.junit.jupiter.api.*;
 import server.Server;
 import Facade.ServerFacade;
@@ -134,13 +136,38 @@ public class ServerFacadeTests {
     }
 
     @Test
-    void createGamePos() {
+    void createGamePos() throws URISyntaxException, IOException {
 
+        facade.register("player1", "password", "p1@email.com");
+        facade.login("player1", "password");
+
+        String gameName = "game1";
+        GameData game = new GameData(0, null, null, gameName, new ChessGame());
+
+        try {
+            facade.createGame(game);
+        } catch (Exception e) {
+            fail();
+        }
+
+        assertTrue(true);
     }
 
     @Test
-    void createGameNeg() {
+    void createGameNeg() throws URISyntaxException, IOException {
 
+        boolean isTrue = false;
+
+        String gameName = "game1";
+        GameData game = new GameData(0, null, null, gameName, new ChessGame());
+
+        try {
+            facade.createGame(game);
+        } catch (Exception e) {
+            isTrue = true;
+        }
+
+        assertTrue(isTrue);
     }
 
     @Test
