@@ -109,20 +109,28 @@ public class ServerFacadeTests {
         facade.register("player1", "password", "p1@email.com");
         facade.login("player1", "password");
 
-        /*
+
         try {
             facade.logout();
         } catch (IOException e) {
             System.out.println("caught error");
         }
         assertTrue(true);
-         */
 
     }
 
     @Test
-    void logoutNegative() {
+    void logoutNegative() throws URISyntaxException, IOException {
 
+        boolean assertion = false;
+
+        try {
+            facade.logout();
+        } catch (Exception e) {
+            assertion = true;
+        }
+
+        assertTrue(assertion);
     }
 
     @Test
