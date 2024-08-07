@@ -1,6 +1,6 @@
 package data;
 
-import facade.ServerFacade;
+import client.ServerFacade;
 import ui.PostLogin;
 import ui.PreLogin;
 
