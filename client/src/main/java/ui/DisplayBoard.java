@@ -93,6 +93,17 @@ public class DisplayBoard {
 
     }
 
+    private static char blackHeaderHelper(boolean bool, PrintStream out, char header, int number) {
+        if (bool) {
+            printHeaderText(out, " " + header + " ");
+            return (char) ((char) header + 1);
+        } else {
+            printHeaderText(out, " " + number + " ");
+        }
+
+        return header;
+    }
+
     private static void drawRowOfSquaresBlack(PrintStream out, int number, boolean bool, int row) {
 
         char header = 'a';
@@ -111,12 +122,7 @@ public class DisplayBoard {
                     if (boardCol == 0 && bool || boardCol == 9 && bool) {
                         printHeaderText(out, EMPTY);
                     } else {
-                        if (bool) {
-                            printHeaderText(out, " " + header + " ");
-                            header++;
-                        } else {
-                            printHeaderText(out, " " + number + " ");
-                        }
+                        header = blackHeaderHelper(bool, out, header, number);
                     }
                 } else {
 
@@ -131,6 +137,17 @@ public class DisplayBoard {
 
             out.println();
         }
+    }
+
+    private static char whiteHeaderHelper(boolean bool, PrintStream out, char header, int number) {
+        if (bool) {
+            printHeaderText(out, " " + header + " ");
+            return (char) ((char) header - 1);
+        } else {
+            printHeaderText(out, " " + number + " ");
+        }
+
+        return header;
     }
 
     private static void drawRowOfSquaresWhite(PrintStream out, int number, boolean bool, int row) {
@@ -151,12 +168,7 @@ public class DisplayBoard {
                     if (boardCol == 0 && bool || boardCol == 9 && bool) {
                         printHeaderText(out, EMPTY);
                     } else {
-                        if (bool) {
-                            printHeaderText(out, " " + header + " ");
-                            header--;
-                        } else {
-                            printHeaderText(out, " " + number + " ");
-                        }
+                        header = whiteHeaderHelper(bool, out, header, number);
                     }
                 } else {
 
