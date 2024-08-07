@@ -6,12 +6,14 @@ public class Main {
 
         Repl repl = new Repl();
 
-        var serverUrl = "http://localhost:0";
+        int port = 8080;
         if (args.length == 1) {
-            serverUrl = args[0];
+            port = Integer.parseInt(args[0]);
         }
+        String url = "http://localhost:" + port;
 
-        DataStorage.getInstance().setRun(serverUrl);
+
+        DataStorage.getInstance().setRun(url);
         repl.run();
     }
 }
