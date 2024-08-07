@@ -55,7 +55,6 @@ public class ServerFacade {
 
     public Collection<GameData> listGames() throws URISyntaxException, IOException {
 
-        AuthData auth = new AuthData(DataStorage.getInstance().getAuthToken(), null);
         ListGameResponse response = this.makeRequest("/game", "GET", null, ListGameResponse.class);
         return response.getGames();
     }

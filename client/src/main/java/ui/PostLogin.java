@@ -1,26 +1,27 @@
 package ui;
 
-import Facade.ServerFacade;
 import chess.ChessGame;
 import data.DataStorage;
+import data.ListGameResponse;
 import model.GameData;
 import model.JoinGameData;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
-import static ui.EscapeSequences.*;
 
 public class PostLogin {
 
     //private ServerFacade facade;
 
-    public Combo eval(String input) {
+    public Combo eval(String input) throws URISyntaxException, IOException {
         var tokens = input.toLowerCase().split(" ");
         var cmd = (tokens.length > 0) ? tokens[0] : "help";
         var params = Arrays.copyOfRange(tokens, 1, tokens.length);
@@ -30,6 +31,7 @@ public class PostLogin {
             case "c", "create" -> createGame(params);
             case "l", "list" -> listGames();
             case "j", "join", "play" -> playGame(params);
+            case "o", "observe" -> observe(params);
             case "quit" -> new Combo("quit", true);
             default -> new Combo(help(), true);
         };
@@ -109,9 +111,9 @@ public class PostLogin {
         return new Combo(out.toString(), true);
     }
 
-    public Combo playGame(String[] input) {
+    public Combo playGame(String[] input) throws URISyntaxException, IOException {
 
-        int gameID = parseInt(input[0]);
+        int ID = parseInt(input[0]);
 
         ChessGame.TeamColor teamColor = null;
         if (input[1].equalsIgnoreCase("white")) {
@@ -122,7 +124,7 @@ public class PostLogin {
             return new Combo("Wrong input, try again", false);
         }
 
-        JoinGameData joinCombined = new JoinGameData(teamColor, gameID);
+        JoinGameData joinCombined = new JoinGameData(teamColor, ID);
 
         try {
             DataStorage.getInstance().getFacade().joinGame(joinCombined);
@@ -130,10 +132,25 @@ public class PostLogin {
             return new Combo("Wrong input, try again", false);
         }
 
+        // this part for phase 6
+        /*
+        Collection<GameData> gameList = new HashSet<>();
+        gameList = DataStorage.getInstance().getFacade().listGames();
+        Predicate<GameData> streamPredicate = item -> item.gameID() == ID;
+        // var data = gameList.stream().filter(streamPredicate).toList();
+        //ListGameResponse data = gameList.stream().filter(streamPredicate).collect(GameData);
+        //System.out.println(data);
+        */
+
+        DisplayBoard.callMain(input);
+
         return new Combo("Join Success", true);
     }
 
-    public void observe(String[] input) {
-        DisplayBoard.callMain();
+    public Combo observe(String[] input) {
+
+        String[] newInput = {input[0], "white"};
+        DisplayBoard.callMain(newInput);
+        return new Combo("", true);
     }
 }
