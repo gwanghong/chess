@@ -130,7 +130,7 @@ public class ServerFacadeTests {
     }
 
     @Test
-    void logoutNegative() throws URISyntaxException, IOException {
+    void logoutNegative() {
 
         boolean assertion = false;
 
@@ -162,7 +162,7 @@ public class ServerFacadeTests {
     }
 
     @Test
-    void createGameNeg() throws URISyntaxException, IOException {
+    void createGameNeg() {
 
         boolean isTrue = false;
 

@@ -2,7 +2,6 @@ package ui;
 
 import chess.ChessGame;
 import data.DataStorage;
-import data.ListGameResponse;
 import model.GameData;
 import model.JoinGameData;
 
@@ -10,10 +9,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static java.lang.Integer.parseInt;
 
@@ -21,12 +16,11 @@ public class PostLogin {
 
     //private ServerFacade facade;
 
-    public Combo eval(String input) throws URISyntaxException, IOException {
+    public Combo eval(String input) {
         var tokens = input.toLowerCase().split(" ");
         var cmd = (tokens.length > 0) ? tokens[0] : "help";
         var params = Arrays.copyOfRange(tokens, 1, tokens.length);
         return switch (cmd) {
-            case "h", "help" -> new Combo(help(), true);
             case "log", "logout" -> logout();
             case "c", "create" -> createGame(params);
             case "l", "list" -> listGames();
@@ -76,7 +70,7 @@ public class PostLogin {
 
     public Combo listGames() {
 
-        Collection<GameData> gameList = new HashSet<>();
+        Collection<GameData> gameList;
 
         try {
             gameList = DataStorage.getInstance().getFacade().listGames();
@@ -111,11 +105,11 @@ public class PostLogin {
         return new Combo(out.toString(), true);
     }
 
-    public Combo playGame(String[] input) throws URISyntaxException, IOException {
+    public Combo playGame(String[] input) {
 
         int ID = parseInt(input[0]);
 
-        ChessGame.TeamColor teamColor = null;
+        ChessGame.TeamColor teamColor;
         if (input[1].equalsIgnoreCase("white")) {
             teamColor = ChessGame.TeamColor.WHITE;
         } else if (input[1].equalsIgnoreCase("black")) {

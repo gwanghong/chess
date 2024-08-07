@@ -5,7 +5,6 @@ import data.DataStorage;
 import data.ListGameResponse;
 import model.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,9 +14,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
 
 public class ServerFacade {
 

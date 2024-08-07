@@ -9,7 +9,6 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-import static java.lang.Integer.parseInt;
 import static ui.EscapeSequences.*;
 
 public class DisplayBoard {
@@ -26,7 +25,7 @@ public class DisplayBoard {
             ChessPiece.PieceType.KING, 'K',
             ChessPiece.PieceType.BISHOP, 'B');
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
 
         boolean whiteTurn = true;
         //args[1].equalsIgnoreCase("white");
@@ -39,11 +38,11 @@ public class DisplayBoard {
 
         resetColors(out);
 
-    }
+    }*/
 
     public static void callMain(String[] input) {
 
-        int gameID = parseInt(input[0]);
+        //int gameID = parseInt(input[0]);
 
         boolean whiteTurn = input[1].equalsIgnoreCase("white");
 
@@ -113,16 +112,16 @@ public class DisplayBoard {
                         printHeaderText(out, EMPTY);
                     } else {
                         if (bool) {
-                            printHeaderText(out, String.valueOf(" " + header + " "));
+                            printHeaderText(out, " " + header + " ");
                             header++;
                         } else {
-                            printHeaderText(out, String.valueOf(" " + number + " "));
+                            printHeaderText(out, " " + number + " ");
                         }
                     }
                 } else {
 
                     ChessPiece piece = returnPiece(row, boardCol);
-                    String player = "   ";
+                    String player;
                     boolean isWhite = false;
 
                     if (piece != null) {
@@ -166,10 +165,10 @@ public class DisplayBoard {
                         printHeaderText(out, EMPTY);
                     } else {
                         if (bool) {
-                            printHeaderText(out, String.valueOf(" " + header + " "));
+                            printHeaderText(out, " " + header + " ");
                             header--;
                         } else {
-                            printHeaderText(out, String.valueOf(" " + number + " "));
+                            printHeaderText(out, " " + number + " ");
                         }
                     }
                 } else {
@@ -177,7 +176,7 @@ public class DisplayBoard {
                     int reverseRow = 9 - row;
                     int reverseCol = 9 - boardCol;
                     ChessPiece piece = returnPiece(reverseRow, reverseCol);
-                    String player = "   ";
+                    String player;
                     boolean isWhite = false;
 
                     if (piece != null) {
@@ -249,20 +248,6 @@ public class DisplayBoard {
         ChessPosition position = new ChessPosition(i, j);
 
 
-        ChessPiece piece = board.getPiece(position);
-
-        if (piece != null) {
-
-            return piece;
-
-            /*
-
-
-            var type = CHAR_TO_TYPE_MAP.get(piece.getPieceType());*/
-
-        } else {
-            return null;
-
-        }
+        return board.getPiece(position);
     }
 }
