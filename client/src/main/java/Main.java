@@ -6,7 +6,7 @@ public class Main {
 
         Repl repl = new Repl();
 
-        var serverUrl = "http://localhost:8080";
+        var serverUrl = "http://localhost:0";
         if (args.length == 1) {
             serverUrl = args[0];
         }

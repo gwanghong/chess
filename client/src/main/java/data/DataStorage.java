@@ -7,7 +7,7 @@ import ui.PreLogin;
 public class DataStorage {
 
     private DataStorage() {
-        this.facade = new ServerFacade("http://localhost:8080");
+        this.facade = new ServerFacade("http://localhost:0");
         this.preLogin = new PreLogin();
         this.postLogin = new PostLogin();
     }
