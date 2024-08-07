@@ -122,46 +122,4 @@ public class ServerFacade {
         return status / 100 == 2;
     }
 
-    /*
-    private <T> T makeRequest(String path, String method, Object request, Class<T> clazz) throws URISyntaxException, IOException {
-        Gson gson = new Gson();
-        URI uri = new URI(url + path);
-        HttpURLConnection http = (HttpURLConnection) uri.toURL().openConnection();
-        http.setRequestMethod(method);
-
-        if (request != null) {
-            writeRequestBody(gson.toJson(request), http);
-        }
-
-        http.connect();
-
-        String response = readResponseBody(http);
-        if (clazz == null) {
-            return null;
-        } else {
-            return gson.fromJson(response, clazz);
-        }
-    }
-
-    private static void writeRequestBody(String body, HttpURLConnection http) throws IOException {
-        if (body != null && !body.isEmpty()) {
-            http.setDoOutput(true);
-            try (OutputStream outputStream = http.getOutputStream()) {
-                outputStream.write(body.getBytes());
-                outputStream.flush();
-            }
-        }
-    }
-
-    private static String readResponseBody(HttpURLConnection http) throws IOException {
-        StringBuilder responseBody = new StringBuilder();
-        try (InputStream respBody = http.getInputStream();
-             BufferedReader reader = new BufferedReader(new InputStreamReader(respBody))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                responseBody.append(line);
-            }
-        }
-        return responseBody.toString();
-    }*/
 }

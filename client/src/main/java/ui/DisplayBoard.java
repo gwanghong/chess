@@ -25,7 +25,7 @@ public class DisplayBoard {
             ChessPiece.PieceType.KING, 'K',
             ChessPiece.PieceType.BISHOP, 'B');
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
 
         boolean whiteTurn = true;
         //args[1].equalsIgnoreCase("white");
@@ -38,7 +38,7 @@ public class DisplayBoard {
 
         resetColors(out);
 
-    }*/
+    }
 
     public static void callMain(String[] input) {
 

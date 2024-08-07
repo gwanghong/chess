@@ -127,14 +127,14 @@ public class PostLogin {
         }
 
         // this part for phase 6
-        /*
-        Collection<GameData> gameList = new HashSet<>();
-        gameList = DataStorage.getInstance().getFacade().listGames();
-        Predicate<GameData> streamPredicate = item -> item.gameID() == ID;
+
+        //Collection<GameData> gameList = new HashSet<>();
+        //gameList = DataStorage.getInstance().getFacade().listGames();
+        //Predicate<GameData> streamPredicate = item -> item.gameID() == ID;
         // var data = gameList.stream().filter(streamPredicate).toList();
         //ListGameResponse data = gameList.stream().filter(streamPredicate).collect(GameData);
         //System.out.println(data);
-        */
+
 
         DisplayBoard.callMain(input);
 
