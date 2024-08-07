@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Predicate;
 
 import static java.lang.Integer.parseInt;
 
@@ -16,7 +17,7 @@ public class PostLogin {
 
     //private ServerFacade facade;
 
-    public Combo eval(String input) {
+    public Combo eval(String input) throws URISyntaxException, IOException {
         var tokens = input.toLowerCase().split(" ");
         var cmd = (tokens.length > 0) ? tokens[0] : "help";
         var params = Arrays.copyOfRange(tokens, 1, tokens.length);
@@ -105,7 +106,7 @@ public class PostLogin {
         return new Combo(out.toString(), true);
     }
 
-    public Combo playGame(String[] input) {
+    public Combo playGame(String[] input) throws URISyntaxException, IOException {
 
         int id = parseInt(input[0]);
 
@@ -126,16 +127,7 @@ public class PostLogin {
             return new Combo("Wrong input, try again", false);
         }
 
-        // this part for phase 6
-
-        //Collection<GameData> gameList = new HashSet<>();
-        //gameList = DataStorage.getInstance().getFacade().listGames();
-        //Predicate<GameData> streamPredicate = item -> item.gameID() == ID;
-        // var data = gameList.stream().filter(streamPredicate).toList();
-        //ListGameResponse data = gameList.stream().filter(streamPredicate).collect(GameData);
-        //System.out.println(data);
-
-
+        forPhase6(id);
         DisplayBoard.callMain(input);
 
         return new Combo("Join Success", true);
@@ -146,5 +138,12 @@ public class PostLogin {
         String[] newInput = {input[0], "white"};
         DisplayBoard.callMain(newInput);
         return new Combo("", true);
+    }
+
+    private void forPhase6(int id) throws URISyntaxException, IOException {
+        Collection<GameData> gameList;
+        gameList = DataStorage.getInstance().getFacade().listGames();
+        Predicate<GameData> streamPredicate = item -> item.gameID() == id;
+        var data = gameList.stream().filter(streamPredicate).toList();
     }
 }
