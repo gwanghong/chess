@@ -3,6 +3,7 @@ package client;
 import chess.ChessGame;
 import dataaccess.DataAccessException;
 import model.GameData;
+import model.JoinGameData;
 import org.junit.jupiter.api.*;
 import server.Server;
 import Facade.ServerFacade;
@@ -30,8 +31,14 @@ public class ServerFacadeTests {
     }
 
     @BeforeEach
-    @AfterEach
     public void setup() throws DataAccessException {
+        //clear Database
+        ClearService clearService = new ClearService();
+        clearService.clear();
+    }
+
+    @AfterEach
+    public void afterTest() throws DataAccessException {
         //clear Database
         ClearService clearService = new ClearService();
         clearService.clear();
@@ -172,12 +179,51 @@ public class ServerFacadeTests {
     }
 
     @Test
-    void joinGamePos() {
+    void joinGamePos() throws URISyntaxException, IOException {
 
+        facade.register("player1", "password", "p1@email.com");
+        facade.login("player1", "password");
+        String gameName = "game1";
+        GameData game = new GameData(0, null, null, gameName, new ChessGame());
+
+        GameData newGame;
+        newGame = facade.createGame(game);
+
+        JoinGameData join = new JoinGameData(ChessGame.TeamColor.WHITE, newGame.gameID());
+        try {
+            facade.joinGame(join);
+        } catch (Exception e) {
+            fail();
+        }
+
+        assertTrue(true);
     }
 
     @Test
-    void joinGameNeg() {
+    void joinGameNeg() throws URISyntaxException, IOException {
+
+        boolean isInError = false;
+
+        facade.register("player1", "password", "p1@email.com");
+        facade.login("player1", "password");
+        String gameName = "game1";
+        GameData game = new GameData(0, null, null, gameName, new ChessGame());
+
+        GameData newGame;
+        newGame = facade.createGame(game);
+
+        JoinGameData join1 = new JoinGameData(ChessGame.TeamColor.WHITE, newGame.gameID());
+        JoinGameData join2 = new JoinGameData(ChessGame.TeamColor.WHITE, newGame.gameID());
+
+        facade.joinGame(join1);
+
+        try {
+            facade.joinGame(join2);
+        } catch (Exception e) {
+            isInError = true;
+        }
+
+        assertTrue(isInError);
 
     }
 

@@ -60,8 +60,8 @@ public class ServerFacade {
         return response.getGames();
     }
 
-    public void joinGame() throws URISyntaxException, IOException {
-        this.makeRequest("/game", "PUT", null, null);
+    public void joinGame(JoinGameData joinCombined) throws URISyntaxException, IOException {
+        this.makeRequest("/game", "PUT", joinCombined, null);
     }
 
     private <T> T makeRequest(String path, String method, Object request, Class<T> responseClass) {

@@ -4,6 +4,7 @@ import Facade.ServerFacade;
 import chess.ChessGame;
 import data.DataStorage;
 import model.GameData;
+import model.JoinGameData;
 
 import javax.xml.crypto.Data;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
+import static java.lang.Integer.parseInt;
 import static ui.EscapeSequences.*;
 
 public class PostLogin {
@@ -27,6 +29,7 @@ public class PostLogin {
             case "log", "logout" -> logout();
             case "c", "create" -> createGame(params);
             case "l", "list" -> listGames();
+            case "j", "join", "play" -> playGame(params);
             case "quit" -> new Combo("quit", true);
             default -> new Combo(help(), true);
         };
@@ -87,14 +90,18 @@ public class PostLogin {
         for (GameData game : gameList) {
             count++;
             out.append(count).append(". GameName: ");
-            out.append(game.gameName()).append(" GameID: ");
+            out.append(game.gameName()).append(" | GameID: ");
             out.append(game.gameID());
 
             if (game.whiteUsername() != null) {
-                out.append(" WhiteUser: ").append(game.whiteUsername());
+                out.append(" | WhitePlayer: ").append(game.whiteUsername());
+            } else {
+                out.append(" | WhitePlayer: ").append("empty");
             }
             if (game.whiteUsername() != null) {
-                out.append(" BlackUser: ").append(game.blackUsername());
+                out.append(" | BlackPlayer: ").append(game.blackUsername());
+            } else {
+                out.append(" | BlackPlayer: ").append("empty");
             }
             out.append("\n");
         }
@@ -102,8 +109,28 @@ public class PostLogin {
         return new Combo(out.toString(), true);
     }
 
-    public void playGame(String[] input) {
-        DisplayBoard.callMain();
+    public Combo playGame(String[] input) {
+
+        int gameID = parseInt(input[0]);
+
+        ChessGame.TeamColor teamColor = null;
+        if (input[1].equalsIgnoreCase("white")) {
+            teamColor = ChessGame.TeamColor.WHITE;
+        } else if (input[1].equalsIgnoreCase("black")) {
+            teamColor = ChessGame.TeamColor.BLACK;
+        } else {
+            return new Combo("Wrong input, try again", false);
+        }
+
+        JoinGameData joinCombined = new JoinGameData(teamColor, gameID);
+
+        try {
+            DataStorage.getInstance().getFacade().joinGame(joinCombined);
+        } catch (IOException | URISyntaxException e) {
+            return new Combo("Wrong input, try again", false);
+        }
+
+        return new Combo("Join Success", true);
     }
 
     public void observe(String[] input) {
