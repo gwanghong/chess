@@ -1,7 +1,6 @@
 package data;
 
 import Facade.ServerFacade;
-import model.AuthData;
 import ui.PostLogin;
 import ui.PreLogin;
 
@@ -24,8 +23,8 @@ public class DataStorage {
     private State state;
     private String authToken;
     private ServerFacade facade;
-    private PreLogin preLogin;
-    private PostLogin postLogin;
+    private final PreLogin preLogin;
+    private final PostLogin postLogin;
 
     public void setState(State state) {
         this.state = state;
