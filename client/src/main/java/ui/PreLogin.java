@@ -57,6 +57,7 @@ public class PreLogin {
             return new Combo("Wrong input, try again", false);
         }
 
+        DataStorage.getInstance().setState(DataStorage.State.LOGGED_IN);
         return new Combo("Register Success", true);
     }
 }

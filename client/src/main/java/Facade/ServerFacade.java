@@ -2,6 +2,7 @@ package Facade;
 
 import com.google.gson.Gson;
 import data.DataStorage;
+import data.ListGameResponse;
 import model.*;
 
 import java.io.BufferedReader;
@@ -14,6 +15,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
 
 public class ServerFacade {
 
@@ -28,7 +32,6 @@ public class ServerFacade {
         UserData user = new UserData(username, password, null);
         AuthData auth = this.makeRequest("/session", "POST", user, AuthData.class);
         DataStorage.getInstance().setAuthToken(auth.authToken());
-        //System.out.println(DataStorage.getInstance().getAuthToken());
         return auth;
     }
 
@@ -51,7 +54,10 @@ public class ServerFacade {
     }
 
     public Collection<GameData> listGames() throws URISyntaxException, IOException {
-        return this.makeRequest("/game", "GET", null, Collection.class);
+
+        AuthData auth = new AuthData(DataStorage.getInstance().getAuthToken(), null);
+        ListGameResponse response = this.makeRequest("/game", "GET", null, ListGameResponse.class);
+        return response.getGames();
     }
 
     public void joinGame() throws URISyntaxException, IOException {
@@ -78,14 +84,16 @@ public class ServerFacade {
 
 
     private static void writeBody(Object request, HttpURLConnection http) throws IOException {
+
+        String authToken = DataStorage.getInstance().getAuthToken();
+
+        if (authToken != null) {
+            http.addRequestProperty("authorization", authToken);
+            http.setRequestProperty("authorization", authToken);
+        }
+
         if (request != null) {
             http.addRequestProperty("Content-Type", "application/json");
-
-            String authToken = DataStorage.getInstance().getAuthToken();
-            //System.out.println(authToken);
-            if (authToken != null) {
-                http.addRequestProperty("authorization", authToken);
-            }
 
             String reqData = new Gson().toJson(request);
             try (OutputStream reqBody = http.getOutputStream()) {

@@ -9,6 +9,8 @@ import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 
 import static ui.EscapeSequences.*;
 
@@ -22,8 +24,9 @@ public class PostLogin {
         var params = Arrays.copyOfRange(tokens, 1, tokens.length);
         return switch (cmd) {
             case "h", "help" -> new Combo(help(), true);
-            case "l", "logout" -> logout();
+            case "log", "logout" -> logout();
             case "c", "create" -> createGame(params);
+            case "l", "list" -> listGames();
             case "quit" -> new Combo("quit", true);
             default -> new Combo(help(), true);
         };
@@ -66,7 +69,37 @@ public class PostLogin {
         return new Combo("Game " + input[0] + " created. GameID is " + gameRes.gameID(), true);
     }
 
-    public void listGames() {
+    public Combo listGames() {
+
+        Collection<GameData> gameList = new HashSet<>();
+
+        try {
+            gameList = DataStorage.getInstance().getFacade().listGames();
+        } catch (IOException | URISyntaxException e) {
+            return new Combo("Error occurred for listing Games", false);
+        }
+
+        int count = 0;
+        StringBuilder out = new StringBuilder();
+        out.append("Game List:\n");
+
+
+        for (GameData game : gameList) {
+            count++;
+            out.append(count).append(". GameName: ");
+            out.append(game.gameName()).append(" GameID: ");
+            out.append(game.gameID());
+
+            if (game.whiteUsername() != null) {
+                out.append(" WhiteUser: ").append(game.whiteUsername());
+            }
+            if (game.whiteUsername() != null) {
+                out.append(" BlackUser: ").append(game.blackUsername());
+            }
+            out.append("\n");
+        }
+
+        return new Combo(out.toString(), true);
     }
 
     public void playGame(String[] input) {

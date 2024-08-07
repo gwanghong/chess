@@ -17,8 +17,7 @@ public class Repl {
 
         DataStorage.getInstance().setState(DataStorage.State.LOGGED_OUT);
 
-        System.out.println("♕ Welcome to Chess. Sign in to start.\n");
-        System.out.print(SET_TEXT_COLOR_BLUE + preLogin.help());
+        System.out.println("\n♕ Welcome to Chess. Sign in to start.\n\n" + SET_TEXT_COLOR_BLUE + preLogin.help());
 
         Scanner scanner = new Scanner(System.in);
         var result = "";
@@ -39,7 +38,7 @@ public class Repl {
                 e.printStackTrace();
             }
         }
-        System.out.println();
+        printPrompt();
     }
 
     private void printPrompt() {

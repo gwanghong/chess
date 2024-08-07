@@ -30,6 +30,7 @@ public class ServerFacadeTests {
     }
 
     @BeforeEach
+    @AfterEach
     public void setup() throws DataAccessException {
         //clear Database
         ClearService clearService = new ClearService();
@@ -181,13 +182,25 @@ public class ServerFacadeTests {
     }
 
     @Test
-    void listGamePos() {
+    void listGamePos() throws URISyntaxException, IOException {
 
+        facade.register("player1", "password", "p1@email.com");
+        facade.login("player1", "password");
+
+        String gameName = "newGame";
+        GameData game = new GameData(0, null, null, gameName, new ChessGame());
+        facade.createGame(game);
+
+        Assertions.assertNotNull(facade.listGames());
     }
 
     @Test
-    void listGameNeg() {
+    void listGameNeg() throws URISyntaxException, IOException {
 
+        facade.register("player1", "password", "p1@email.com");
+        facade.login("player1", "password");
+
+        Assertions.assertTrue(facade.listGames().isEmpty());
     }
 
 }
