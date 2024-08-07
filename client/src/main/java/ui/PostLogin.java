@@ -107,7 +107,7 @@ public class PostLogin {
 
     public Combo playGame(String[] input) {
 
-        int ID = parseInt(input[0]);
+        int id = parseInt(input[0]);
 
         ChessGame.TeamColor teamColor;
         if (input[1].equalsIgnoreCase("white")) {
@@ -118,7 +118,7 @@ public class PostLogin {
             return new Combo("Wrong input, try again", false);
         }
 
-        JoinGameData joinCombined = new JoinGameData(teamColor, ID);
+        JoinGameData joinCombined = new JoinGameData(teamColor, id);
 
         try {
             DataStorage.getInstance().getFacade().joinGame(joinCombined);

@@ -121,20 +121,7 @@ public class DisplayBoard {
                 } else {
 
                     ChessPiece piece = returnPiece(row, boardCol);
-                    String player;
-                    boolean isWhite = false;
-
-                    if (piece != null) {
-
-                        var type = CHAR_TO_TYPE_MAP.get(piece.getPieceType());
-
-                        isWhite = piece.getTeamColor().equals(ChessGame.TeamColor.WHITE);
-                        player = " " + type + " ";
-                    } else {
-                        player = "   ";
-                    }
-
-                    printPlayer(out, player, number, boardCol, isWhite);
+                    drawRowOfSquareHelper(piece, out, number, boardCol);
                 }
 
                 out.print(EMPTY.repeat(suffixLength));
@@ -176,20 +163,9 @@ public class DisplayBoard {
                     int reverseRow = 9 - row;
                     int reverseCol = 9 - boardCol;
                     ChessPiece piece = returnPiece(reverseRow, reverseCol);
-                    String player;
-                    boolean isWhite = false;
 
-                    if (piece != null) {
+                    drawRowOfSquareHelper(piece, out, number, boardCol);
 
-                        var type = CHAR_TO_TYPE_MAP.get(piece.getPieceType());
-
-                        isWhite = piece.getTeamColor().equals(ChessGame.TeamColor.WHITE);
-                        player = " " + type + " ";
-                    } else {
-                        player = "   ";
-                    }
-
-                    printPlayer(out, player, number, boardCol, isWhite);
                 }
 
                 out.print(EMPTY.repeat(suffixLength));
@@ -199,6 +175,23 @@ public class DisplayBoard {
 
             out.println();
         }
+    }
+
+    private static void drawRowOfSquareHelper(ChessPiece piece, PrintStream out, int number, int boardCol) {
+        String player;
+        boolean isWhite = false;
+
+        if (piece != null) {
+
+            var type = CHAR_TO_TYPE_MAP.get(piece.getPieceType());
+
+            isWhite = piece.getTeamColor().equals(ChessGame.TeamColor.WHITE);
+            player = " " + type + " ";
+        } else {
+            player = "   ";
+        }
+
+        printPlayer(out, player, number, boardCol, isWhite);
     }
 
     private static void setWhite(PrintStream out) {

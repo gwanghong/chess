@@ -6,7 +6,7 @@ import model.GameData;
 import model.JoinGameData;
 import org.junit.jupiter.api.*;
 import server.Server;
-import Facade.ServerFacade;
+import facade.ServerFacade;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
