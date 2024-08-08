@@ -125,9 +125,9 @@ public class DisplayBoard {
                         header = blackHeaderHelper(bool, out, header, number);
                     }
                 } else {
-
-                    ChessPiece piece = returnPiece(row, boardCol);
-                    drawRowOfSquareHelper(piece, out, number, boardCol);
+                    int reverseCol = 9 - boardCol;
+                    ChessPiece piece = returnPiece(row, reverseCol);
+                    drawRowOfSquareHelper(piece, out, number, boardCol, true);
                 }
 
                 out.print(EMPTY.repeat(suffixLength));
@@ -176,7 +176,7 @@ public class DisplayBoard {
                     //int reverseCol = 9 - boardCol;
                     ChessPiece piece = returnPiece(reverseRow, boardCol);
 
-                    drawRowOfSquareHelper(piece, out, number, boardCol);
+                    drawRowOfSquareHelper(piece, out, number, boardCol, false);
 
                 }
 
@@ -189,7 +189,7 @@ public class DisplayBoard {
         }
     }
 
-    private static void drawRowOfSquareHelper(ChessPiece piece, PrintStream out, int number, int boardCol) {
+    private static void drawRowOfSquareHelper(ChessPiece piece, PrintStream out, int number, int boardCol, boolean isBlackTurn) {
         String player;
         boolean isWhite = false;
 
@@ -203,7 +203,7 @@ public class DisplayBoard {
             player = "   ";
         }
 
-        printPlayer(out, player, number, boardCol, isWhite);
+        printPlayer(out, player, number, boardCol, isWhite, isBlackTurn);
     }
 
     private static void setWhite(PrintStream out) {
@@ -226,9 +226,14 @@ public class DisplayBoard {
         //out.print(RESET_TEXT_COLOR);
     }
 
-    private static void printPlayer(PrintStream out, String player, int number, int col, boolean isWhite) {
+    private static void printPlayer(PrintStream out, String player, int number, int col, boolean isWhite, boolean isBlackTurn) {
 
-        if ((number + col) % 2 == 0) {
+        int rest = 0;
+        if (isBlackTurn) {
+            rest = 1;
+        }
+
+        if ((number + col) % 2 == rest) {
             out.print(SET_BG_COLOR_BLACK);
         } else {
             out.print(SET_BG_COLOR_WHITE);
