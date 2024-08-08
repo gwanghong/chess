@@ -34,6 +34,10 @@ public class PreLogin {
 
     public Combo login(String[] input) {
 
+        if (input.length != 2) {
+            return new Combo("Wrong input length, try again", false);
+        }
+
         try {
             DataStorage.getInstance().getFacade().login(input[0], input[1]);
         } catch (IOException | URISyntaxException e) {
@@ -46,7 +50,9 @@ public class PreLogin {
 
     public Combo register(String[] input) {
 
-        System.out.println(Arrays.toString(input));
+        if (input.length != 3) {
+            return new Combo("Wrong input length, try again", false);
+        }
 
         try {
             DataStorage.getInstance().getFacade().register(input[0], input[1], input[2]);

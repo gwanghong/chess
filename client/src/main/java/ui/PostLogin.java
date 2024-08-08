@@ -58,6 +58,10 @@ public class PostLogin {
 
     public Combo createGame(String[] input) {
 
+        if (input.length != 1) {
+            return new Combo("Wrong input length, try again", false);
+        }
+
         GameData game = new GameData(0, null, null, input[0], new ChessGame());
         GameData gameRes;
         try {
@@ -108,6 +112,10 @@ public class PostLogin {
 
     public Combo playGame(String[] input) throws URISyntaxException, IOException {
 
+        if (input.length != 2) {
+            return new Combo("Wrong input length, try again", false);
+        }
+
         int id = parseInt(input[0]);
 
         ChessGame.TeamColor teamColor;
@@ -134,6 +142,10 @@ public class PostLogin {
     }
 
     public Combo observe(String[] input) {
+
+        if (input.length != 1) {
+            return new Combo("Wrong input length, try again", false);
+        }
 
         String[] newInput = {input[0], "white"};
         DisplayBoard.callMain(newInput);

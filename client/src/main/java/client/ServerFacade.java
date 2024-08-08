@@ -72,7 +72,6 @@ public class ServerFacade {
             throwIfNotSuccessful(http);
             return readBody(http, responseClass);
         } catch (Exception ex) {
-            ex.printStackTrace(); // Print the stack trace to identify the issue
             throw new RuntimeException(ex.getMessage());
         }
     }
