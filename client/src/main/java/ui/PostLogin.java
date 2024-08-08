@@ -72,7 +72,7 @@ public class PostLogin {
             return new Combo("Wrong input, try again", false);
         }
 
-        return new Combo("Game " + input[0] + " created. GameID is " + gameRes.gameID(), true);
+        return new Combo("Game " + input[0] + " created.", true);
     }
 
     public Combo listGames() {
