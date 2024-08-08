@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import static java.lang.Integer.parseInt;
@@ -87,12 +89,15 @@ public class PostLogin {
         StringBuilder out = new StringBuilder();
         out.append("Game List:\n");
 
+        Map<Integer, GameData> listGames = new HashMap<>();
 
         for (GameData game : gameList) {
             count++;
+
+            listGames.put(count, game);
+
             out.append(count).append(". GameName: ");
-            out.append(game.gameName()).append(" | GameID: ");
-            out.append(game.gameID());
+            out.append(game.gameName());
 
             if (game.whiteUsername() != null) {
                 out.append(" | WhitePlayer: ").append(game.whiteUsername());
@@ -107,6 +112,8 @@ public class PostLogin {
             out.append("\n");
         }
 
+        DataStorage.getInstance().setListGames(listGames);
+
         return new Combo(out.toString(), true);
     }
 
@@ -116,7 +123,10 @@ public class PostLogin {
             return new Combo("Wrong input length, try again", false);
         }
 
-        int id = parseInt(input[0]);
+        int listNum = parseInt(input[0]);
+        Map<Integer, GameData> listGames = DataStorage.getInstance().getListGames();
+        GameData game = listGames.get(listNum);
+        int id = game.gameID();
 
         ChessGame.TeamColor teamColor;
         if (input[1].equalsIgnoreCase("white")) {
