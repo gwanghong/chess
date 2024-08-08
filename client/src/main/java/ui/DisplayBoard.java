@@ -67,9 +67,9 @@ public class DisplayBoard {
 
     private static void drawBoard(PrintStream out, boolean whiteTurn) {
 
-        int start = 9;
+        int start = 0;
         if (whiteTurn) {
-            start = 0;
+            start = 9;
         }
         boolean isFirstAndLast;
 
@@ -79,10 +79,10 @@ public class DisplayBoard {
 
             if (whiteTurn) {
                 drawRowOfSquaresWhite(out, start, isFirstAndLast, boardRow);
-                start++;
+                start--;
             } else {
                 drawRowOfSquaresBlack(out, start, isFirstAndLast, boardRow);
-                start--;
+                start++;
             }
 
             if (boardRow == 0) {
@@ -96,7 +96,7 @@ public class DisplayBoard {
     private static char blackHeaderHelper(boolean bool, PrintStream out, char header, int number) {
         if (bool) {
             printHeaderText(out, " " + header + " ");
-            return (char) ((char) header + 1);
+            return (char) ((char) header - 1);
         } else {
             printHeaderText(out, " " + number + " ");
         }
@@ -106,7 +106,7 @@ public class DisplayBoard {
 
     private static void drawRowOfSquaresBlack(PrintStream out, int number, boolean bool, int row) {
 
-        char header = 'a';
+        char header = 'h';
 
         for (int squareRow = 0; squareRow < SQUARE_SIZE_IN_CHARS; ++squareRow) {
             for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; ++boardCol) {
@@ -142,7 +142,7 @@ public class DisplayBoard {
     private static char whiteHeaderHelper(boolean bool, PrintStream out, char header, int number) {
         if (bool) {
             printHeaderText(out, " " + header + " ");
-            return (char) ((char) header - 1);
+            return (char) ((char) header + 1);
         } else {
             printHeaderText(out, " " + number + " ");
         }
@@ -152,7 +152,7 @@ public class DisplayBoard {
 
     private static void drawRowOfSquaresWhite(PrintStream out, int number, boolean bool, int row) {
 
-        char header = 'h';
+        char header = 'a';
 
         for (int squareRow = 0; squareRow < SQUARE_SIZE_IN_CHARS; ++squareRow) {
             for (int boardCol = 0; boardCol < BOARD_SIZE_IN_SQUARES; ++boardCol) {
@@ -173,8 +173,8 @@ public class DisplayBoard {
                 } else {
 
                     int reverseRow = 9 - row;
-                    int reverseCol = 9 - boardCol;
-                    ChessPiece piece = returnPiece(reverseRow, reverseCol);
+                    //int reverseCol = 9 - boardCol;
+                    ChessPiece piece = returnPiece(reverseRow, boardCol);
 
                     drawRowOfSquareHelper(piece, out, number, boardCol);
 
