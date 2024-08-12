@@ -1,6 +1,7 @@
 package server.websocket;
 
 import com.google.gson.Gson;
+import model.AuthData;
 import model.GameData;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
@@ -22,6 +23,14 @@ public class WebSocketHandler {
     public void onMessage(Session session, String message) {
 
         UserGameCommand userGameCommand = new Gson().fromJson(message, UserGameCommand.class);
+
+        String authToken;
+        if (userGameCommand.getAuthToken() != null) {
+            authToken = userGameCommand.getAuthToken();
+        }
+
+        Integer gameID = userGameCommand.getGameID();
+
         switch (userGameCommand.getCommandType()) {
             case CONNECT -> connect();
             case MAKE_MOVE -> makeMove();
@@ -31,6 +40,8 @@ public class WebSocketHandler {
     }
 
     private void connect() {
+        var message = String.format("", );
+        var notification = new UserGameCommand(UserGameCommand.CommandType.CONNECT, );
     }
 
     private void makeMove() {
