@@ -12,6 +12,7 @@ import websocket.commands.UserGameCommand;
 import dataaccess.*;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ public class WebSocketHandler {
 
         UserGameCommand userGameCommand = new Gson().fromJson(message, UserGameCommand.class);
 
-        String authToken;
+        String authToken = null;
         if (userGameCommand.getAuthToken() != null) {
             authToken = userGameCommand.getAuthToken();
         }
@@ -32,22 +33,24 @@ public class WebSocketHandler {
         Integer gameID = userGameCommand.getGameID();
 
         switch (userGameCommand.getCommandType()) {
-            case CONNECT -> connect();
+            case CONNECT -> connect(gameID, authToken);
             case MAKE_MOVE -> makeMove();
-            case LEAVE -> leave();
+            case LEAVE -> leave(gameID, authToken);
             case RESIGN -> resign();
         }
     }
 
-    private void connect() {
-        var message = String.format("", );
-        var notification = new UserGameCommand(UserGameCommand.CommandType.CONNECT, );
+    private void connect(Integer gameID, String authToken) {
+        connections.put(gameID, new HashSet<>());
+        var message = String.format("Connected to game: %d", gameID);
+        var notification = new UserGameCommand(UserGameCommand.CommandType.CONNECT, authToken, gameID);
     }
 
     private void makeMove() {
     }
 
-    private void leave() {
+    private void leave(Integer gameID, String authToken) {
+
     }
 
     private void resign() {
