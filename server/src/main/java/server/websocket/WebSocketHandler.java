@@ -11,10 +11,7 @@ import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import websocket.commands.UserGameCommand;
 import dataaccess.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class WebSocketHandler {
 
@@ -63,6 +60,11 @@ public class WebSocketHandler {
 
     public void broadcast(Integer gameID, UserGameCommand notification) {
 
+        var list = new ArrayList<Session>();
+
+        for (var s : list) {
+            connections.remove(gameID);
+        }
     }
 
     @OnWebSocketClose
