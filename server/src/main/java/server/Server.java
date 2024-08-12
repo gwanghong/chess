@@ -6,11 +6,8 @@ import service.ClearService;
 import service.GameService;
 import service.UserService;
 import spark.*;
-import server.websocket.WebSocketHandler;
 
 public class Server {
-
-    private final WebSocketHandler webSocketHandler = new WebSocketHandler();
 
     public static void main(String[] args) {
         new Server().run(8080);
@@ -19,9 +16,7 @@ public class Server {
     public int run(int desiredPort) {
         Spark.port(desiredPort);
 
-        //Spark.webSocket("/ws", webSocketHandler);
-
-        //Spark.staticFiles.location("web");
+        Spark.staticFiles.location("web");
 
         // Register your endpoints and handle exceptions here.
         UserDAO userDao = new MySqlUserDAO();
