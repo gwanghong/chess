@@ -1,12 +1,14 @@
 package server.websocket;
 
 import com.google.gson.Gson;
+import model.GameData;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketError;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import websocket.commands.UserGameCommand;
+import dataaccess.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +20,7 @@ public class WebSocketHandler {
 
     @OnWebSocketMessage
     public void onMessage(Session session, String message) {
+
         UserGameCommand userGameCommand = new Gson().fromJson(message, UserGameCommand.class);
         switch (userGameCommand.getCommandType()) {
             case CONNECT -> connect();
